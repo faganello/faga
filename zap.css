@@ -1,0 +1,149 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-size: 100vw 100vh;
+    background-position: 0 0;
+    background-image: 
+        repeating-linear-gradient(315deg, #00FFFF2E 92%, #073AFF00 100%),
+        repeating-radial-gradient(75% 75% at 238% 218%, #00FFFF12 30%, #073AFF14 39%),
+        radial-gradient(99% 99% at 109% 2%, #DFFDDD96 0%, #073AFF00 100%),
+        radial-gradient(99% 99% at 21% 78%, #057905FF 0%, #1F860A00 100%),
+        radial-gradient(160% 154% at 711px -303px, #048000FF 0%, #048000FF 100%);
+    overflow: hidden;
+}
+
+.form { width:calc(100% - 20px); max-width:500px; margin: 50px 10px 0 10px;}
+.content { width:100%; display: flex; align-items: center; flex-direction: column;}
+.contatos { width:calc(100% - 20px); max-width:500px; height: 600px; }
+.loadSheets {border:none; width: 100%;}
+#lista-contatos { height: 430px; overflow-y: scroll; margin: 15px 0 0 0; box-shadow: rgba(0, 0, 0, 0.35) 0px -10px 30px -25px inset; padding: 0 0 20px 0;}
+.sheet-btn {width: 100%;}
+.titulo-lista-contatos { 
+    background-color:#80808014; 
+    border-radius: 3px 0 0 3px;
+    padding: 7px 0 7px 15px;
+    font-weight: 500;
+    color: #9b9b9b;
+}
+
+.num-contato { 
+    color:#9b9b9b; 
+    display: flex;
+    justify-content: center; }
+
+.check-contato { 
+    color:#006517; 
+    display: flex;
+    justify-content: flex-start; 
+    padding: 0 0 0 15px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f3f9; 
+}
+::-webkit-scrollbar-thumb {
+  background: #c2c9d6; 
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #075e54; 
+}
+
+
+
+.contatoWpp {
+    opacity: 0; /* Inicialmente, definimos a opacidade como 0 para o fade-in */
+    animation: fadeIn 0.8s ease-in-out forwards; /* Aplicamos a animação de fade-in com duração de 2 segundos */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; } /* Começa com a opacidade 0 (totalmente transparente) */
+    to { opacity: 1; } /* Termina com a opacidade 1 (totalmente opaco) */
+}
+
+.dependencias { height:auto; width:100%; display: flex; justify-content:center;}
+.dependencias > img { height:30px; width:auto; margin: 0 10px 0 10px; }
+
+.tempoEstimado { color:grey; font-weight:bold; font-size: small; margin: 20px 0 0 0;
+    position: absolute;}
+
+.contador-msg{
+    background-color: #003f0df2;
+    width: 200px;
+    height: 200px;
+    position: fixed;
+    bottom: 0;
+    right: 5%;
+    border-radius: 15px 15px 0 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px;
+    z-index: 9;
+    animation: showCounter 2s ease-in-out forwards;
+}
+
+.num-msg-enviadas {
+    color: white;
+    width: 100%;
+    height: auto;
+
+    font-size: xxx-large;
+    padding: 0;
+    margin: 0 0 10px 0;
+    display: flex;
+    justify-content: center;
+}
+
+@keyframes showCounter {
+    from { bottom: -200px; } /* Começa com a opacidade 0 (totalmente transparente) */
+    to { bottom: 0px; } /* Termina com a opacidade 1 (totalmente opaco) */
+}
+.reload-page {
+    display: none;
+}
+
+
+
+/* NOTAS DE VERSÃO  */
+.release-note {
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: none;
+    position: fixed;
+    bottom: 0;
+    justify-content: center;
+    align-content: center;
+    padding: 30px 0 30px 0;
+}
+.release-btn {
+    z-index: 10;
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+}
+.font-icon-mgn { margin:0 5px 0 0; }
+
+.release-content {
+    border: 1px solid #8080802e;
+    border-radius: 15px;
+    width: 600px;
+    padding: 20px;
+    overflow-y: scroll;
+    display: flex;
+    align-items: flex-start;
+}
+.close-release-btn { 
+    position: relative;
+    right: 10px;
+}
+.release-workflow { width:100%; }
