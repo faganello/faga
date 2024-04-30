@@ -1,166 +1,31 @@
-
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title></title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Delicious+Handrawn&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,340,100,0..1;1,9..144,340,100,0..1&display=swap" rel="stylesheet">
 
-    <link href="zap.css" rel="stylesheet" >
-    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
-<body>
 
 
-<!-- CONTADOR DE MENSAGENS ENVIADAS -->
-<div class="contador-msg">
-    <div class="num-msg-enviadas">
-        <span class="num-contato-atual">0</span>/<span class="num-total-contatos">0</span>
-    </div>
-    <button class="button stop-workflow" onclick="pararExecucao();"><i class="fa-regular fa-circle-stop font-icon-mgn"></i>Parar</button>
-    <button class="button reload-page" onclick="location.reload();"><i class="fa-solid fa-repeat font-icon-mgn"></i>Recarregar</button>
-</div>
+<header>
 
-
-<div class="content">
-
-<div class="form box">
-	<center><h2><i class="fa-brands fa-whatsapp"></i> Whatsapp Bot</h2></center>
-	<input class="input block" type="text" name="" id="msgInput" placeholder="Digite sua mensagem aqui..." required>
-	<button class="button" onclick="executarWorkflow()"> Enviar Mensagem </button>
-</div>
+	<h1 class="fraunces-title">Trabalhe menos,<br><span class="title-word"></span> mais.</h1>
+	<h2 class="delicious-handrawn-regular">deixe as tarefas repetitivas para as automações</h2>
+	
+  <a href="https://wa.me/5519997339562"><button class="callme"><i class="fa-brands fa-whatsapp"></i> Faça seu orçamento </button></a>
+</header>
 
 
 
-
-<div class="fixed-grid has-6-cols box contatos">
-
-	<center><h4><i class="fa-regular fa-address-book"></i> Números</h4></center>
-
-    <div class="sheet-btn">
-        <button title="Recarregar dados" class="button is-small" onclick="Webhook();">
-            <span class="icon is-small">
-                <i class="fa-solid fa-rotate-right"></i>
-            </span>
-        </button>
-
-        <button title="Abrir Planilha" class="button is-small" onclick="window.open('https://docs.google.com/spreadsheets/d/11vl6auB8k5xNYaFrCHyicVFhXYVhxHDXLWI7TdJ6naE/edit?usp=sharing', '_blank');
-    ">
-            <span class="icon is-small">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-            </span>
-        </button>
-    </div>
-
-	<!--<hr style="width:100%;">-->
-
-    <div id="lista-contatos">
-        <!-- Cabeçalho -->
-    	<div class="grid titulo-lista-contatos">
-    		<div class="cell">
-    			Num. 
-    		</div>
-    		<div class="cell is-col-span-4">
-    			<p>Telefone</p>
-    		</div>
-            <div class="cell" style="display: flex; justify-content: start;">
-                Feito
-            </div>
-    	</div>
-        <!-- OS NUMEROS SERÃO ADICIONADOS AQUI -->
-        <button class="button is-loading loadSheets">Loading</button>
-    </div>
-    <span class="tempoEstimado">----</span>
-</div>
-
-
-<h6 style="color:white;">Dependencias</h6>
-<div class="dependencias">
-    <img src="https://www.automa.site/_nuxt/logo.0c7d1c9e.svg">
-    <img src="https://seeklogo.com/images/N/n8n-logo-9D5347DF64-seeklogo.com.png">
-</div>
-</div>
-
-
-<button class="button release-btn" onclick="showReleaseNotes()"><i class="fa-solid fa-book font-icon-mgn"></i> Notas da versão </button>
-
-<div class="release-note">
-    <div class="release-content content is-medium">
-        <button class="delete is-large close-release-btn" onclick="hiddeReleaseNotes();"></button>
-
-        <h1>Notas da Versão 1.0</h1>
-        <p>
-            O app <strong>Zap</strong> tem o objetivo de automatizar o envio de mensagens no Whatsapp sem a utilização da API oficial, e por consequência, sem arcar com os custos por envio cobrado pela API. A automação opera através do <i>web scrapping</i>, "simulando" o acesso feito pelo usuario; fazendo com que o navegador fique ocupado durante a execução.  
-        </p>
-        <p>
-            A lista de contatos utilizada pelo aplicativo vem de uma planilha criada pelo Google Sheets. Sendo essa acessada pelo n8n quando solicitado pelo cliente através de WebHook.
-        </p>
-        <p>
-            Todo o design foi pensado para o Desktop. Por isso, problemas visuais são esperados caso a tela fique no tamanho de um mobile.
-        </p>
-
-        <h2>Funcionalidades</h2>
-        <ul>
-            <li><a>Envio de mensagens</a> no Whatsapp com a extensão <strong>Automa</strong></li>
-            <li><a>Lista de contatos armazenada</a> no Google Sheets</li>
-            <li><a>Atualização da lista</a> de contatos pelo botão <button class="button is-small"><i class="fa-solid fa-rotate-right"></i></button></li>
-            <li><a>Visualização da planilha</a> de contatos no Google Sheets pelo botão <button class="button is-small"><i class="fa-solid fa-arrow-up-right-from-square"></i></button></li>
-            <li><a>Calculo</a> do <strong>Tempo Estimado</strong> do envio para todos os contatos</li>
-            <li><a>Contador de mensagens</a> enviadas durante a execução da automação(localizado no canto inferior direito, exibido após o inicio da execução)</li>
-            <li><a>Interrompção do disparo</a>(localizado no contador de mensagens enviadas) com o botão <button class="button is-small"><i class="fa-regular fa-circle-stop font-icon-mgn"></i>Parar</button></li>
-            <li><a>Marcação visual</a> <i class="fa-regular fa-square-check"></i> do inicio de cada disparo, colocado ao lado direito do contato</li>
-        </ul>
-
-
-        <h2>Dependencias</h2>
-        <p>
-            <strong>n8n</strong> 1.38.1<br>
-            <strong>Automa</strong> 1.28.27<br>
-            <strong><i class="fa-solid fa-arrow-right-long"></i> Workflow</strong> Whatsapp v1
-        </p>
-
-        <div class="control release-workflow">
-            <textarea class="textarea has-fixed-size">
-{"extVersion":"1.28.27","name":"whatsapp v2","icon":"riGlobalLine","table":[],"version":"1.28.27","drawflow":{"edges":[{"data":{},"events":{},"id":"vueflow__edge-gc470scgc470sc-output-1-283d1o8283d1o8-input-1","markerEnd":"arrowclosed","selectable":true,"source":"gc470sc","sourceHandle":"gc470sc-output-1","sourceX":-7.512232646196651,"sourceY":423.048489554979,"target":"283d1o8","targetHandle":"283d1o8-input-1","targetX":337.6782687759818,"targetY":423.94572092236467,"type":"custom","updatable":true},{"data":{},"events":{},"id":"vueflow__edge-brbqftrbrbqftr-output-1-6c8n22e6c8n22e-input-1","markerEnd":"arrowclosed","selectable":true,"source":"brbqftr","sourceHandle":"brbqftr-output-1","sourceX":849.1986487996182,"sourceY":433.7683532921613,"target":"6c8n22e","targetHandle":"6c8n22e-input-1","targetX":915.7262987483713,"targetY":428.9774820322615,"type":"custom","updatable":true},{"data":{},"events":{},"id":"vueflow__edge-283d1o8283d1o8-output-1-brbqftrbrbqftr-input-1","markerEnd":"arrowclosed","selectable":true,"source":"283d1o8","sourceHandle":"283d1o8-output-1","sourceX":569.6782687759818,"sourceY":423.94572092236467,"target":"brbqftr","targetHandle":"brbqftr-input-1","targetX":614.1986487996182,"targetY":433.7683532921613,"type":"custom","updatable":true},{"data":{},"events":{},"id":"vueflow__edge-brbqftrbrbqftr-output-2-jq16zyjjq16zyj-input-1","markerEnd":"arrowclosed","selectable":true,"source":"brbqftr","sourceHandle":"brbqftr-output-2","sourceX":849.1986487996182,"sourceY":478.3621032921613,"target":"jq16zyj","targetHandle":"jq16zyj-input-1","targetX":1133.0400888743318,"targetY":570.1740741228084,"type":"custom","updatable":true},{"data":{},"events":{},"id":"vueflow__edge-6c8n22e6c8n22e-output-1-jq16zyjjq16zyj-input-1","markerEnd":"arrowclosed","selectable":true,"source":"6c8n22e","sourceHandle":"6c8n22e-output-1","sourceX":1147.7262987483714,"sourceY":428.9774820322615,"target":"jq16zyj","targetHandle":"jq16zyj-input-1","targetX":1133.0400888743318,"targetY":570.1740741228084,"type":"custom","updatable":true},{"class":"source-k3d38qt-output-1 target-mgy4cbz-input-1","data":{},"events":{},"id":"vueflow__edge-k3d38qtk3d38qt-output-1-mgy4cbzmgy4cbz-input-1","markerEnd":"arrowclosed","selectable":true,"source":"k3d38qt","sourceHandle":"k3d38qt-output-1","sourceX":1753.8296051474042,"sourceY":473.27493090862777,"target":"mgy4cbz","targetHandle":"mgy4cbz-input-1","targetX":1830.850677479691,"targetY":454.4928298040166,"type":"custom","updatable":true},{"data":{},"events":{},"id":"vueflow__edge-jq16zyjjq16zyj-output-1-k3d38qtk3d38qt-input-1","markerEnd":"arrowclosed","selectable":true,"source":"jq16zyj","sourceHandle":"jq16zyj-output-1","sourceX":1365.0400888743318,"sourceY":570.1740741228084,"target":"k3d38qt","targetHandle":"k3d38qt-input-1","targetX":1518.8296051474042,"targetY":473.27493090862777,"type":"custom","updatable":true},{"data":{},"events":{},"id":"vueflow__edge-k3d38qtk3d38qt-output-2-jq16zyjjq16zyj-input-1","markerEnd":"arrowclosed","selectable":true,"source":"k3d38qt","sourceHandle":"k3d38qt-output-2","sourceX":1753.8296051474042,"sourceY":517.8686809086278,"target":"jq16zyj","targetHandle":"jq16zyj-input-1","targetX":1133.0400888743318,"targetY":570.1740741228084,"type":"custom","updatable":true},{"class":"connected-edges","data":{},"events":{},"id":"vueflow__edge-mgy4cbzmgy4cbz-output-1-bu24egsbu24egs-input-1","markerEnd":"arrowclosed","selectable":true,"source":"mgy4cbz","sourceHandle":"mgy4cbz-output-1","sourceX":2062.850677479691,"sourceY":454.4928298040166,"target":"bu24egs","targetHandle":"bu24egs-input-1","targetX":2033.7188309162857,"targetY":704.491111390154,"type":"custom","updatable":true},{"class":"connected-edges","data":{},"events":{},"id":"vueflow__edge-bu24egsbu24egs-output-1-rvm3yuwrvm3yuw-input-1","markerEnd":"arrowclosed","selectable":true,"source":"bu24egs","sourceHandle":"bu24egs-output-1","sourceX":2265.7188309162857,"sourceY":704.491111390154,"target":"rvm3yuw","targetHandle":"rvm3yuw-input-1","targetX":2269.0602853895602,"targetY":462.6403819726722,"type":"custom","updatable":true},{"data":{},"events":{},"id":"vueflow__edge-gc470scgc470sc-output-1-be2lzerbe2lzer-input-1","markerEnd":"arrowclosed","selectable":true,"source":"gc470sc","sourceHandle":"gc470sc-output-1","sourceX":-7.512232646196651,"sourceY":423.048489554979,"target":"be2lzer","targetHandle":"be2lzer-input-1","targetX":143.33249698697273,"targetY":598.2304317283172,"type":"custom","updatable":true},{"data":{},"events":{},"id":"vueflow__edge-a5k4olka5k4olk-output-1-gc470scgc470sc-input-1","markerEnd":"arrowclosed","selectable":true,"source":"a5k4olk","sourceHandle":"a5k4olk-output-1","sourceX":-349.69437877321093,"sourceY":432.27115415392694,"target":"gc470sc","targetHandle":"gc470sc-input-1","targetX":-239.51223264619665,"targetY":423.048489554979,"type":"custom","updatable":true}],"nodes":[{"data":{"activeInInput":false,"contextMenuName":"","contextTypes":[],"date":"","days":[],"delay":5,"description":"","disableBlock":false,"interval":10,"isUrlRegex":false,"observeElement":{"baseElOptions":{"attributeFilter":[],"attributes":false,"characterData":false,"childList":true,"subtree":false},"baseSelector":"","matchPattern":"","selector":"","targetOptions":{"attributeFilter":[],"attributes":false,"characterData":false,"childList":true,"subtree":false}},"parameters":[],"preferParamsInTab":false,"shortcut":"","time":"00:00","triggers":[],"type":"manual","url":""},"events":{},"id":"a5k4olk","label":"trigger","position":{"x":-561.6943787732109,"y":396.27115415392694},"type":"BlockBasic"},{"data":{"active":true,"customUserAgent":false,"description":"","disableBlock":false,"inGroup":false,"onError":{},"tabZoom":1,"updatePrevTab":false,"url":"https://api.whatsapp.com/send?phone={{variables.phone}}&text={{variables.message}}","userAgent":"","waitTabLoaded":false},"events":{},"id":"gc470sc","label":"new-tab","position":{"x":-219.51223264619665,"y":387.048489554979},"type":"BlockBasic"},{"data":{"description":"","disableBlock":false,"findBy":"cssSelector","markEl":false,"multiple":false,"selector":"div:nth-child(3) > ._9vd5 ._advp","waitForSelector":false,"waitSelectorTimeout":5000},"events":{},"id":"283d1o8","label":"event-click","position":{"x":357.6782687759818,"y":387.94572092236467},"type":"BlockBasic"},{"data":{"description":"","disableBlock":false,"findBy":"cssSelector","markEl":false,"multiple":false,"selector":"a#action-button","waitForSelector":false,"waitSelectorTimeout":5000},"events":{},"id":"6c8n22e","label":"event-click","position":{"x":935.7262987483713,"y":392.9774820322615},"type":"BlockBasic"},{"data":{"description":"","disableBlock":false,"findBy":"cssSelector","markEl":false,"multiple":false,"selector":".xfect85 > span","waitForSelector":false,"waitSelectorTimeout":5000},"events":{},"id":"mgy4cbz","label":"event-click","position":{"x":1850.850677479691,"y":418.4928298040166},"type":"BlockBasic"},{"data":{"description":"","disableBlock":false,"findBy":"cssSelector","markEl":false,"selector":"a#action-button","throwError":false,"timeout":500,"tryCount":1},"events":{},"id":"brbqftr","label":"element-exists","position":{"x":634.1986487996182,"y":361.1746032921613},"type":"BlockElementExists"},{"data":{"disableBlock":false,"time":"5000"},"events":{},"id":"jq16zyj","label":"delay","position":{"x":1153.0400888743318,"y":511.5803241228084},"type":"BlockDelay"},{"data":{"description":"","disableBlock":false,"findBy":"cssSelector","markEl":false,"selector":".xfect85 > span","throwError":false,"timeout":500,"tryCount":1},"events":{},"id":"k3d38qt","label":"element-exists","position":{"x":1538.8296051474042,"y":400.68118090862777},"type":"BlockElementExists"},{"data":{"activeTab":true,"allWindows":false,"closeType":"tab","description":"","disableBlock":false,"url":""},"events":{},"id":"rvm3yuw","label":"close-tab","position":{"x":2289.0602853895602,"y":426.6403819726722},"type":"BlockBasic"},{"data":{"disableBlock":false,"time":"500"},"events":{},"id":"bu24egs","label":"delay","position":{"x":2053.7188309162857,"y":645.897361390154},"type":"BlockDelay"},{"data":{"description":"","disableBlock":false,"iconUrl":"","imageUrl":"","message":"","title":"{{ variables.phone.0 }}"},"events":{},"id":"be2lzer","label":"notification","position":{"x":163.33249698697273,"y":562.2304317283172},"type":"BlockBasic"}],"position":[-656.5563561144227,12.104698721867635],"viewport":{"x":-656.5563561144227,"y":12.104698721867635,"zoom":0.7578582832551992},"zoom":0.7578582832551992},"settings":{"blockDelay":0,"debugMode":false,"defaultColumnName":"column","execContext":"popup","executedBlockOnWeb":false,"inputAutocomplete":true,"insertDefaultColumn":false,"notification":true,"onError":"stop-workflow","publicId":"","restartTimes":3,"reuseLastState":false,"saveLog":true},"globalData":"{\n\t\"key\": \"value\"\n}","description":"","includedWorkflows":{}}
-            </textarea>
-        </div>
-
-
-        <h2>Configurações</h2>
-        <dl>
-            <dt><strong>Planilha</strong></dt>
-                <dd>Para acessar a planilha do Google Sheets, as credenciais do Google Console devem ser adicionados no n8n, junto com a URL da planilha.</dd>
-            <dt><strong>API Google</strong></dt>
-                <dd>Para acessar a planilha do Google Sheets, deve ativar no Google Console, a API do Google Sheets e Google Drive. Caso contrario, o n8n não terá as permissões corretas para acessar o arquivo.</dd>
-            <dt><strong>WebHook</strong></dt>
-                <dd>A consulta da planilha é feita pelo n8n e é acessada pelo usuário através do webhook configurado como gatilho. A URL do webhook deve ser colocada corretamente no zap.js do lado do cliente.</dd>
-            <dt><strong>Automa</strong></dt>
-                <dd>O ID da automação do Whatsapp do Automa deve ser colocado no zap.js do lado do cliente. Ver acima o <i>workflow Whatsapp v1.</i></dd>
-        </dl>
-
-        <h2>Erros Conhecidos</h2>
-        <p>
-            Verifique a baixo os erros conhecidos e o que esperar em cada caso.
-        </p>
-        <ul>
-            <li><strong>Disparo Interrompido:</strong> Caso precise interromper, terá de recarregar a página e remover os contato que já receberam a mensagem. Dependendo do ponto do processo que for interrompido, é possivel que a última mensagem não tenha sido enviada.</li>
-            <li><strong>Mensagem Vazia:</strong> Caso execute o workflow com o campo de mensagem vazio, o link do whatsapp irá redireciona-lo para uma página alternativa e a automação irá continuar sem disparar corretamente, não apenas por falta de mensagem, mas também por não acessar a página do contato.</li>
-            <li><strong>Check Adiantado:</strong> O icone de <i>check</i> é adicionado assim que a automação com o contato é iniciado, e não no final. Em caso de interrupção, isso pode causar o engano de acreditar que a última mensagem foi de fato enviada. Verifique na conversa. </li>
-            <li><strong>Aba Não Fechada:</strong> Caso o envio para um determinado contato leve alguns segundos a mais do que o esperado, pode ocorrer da aba não ser fechada. Isso não atrapalha a continuidade da automação e até o momento não foi identificado nenhum efeito colateral. </li>
-        </ul>
-
- 
-        <div style="width:100%; display: flex; justify-content:center; align-items: flex-end;"><i style="color:#5b5a5a;">Feito com </i><i class="fa-solid fa-heart" style="color:red; margin: 0 5px 0 5px;"></i>, pra mim mesmo</div>
-    </div>
-</div>
-
-
-<script type="text/javascript" src="zap.js"></script>
-
+<script type="text/javascript" src="script.js"></script>
 
 </body>
 </html>
