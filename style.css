@@ -1,8 +1,51 @@
-.botao {
-  width: 200px;
-  height: 40px;
-  background-color: blue;
+
+
+
+.fraunces-font {
+  font-family: "Fraunces", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "SOFT" 100,
+    "WONK" 440;
+}
+
+body {
+  background-color: #0C0C0C;
   color: white;
-  border-radius: 15px;
-  
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.section {
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+#section0 {
+
+}
+
+.h1 {
+  font-size: 100px;
+}
+
+.title {
+  font-size: 100px;
+}
+.intro {
+  padding: 150px;
+}
+.intro > p {
+  text-align: left;
+  font-size: 36px;
+}
+
+.p {
+  text-align: left;
+  font-size: 36px;
 }
