@@ -1,111 +1,102 @@
-/* Configura o tamanho da fonte padrão do documento */
+/* This CSS rule sets the default font size of the entire document */
 html {
   font-size: 16px;
 }
 
-/* Define a direção do texto */
+/* These CSS rules set the text direction of the paragraph (RTL or LTR) */
 p,
 .bpw-from-bot > div,
 #input-message {
   direction: ltr;
 }
 
-/* Altera a cor do texto no campo de entrada */
+/* This rule changes the color of the text in the input message */
 #input-message {
   color: #000000;
 }
 
-/* Altera a cor do indicador de novas mensagens */
+/* Changes the color of the new message indicator */
 .bpw-new-messages-indicator {
   background-color: #f5f5f5;
   color: #ffffff;
 }
 
-/* Estilização para o cabeçalho do chat */
+/* Styling for the chat header container */
 .bpw-header-container {
   margin: 10px;
   background: #6675fa;
   border-radius: 10px;
   position: relative;
   overflow: hidden;
-  border: 1px;
-  border-radius: 10px;
   color: #ffffff;
 }
 
+/* Styling for the header name */
 .bpw-header-name {
   color: #ffffff;
 }
 
-/* Estilização para a bolha de digitação */
+/* Styling for the typing bubble */
 .bpw-typing-bubble {
   background: #000000;
 }
 
-/* Estilização para o conteúdo da bolha de chat */
+/* Styling for the chat bubble content */
 .bpw-chat-bubble-content {
   background-color: #f5f5f5;
   border-radius: 3px;
   border: 1px transparent;
 }
 
-/* Estilização para o container da data, nome e subtítulo do cabeçalho */
+/* Styling for the date container, header name, and header subtitle */
 .bpw-date-container,
 .bpw-header-name,
 .bpw-header-subtitle {
   color: #ffffff;
 }
 
-/* Estilização para o layout do chat */
+/* Styling for the layout of the chat bubble. Width, height, border, position, and radius of the chat bubble */
 .bpw-layout {
   width: 100% !important;
-  height: 100vh !important;
+  height: 100vh;
   border-radius: 10px;
-  right: 0;
+  position: fixed;
+  left: 0;
   bottom: 0;
   border: 1px;
+  max-width: 100%;
 }
 
-/* Regras de design responsivo para dispositivos com largura de até 767px */
-@media screen and (max-device-width: 767px) {
-  .bpw-layout {
-    width: 100% !important;
-    height: 100vh !important;
-    right: 0;
-    bottom: 0;
-    border-radius: 0;
-  }
-}
-
-/* Altera a cor dos ícones no cabeçalho para branco */
+/* Changes the fill color of the header icons to white */
 .bpw-header-icon,
 .bpw-header-icon svg,
 .bpw-header-icon svg path {
   fill: #ffffff !important;
 }
 
-/* Altera a cor do texto do placeholder no campo de entrada */
+/* Changes the color of the placeholder text in the input message */
 #input-message::placeholder {
-  color: rgba(0,0,0,.30);
+  color: rgba(0, 0, 0, .30);
 }
 
+/* Styling for the text area in the composer */
 .bpw-composer textarea {
   outline: none !important;
-  border: 1px solid rgba(0,0,0,.15);
+  border: 1px solid rgba(0, 0, 0, .15);
 }
 
 .bpw-composer textarea:focus {
   outline: none !important;
-  border: 1px solid rgba(0,0,0,.30);
+  border: 1px solid rgba(0, 0, 0, .30);
 }
 
-/* Estilização para as opções de escolha única do teclado */
+/* Styling for the keyboard single choice option */
 .bpw-keyboard-single-choice {
   background-color: #ffffff;
   border: none;
 }
 
-/* Estilização para os botões da interface do chat */
+/* Styling for the buttons in the chat interface */
 .bpw-button,
 .bpw-button-alt {
   background-color: #dcdcdc;
@@ -114,19 +105,19 @@ p,
   border: none;
 }
 
-/* Efeito de hover nos botões da interface do chat */
+/* Styling for hover effect on the buttons in the chat interface */
 .bpw-button:hover,
 .bpw-button-alt:hover {
   background-color: #f5f5f5;
 }
 
-/* Estilização para os hyperlinks na interface do chat */
+/* Styling for hyperlinks in the chat interface */
 a {
   color: #ffffff;
   text-decoration: underline;
 }
 
-/* Estilização para o container do chat, incluindo cor, largura do scrollbar e cor, e borda */
+/* Styling for the chat container, including color, scrollbar width and color, and border */
 .bpw-chat-container {
   background-color: #ffffff;
   scrollbar-width: thin;
@@ -134,25 +125,25 @@ a {
   border: none;
 }
 
-/* Estilização para o conteúdo da bolha de chat quando é do bot */
+/* Styling for the chat bubble content when it's from the bot */
 .bpw-from-bot .bpw-chat-bubble .bpw-chat-bubble-content {
   background-color: #f5f5f5;
   color: #000000;
 }
 
-/* Estilização para o conteúdo da bolha de chat quando é do usuário */
+/* Styling for the chat bubble content when it's from the user */
 .bpw-from-user .bpw-chat-bubble .bpw-chat-bubble-content {
   background-color: #6675fa;
   color: #ffffff;
 }
 
-/* Estilização para a seção do compositor na interface do chat */
+/* Styling for the composer section of the chat interface */
 .bpw-composer {
   background-color: #ffffff;
   border-top: none;
 }
 
-/* Estilização para o scrollbar no container do chat */
+/* Styling for the scrollbar in the chat container */
 .bpw-chat-container::-webkit-scrollbar,
 .bpw-chat-container::-moz-scrollbar {
   width: 10px;
@@ -160,26 +151,26 @@ a {
   border: none;
 }
 
-/* Estilização para o avatar do bot */
+/* Styling for the avatar of the bot */
 .bpw-bot-avatar img,
 .bpw-bot-avatar svg {
   background: #000000;
   border: 3px solid #ffffff;
 }
 
-/* Estilização para o scrollbar geral na página */
+/* Styling for the general scrollbar in the web page */
 ::-webkit-scrollbar {
   width: 0.5rem;
 }
 
-/* Estilização para o track do scrollbar geral e do container do chat */
+/* Styling for the track of the general scrollbar and the chat container scrollbar */
 ::-webkit-scrollbar-track,
 .bpw-chat-container::-webkit-scrollbar-track,
 .bpw-chat-container::-moz-scrollbar-track {
   background-color: transparent;
 }
 
-/* Estilização para o thumb do scrollbar geral e do container do chat */
+/* Styling for the thumb of the general scrollbar and the chat container scrollbar */
 ::-webkit-scrollbar-thumb,
 .bpw-chat-container::-webkit-scrollbar-thumb,
 .bpw-chat-container::-moz-scrollbar-thumb {
@@ -188,12 +179,12 @@ a {
   border: 0.5rem solid transparent;
 }
 
-/* Estilização para o ícone do botão flutuante na interface do chat */
+/* Styling for the floating button icon in the chat interface */
 .bpw-floating-button i svg path {
   fill: #6675fa;
 }
 
-/* Estilização para a seção "powered by" na interface do chat */
+/* Styling for the 'powered by' section of the chat interface */
 .bpw-powered {
   text-align: center;
   padding: 10px;
@@ -204,13 +195,13 @@ a {
   border-bottom-left-radius: 10px;
 }
 
-/* Estilização para os hyperlinks na seção "powered by" da interface do chat */
+/* Styling for the hyperlinks in the 'powered by' section of the chat interface */
 .bpw-powered a {
   color: #000000;
   text-decoration: underline;
 }
 
-/* Efeito de hover nos hyperlinks na seção "powered by" da interface do chat */
+/* Styling for hover effect on the hyperlinks in the 'powered by' section of the chat interface */
 .bpw-powered a:hover {
   text-decoration: underline;
 }
@@ -219,7 +210,7 @@ a {
   background: #6675fa;
 }
 
-/* Estilização do ícone do botão de widget do bot */
+/* Change Bot Widget Icon */
 .bpw-widget-btn {
   border-radius: 50%;
   background: #6675fa;
@@ -241,8 +232,3 @@ a {
 .bpw-floating-button:hover {
   box-shadow: none !important;
 }
-
-/* Oculta o ícone dentro do botão flutuante */
-// .bpw-floating-button > i {
-// display: none;
-// }
