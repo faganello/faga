@@ -1,228 +1,155 @@
-/* Define o tamanho da fonte padrão para todo o documento */
+/* Base Styles */
 html {
   font-size: 16px;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Define a direção do texto para parágrafos, mensagens do bot e campo de entrada */
-p,
-.bpw-from-bot > div,
-#input-message {
-  direction: ltr;
-}
-
-/* Altera a cor do texto no campo de entrada */
-#input-message {
-  color: #000000;
-}
-
-/* Altera a cor do indicador de novas mensagens */
-.bpw-new-messages-indicator {
-  background-color: #f5f5f5;
-  color: #ffffff;
-}
-
-/* Estiliza o cabeçalho do chat */
-.bpw-header-container {
-  margin: 10px;
-  background: #6675fa;
-  border-radius: 10px;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid #ffffff;
-  color: #ffffff;
-}
-
-.bpw-header-name{
-  color: #ffffff;
-}
-
-/* Estiliza a bolha de digitação */
-.bpw-typing-bubble {
-  background: #000000;
-}
-
-/* Estiliza o conteúdo das bolhas de chat */
-.bpw-chat-bubble-content {
-  background-color: #f5f5f5;
-  border-radius: 3px;
-  border: 1px transparent;
-}
-
-/* Estiliza o container da data, o nome do cabeçalho e o subtítulo */
-.bpw-date-container,
-.bpw-header-name,
-.bpw-header-subtitle {
-  color: #ffffff;
-}
-
-/* Estiliza o layout das bolhas de chat */
+/* Chat Layout */
 .bpw-layout {
   width: 100% !important;
-  height: 100vh !important;
-  border-radius: 10px;
+  height: 100vh;
+  border-radius: 12px;
   position: fixed;
-  right: 0;
+  left: 0;
   bottom: 0;
-  border: 1px solid #ffffff;
+  max-width: 100%;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  transition: all 0.3s ease-in-out;
 }
 
-/* Regras de design responsivo para dispositivos com largura máxima de 767px */
-@media screen and (max-device-width: 767px) {
-  .bpw-layout {
-    width: 100% !important;
-    height: 100vh !important;
-    right: 0;
-    bottom: 0;
-    border-radius: 0;
-  }
-}
-
-/* Altera a cor dos ícones do cabeçalho para branco */
-.bpw-header-icon,
-.bpw-header-icon svg,
-.bpw-header-icon svg path {
-  fill: #ffffff !important;
-}
-
-/* Altera a cor do texto placeholder no campo de entrada */
-#input-message::placeholder {
-  color: rgba(0,0,0,.30);
-}
-
-.bpw-composer textarea{
-  outline: none !important;
-  border: 1px solid rgba(0,0,0,.15);
-}
-
-.bpw-composer textarea:focus{
-  outline: none !important;
-  border: 1px solid rgba(0,0,0,.30);
-}
-
-/* Estiliza a opção de escolha única no teclado */
-.bpw-keyboard-single-choice {
-  background-color: #ffffff;
-  border: none;
-}
-
-/* Estiliza os botões na interface do chat */
-.bpw-button,
-.bpw-button-alt {
-  background-color: #dcdcdc;
-  color: #000000;
-  border-radius: 10px;
-  border: none;
-}
-
-/* Estiliza o efeito hover nos botões da interface do chat */
-.bpw-button:hover,
-.bpw-button-alt:hover {
-  background-color: #f5f5f5;
-}
-
-/* Estiliza os hyperlinks na interface do chat */
-a {
+/* Header */
+.bpw-header-container {
+  background: #2c3e50;
+  padding: 15px;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   color: #ffffff;
-  text-decoration: underline;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Estiliza o container do chat, incluindo cor, largura e cor da barra de rolagem e borda */
-.bpw-chat-container {
-  background-color: #ffffff;
-  scrollbar-width: thin;
-  scrollbar-color: #f5f5f5 #ffffff;
-  border: none;
+.bpw-header-name {
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
-/* Estiliza o conteúdo das bolhas de chat quando são do bot */
-.bpw-from-bot .bpw-chat-bubble .bpw-chat-bubble-content {
-  background-color: #f5f5f5;
-  color: #000000;
+.bpw-header-subtitle {
+  font-size: 0.9rem;
+  color: #bdc3c7;
 }
 
-/* Estiliza o conteúdo das bolhas de chat quando são do usuário */
-.bpw-from-user .bpw-chat-bubble .bpw-chat-bubble-content {
-  background-color: #6675fa;
+/* Chat Bubbles */
+.bpw-chat-bubble {
+  margin: 10px 15px;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  max-width: 70%;
+  display: inline-block;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.bpw-from-bot .bpw-chat-bubble {
+  background-color: #ecf0f1;
+  color: #2c3e50;
+  border-radius: 20px 20px 20px 5px;
+}
+
+.bpw-from-user .bpw-chat-bubble {
+  background-color: #2c3e50;
   color: #ffffff;
+  border-radius: 20px 20px 5px 20px;
+  align-self: flex-end;
 }
 
-/* Estiliza a seção do compositor na interface do chat */
+/* Input Area */
 .bpw-composer {
   background-color: #ffffff;
-  border-top: none;
-}
-
-/* Estiliza a barra de rolagem no container do chat */
-.bpw-chat-container::-webkit-scrollbar,
-.bpw-chat-container::-moz-scrollbar {
-  width: 10px;
-  background-color: #ffffff;
-  border: none;
-}
-
-/* Estiliza o avatar do bot */
-.bpw-bot-avatar img,
-.bpw-bot-avatar svg {
-  background: #000000;
-  border: 3px solid #ffffff;
-}
-
-/* Estiliza a barra de rolagem geral da página */
-::-webkit-scrollbar {
-  width: 0.5rem;
-}
-
-/* Estiliza a trilha da barra de rolagem geral e a barra de rolagem do container do chat */
-::-webkit-scrollbar-track,
-.bpw-chat-container::-webkit-scrollbar-track,
-.bpw-chat-container::-moz-scrollbar-track {
-  background-color: transparent;
-}
-
-/* Estiliza o polegar da barra de rolagem geral e a barra de rolagem do container do chat */
-::-webkit-scrollbar-thumb,
-.bpw-chat-container::-webkit-scrollbar-thumb,
-.bpw-chat-container::-moz-scrollbar-thumb {
-  background-color: #ffffff;
-  border-radius: 1rem;
-  border: 0.5rem solid transparent;
-}
-
-/* Estiliza o ícone do botão flutuante na interface do chat */
-.bpw-floating-button i svg path {
-  fill: #6675fa;
-}
-
-/* Estiliza a seção "powered by" da interface do chat */
-.bpw-powered {
-  text-align: center;
   padding: 10px;
-  color: #000000;
-  background: #ffffff;
-  font-size: 14px;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
+  border-top: 1px solid #ecf0f1;
+  box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
 }
 
-/* Estiliza os hyperlinks na seção "powered by" da interface do chat */
-.bpw-powered a {
-  color: #000000;
-  text-decoration: underline;
+.bpw-composer textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #ecf0f1;
+  outline: none;
+  resize: none;
+  font-size: 0.9rem;
+  transition: border-color 0.3s ease-in-out;
 }
 
-/* Estiliza o efeito hover nos hyperlinks na seção "powered by" da interface do chat */
-.bpw-powered a:hover {
-  text-decoration: underline;
+.bpw-composer textarea:focus {
+  border-color: #3498db;
 }
 
 .bpw-send-button {
-  background: #6675fa;
+  background: #3498db;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
 }
 
-/* Altera o ícone do widget do bot */
-.bpw-widget-btn {
+.bpw-send-button:hover {
+  background: #2980b9;
+}
+
+.bpw-send-button svg path {
+  fill: #ffffff;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scrollbar Styling */
+.bpw-chat-container {
+  scrollbar-width: thin;
+  scrollbar-color: #ecf0f1 #ffffff;
+}
+
+.bpw-chat-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.bpw-chat-container::-webkit-scrollbar-thumb {
+  background-color: #bdc3c7;
+  border-radius: 10px;
+}
+
+/* Floating Button */
+.bpw-floating-button {
+  background: #3498db;
   border-radius: 50%;
-  background: #6675fa;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.bpw-floating-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 .bpw-floating-button::before {
@@ -234,10 +161,23 @@ a {
   width: undefinedpx !important;
 }
 
-.bpw-floating-button {
-  box-shadow: none !important;
+/* Powered by Section */
+.bpw-powered {
+  text-align: center;
+  padding: 10px;
+  color: #7f8c8d;
+  background: #ffffff;
+  font-size: 12px;
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
 }
 
-.bpw-floating-button:hover {
-  box-shadow: none !important;
+.bpw-powered a {
+  color: #3498db;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.bpw-powered a:hover {
+  color: #2980b9;
 }
