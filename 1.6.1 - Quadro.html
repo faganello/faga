@@ -1,0 +1,1359 @@
+<html><head><base href="https://websim.creationengine.ai/editor/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NodeFlow - 1.6.1</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+  :root {
+    --bg-color: #1a1a1a;
+    --menu-bg: #2a2a2a;
+    --node-bg: #3a3a3a;
+    --text-color: #e0e0e0;
+    --accent-color: #4CAF50;
+    --hover-color: #45a049;
+    --connection-point-color: #555;
+    --connection-point-hover-color: #777;
+    --selected-connection-color: #FFA500;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  #logo {
+    background-color: transparent;
+    color: var(--text-color);
+    padding: 10px;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: text; 
+  }
+  #editor {
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden;
+  }
+  #menu {
+    background-color: var(--menu-bg);
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+  }
+  #menu-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  .node {
+    position: absolute;
+    background-color: var(--node-bg);
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 10px;
+    min-width: 100px;
+    min-height: 50px;
+    cursor: move;
+    user-select: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .node.selected {
+    border: 2px solid var(--accent-color);
+  }
+  .node:hover {
+    box-shadow: 0 6px 8px rgba(0,0,0,0.2);
+  }
+  .node-title {
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 100%;
+  }
+  .node-content {
+    font-size: 0.85em;
+    opacity: 0.8;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    width: 100%;
+  }
+  .api-response {
+    margin-top: 10px;
+    padding: 5px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--connection-point-color);
+    border-radius: 4px;
+    font-size: 0.8em;
+    max-height: 100px;
+    overflow-y: auto;
+    display: none;
+  }
+  .node img {
+    max-height: 300px;
+    width: auto;
+    max-width: 100%;
+    margin-top: 10px;
+  }
+  .menu-button {
+    background-color: transparent;
+    color: var(--text-color);
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+  }
+  .menu-button:hover {
+    background-color: rgba(255,255,255,0.1);
+  }
+  .menu-button i {
+    margin-right: 8px;
+  }
+  .connection-point {
+    width: 6px;
+    height: 6px;
+    background-color: var(--connection-point-color);
+    border-radius: 50%;
+    position: absolute;
+    transition: all 0.2s ease;
+  }
+  .connection-point:hover {
+    width: 8px;
+    height: 8px;
+    background-color: var(--connection-point-hover-color);
+  }
+  .connection-point.top { top: -3px; left: 50%; transform: translateX(-50%); }
+  .connection-point.right { top: 50%; right: -3px; transform: translateY(-50%); }
+  .connection-point.bottom { bottom: -3px; left: 50%; transform: translateX(-50%); }
+  .connection-point.left { top: 50%; left: -3px; transform: translateY(-50%); }
+  .connection-point:hover.top { top: -4px; }
+  .connection-point:hover.right { right: -4px; }
+  .connection-point:hover.bottom { bottom: -4px; }
+  .connection-point:hover.left { left: -4px; }
+  .delete-node {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+  }
+  .delete-node:hover {
+    background-color: #ff0000;
+  }
+  .delete-connection {
+    position: absolute;
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+  }
+  .delete-connection:hover {
+    background-color: #ff0000;
+  }
+  #import-modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+  }
+  .modal-content {
+    background-color: var(--menu-bg);
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .modal-button {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .modal-button:hover {
+    background-color: var(--hover-color);
+  }
+  #file-input {
+    display: none;
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+  }
+  #confirm-modal .modal-content {
+    background-color: var(--menu-bg);
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  #confirm-modal .modal-button {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  #confirm-modal .modal-button:hover {
+    background-color: var(--hover-color);
+  }
+  #cancel-clear {
+    background-color: #888;
+  }
+  #cancel-clear:hover {
+    background-color: #777;
+  }
+  #export-filename {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  #cancel-export {
+    background-color: #888;
+  }
+  #cancel-export:hover {
+    background-color: #777;
+  }
+  #theme-switcher {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+  }
+  #theme-button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #theme-button i {
+    font-size: 1.2em;
+  }
+  #theme-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--menu-bg);
+    border: 1px solid var(--accent-color);
+    border-radius: 4px;
+    padding: 5px;
+    display: none;
+  }
+  .theme-option {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    text-align: left;
+  }
+  .theme-option:hover {
+    background-color: var(--accent-color);
+    color: white;
+  }
+  [data-theme="dark"] {
+    --bg-color: #000000;
+    --menu-bg: #1a1a1a;
+    --node-bg: #2a2a2a;
+    --text-color: #ffffff;
+    --accent-color: #6200ea;
+    --hover-color: #7c4dff;
+    --connection-point-color: #444;
+    --connection-point-hover-color: #666;
+    --selected-connection-color: #ff4081;
+  }
+  [data-theme="light"] {
+    --bg-color: #f5f5f5;
+    --menu-bg: #e0e0e0;
+    --node-bg: #ffffff;
+    --text-color: #333333;
+    --accent-color: #2196F3;
+    --hover-color: #1976D2;
+    --connection-point-color: #bdbdbd;
+    --connection-point-hover-color: #9e9e9e;
+    --selected-connection-color: #FF9800;
+  }
+  [data-theme="colorful"] {
+    --bg-color: #1E1E2E;
+    --menu-bg: #302D41;
+    --node-bg: #575268;
+    --text-color: #D9E0EE;
+    --accent-color: #F28FAD;
+    --hover-color: #F5C2E7;
+    --connection-point-color: #ABE9B3;
+    --connection-point-hover-color: #B5E8E0;
+    --selected-connection-color: #FAE3B0;
+  }
+  [data-theme="monochrome"] {
+    --bg-color: #000000;
+    --menu-bg: #1A1A1A;
+    --node-bg: #333333;
+    --text-color: #FFFFFF;
+    --accent-color: #808080;
+    --hover-color: #A0A0A0;
+    --connection-point-color: #4D4D4D;
+    --connection-point-hover-color: #666666;
+    --selected-connection-color: #B3B3B3;
+  }
+  .node-edit-panel {
+    position: fixed;
+    right: -300px;
+    top: 0;
+    width: 300px;
+    height: 100%;
+    background-color: var(--menu-bg);
+    box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+    transition: right 0.3s ease;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+  .node-edit-panel.open {
+    right: 0;
+  }
+  .node-edit-panel h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  .input-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+  }
+  .input-group input[type="text"],
+  .input-group textarea {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid var(--connection-point-color);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border-radius: 4px;
+  }
+  .input-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  .icon-button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 5px;
+  }
+  .icon-button:hover {
+    color: var(--accent-color);
+  }
+  input[type="file"] {
+    display: none;
+  }
+  .custom-file-upload {
+    display: inline-block;
+    padding: 8px 12px;
+    cursor: pointer;
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 4px;
+  }
+  .custom-file-upload:hover {
+    background-color: var(--hover-color);
+  }
+  #node-image-preview {
+    max-width: 100%;
+    margin-top: 10px;
+    border-radius: 4px;
+  }
+  #remove-image {
+    display: block;
+    margin-top: 10px;
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  #remove-image:hover {
+    background-color: #ff0000;
+  }
+  .image-size-options {
+    display: none;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  #image-catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  #image-catalog-grid img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+  }
+  #image-catalog-grid img:hover {
+    border-color: var(--accent-color);
+  }
+  .api-config-section {
+    margin-top: 20px;
+    border-top: 1px solid var(--connection-point-color);
+    padding-top: 20px;
+  }
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  .custom-button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .custom-button:hover {
+    background-color: var(--hover-color);
+  }
+</style>
+</head>
+<body>
+  <div id="logo" contenteditable="true">NodeFlow</div>
+  <div id="theme-switcher">
+    <button id="theme-button"><i class="fas fa-palette"></i></button>
+    <div id="theme-options" style="display: none;">
+      <button class="theme-option" data-theme="default">Default</button>
+      <button class="theme-option" data-theme="dark">Dark</button>
+      <button class="theme-option" data-theme="light">Light</button>
+      <button class="theme-option" data-theme="colorful">Colorful</button>
+      <button class="theme-option" data-theme="monochrome">Monochrome</button>
+    </div>
+  </div>
+  <div id="editor"></div>
+  <div id="menu">
+    <div id="menu-buttons">
+      <button id="add-node" class="menu-button">
+        <i class="fas fa-plus"></i> Add Node
+      </button>
+      <button id="clear-canvas" class="menu-button">
+        <i class="fas fa-trash"></i> Clear Canvas
+      </button>
+      <button id="export-json" class="menu-button">
+        <i class="fas fa-file-export"></i> Export
+      </button>
+      <button id="import-json" class="menu-button">
+        <i class="fas fa-file-import"></i> Import
+      </button>
+    </div>
+  </div>
+
+  <div id="import-modal">
+    <div class="modal-content">
+      <h2>Import JSON</h2>
+      <p>How would you like to import the file?</p>
+      <button id="add-to-frame" class="modal-button">Add to Current Frame</button>
+      <button id="clear-and-import" class="modal-button">Clear Frame and Import</button>
+    </div>
+  </div>
+
+  <div id="confirm-modal" class="modal">
+    <div class="modal-content">
+      <h2>Confirm Clear Canvas</h2>
+      <p>Are you sure you want to clear the canvas? This action cannot be undone.</p>
+      <button id="confirm-clear" class="modal-button">Clear Canvas</button>
+      <button id="cancel-clear" class="modal-button">Cancel</button>
+    </div>
+  </div>
+
+  <div id="export-modal" class="modal">
+    <div class="modal-content">
+      <h2>Export JSON</h2>
+      <p>Enter a file name for your export:</p>
+      <input type="text" id="export-filename" placeholder="node_editor_export">
+      <button id="confirm-export" class="modal-button">Export</button>
+      <button id="cancel-export" class="modal-button">Cancel</button>
+    </div>
+  </div>
+
+  <div id="image-catalog-modal" class="modal">
+    <div class="modal-content">
+      <h2>Image Catalog</h2>
+      <div id="image-catalog-grid"></div>
+      <div class="input-group">
+        <input type="file" id="custom-image-upload" accept="image/*">
+        <label for="custom-image-upload" class="custom-file-upload">
+          <i class="fas fa-upload"></i> Upload Custom Image
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="file-input" accept=".json">
+
+  <div id="node-edit-panel" class="node-edit-panel">
+    <h3>Edit Node</h3>
+    <div class="panel-content">
+      <div class="input-group">
+        <input type="text" id="node-title" placeholder="Node Title">
+        <button id="toggle-title" class="icon-button"><i class="fas fa-eye"></i></button>
+      </div>
+      <div class="input-group">
+        <textarea id="node-description" placeholder="Node Description"></textarea>
+        <button id="toggle-description" class="icon-button"><i class="fas fa-eye"></i></button>
+      </div>
+      <div class="api-config-section">
+        <h4>API Configuration</h4>
+        <div class="input-group">
+          <input type="text" id="curl-command" placeholder="Enter cURL command">
+        </div>
+        <div class="input-group">
+          <input type="number" id="api-interval" placeholder="Interval (seconds)" min="1">
+        </div>
+        <div class="button-group">
+          <button id="toggle-api-response" class="icon-button"><i class="fas fa-eye"></i></button>
+          <button id="test-api" class="custom-button">Test API</button>
+          <button id="save-api-config" class="custom-button">Save &amp; Start</button>
+        </div>
+      </div>
+      <div class="input-group"></div>
+      <div class="input-group">
+        <button id="open-image-catalog" class="custom-file-upload">
+          <i class="fas fa-images"></i> Open Image Catalog
+        </button>
+      </div>
+      <img id="node-image-preview" src="" alt="Node Image" style="display: none;">
+      <button id="remove-image" class="icon-button" style="display: none;"><i class="fas fa-trash"></i> Remove Image</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.6/js/jsplumb.min.js"></script>
+  <script>
+    const editor = document.getElementById('editor');
+    const addNodeBtn = document.getElementById('add-node');
+    const clearCanvasBtn = document.getElementById('clear-canvas');
+    const exportJsonBtn = document.getElementById('export-json');
+    const importJsonBtn = document.getElementById('import-json');
+    const importModal = document.getElementById('import-modal');
+    const confirmModal = document.getElementById('confirm-modal');
+    const confirmClearBtn = document.getElementById('confirm-clear');
+    const cancelClearBtn = document.getElementById('cancel-clear');
+    const addToFrameBtn = document.getElementById('add-to-frame');
+    const clearAndImportBtn = document.getElementById('clear-and-import');
+    const fileInput = document.getElementById('file-input');
+    const exportModal = document.getElementById('export-modal');
+    const exportFilenameInput = document.getElementById('export-filename');
+    const confirmExportBtn = document.getElementById('confirm-export');
+    const cancelExportBtn = document.getElementById('cancel-export');
+    const openImageCatalogBtn = document.getElementById('open-image-catalog');
+    const imageCatalogModal = document.getElementById('image-catalog-modal');
+    const imageCatalogGrid = document.getElementById('image-catalog-grid');
+    const customImageUpload = document.getElementById('custom-image-upload');
+    let nodeId = 0;
+    let instance;
+    let selectedNode = null;
+    let selectedConnection = null;
+
+    let isPanning = false;
+    let panStartX = 0;
+    let panStartY = 0;
+
+    let editingNode = null;
+    const nodeEditPanel = document.getElementById('node-edit-panel');
+    const nodeTitleInput = document.getElementById('node-title');
+    const nodeDescriptionInput = document.getElementById('node-description');
+    const toggleTitleBtn = document.getElementById('toggle-title');
+    const toggleDescriptionBtn = document.getElementById('toggle-description');
+    const nodeImagePreview = document.getElementById('node-image-preview');
+    const removeImageBtn = document.getElementById('remove-image');
+    
+    let apiIntervals = new Map();
+
+    nodeTitleInput.addEventListener('input', () => {
+      updateNodeTitle();
+      adjustNodeSize(editingNode);
+    });
+    nodeDescriptionInput.addEventListener('input', () => {
+      updateNodeDescription();
+      adjustNodeSize(editingNode);
+    });
+
+    function performApiCall(node, curlCommand) {
+      console.log(`Simulating API call for node ${node.id}: ${curlCommand}`);
+      const response = `API Response at ${new Date().toLocaleTimeString()}`;
+      const apiResponseElement = node.querySelector('.api-response');
+      apiResponseElement.textContent = response;
+    }
+
+    function toggleApiResponse(node) {
+      if (!node) return; 
+      const apiResponseElement = node.querySelector('.api-response');
+      if (apiResponseElement) {
+        const isVisible = apiResponseElement.style.display !== 'none';
+        apiResponseElement.style.display = isVisible ? 'none' : 'block';
+        adjustNodeSize(node);
+      }
+    }
+
+    function setupApiInterval(node, curlCommand, interval) {
+      if (apiIntervals.has(node.id)) {
+        clearInterval(apiIntervals.get(node.id));
+      }
+      const intervalId = setInterval(() => {
+        performApiCall(node, curlCommand);
+      }, interval * 1000);
+      apiIntervals.set(node.id, intervalId);
+    }
+
+    function adjustNodeSize(node) {
+      if (!node) return;
+
+      node.style.width = 'auto';
+      node.style.height = 'auto';
+
+      const titleDiv = node.querySelector('.node-title');
+      const contentDiv = node.querySelector('.node-content');
+      const apiResponseElement = node.querySelector('.api-response');
+      const imageElement = node.querySelector('img');
+
+      let contentWidth = 0;
+      if (titleDiv && titleDiv.style.display !== 'none') {
+        contentWidth = Math.max(contentWidth, titleDiv.offsetWidth);
+      }
+      if (contentDiv && contentDiv.style.display !== 'none') {
+        contentWidth = Math.max(contentWidth, contentDiv.offsetWidth);
+      }
+      if (apiResponseElement && apiResponseElement.style.display !== 'none') {
+        contentWidth = Math.max(contentWidth, apiResponseElement.offsetWidth);
+      }
+      if (imageElement) {
+        contentWidth = Math.max(contentWidth, imageElement.offsetWidth);
+      }
+
+      const totalWidth = contentWidth + 20; 
+      node.style.width = `${Math.max(100, totalWidth)}px`;
+
+      const contentHeight = node.offsetHeight;
+      node.style.height = `${Math.max(50, contentHeight)}px`;
+
+      updateConnectionPoints(node);
+      if (instance) {
+        instance.repaintEverything();
+      }
+    }
+
+    function updateConnectionPoints(node) {
+      if (!node) return;
+
+      const connectionPoints = node.querySelectorAll('.connection-point');
+      const nodeRect = node.getBoundingClientRect();
+
+      connectionPoints.forEach(point => {
+        if (point.classList.contains('top')) {
+          point.style.top = '-3px';
+          point.style.left = '50%';
+        } else if (point.classList.contains('right')) {
+          point.style.top = '50%';
+          point.style.right = '-3px';
+        } else if (point.classList.contains('bottom')) {
+          point.style.bottom = '-3px';
+          point.style.left = '50%';
+        } else if (point.classList.contains('left')) {
+          point.style.top = '50%';
+          point.style.left = '-3px';
+        }
+      });
+
+      if (instance) {
+        instance.revalidate(node.id);
+      }
+    }
+
+    function updateNodeTitle() {
+      if (editingNode) {
+        let titleDiv = editingNode.querySelector('.node-title');
+        if (!titleDiv) {
+          titleDiv = document.createElement('div');
+          titleDiv.className = 'node-title';
+          editingNode.insertBefore(titleDiv, editingNode.firstChild);
+        }
+        titleDiv.textContent = nodeTitleInput.value;
+      }
+    }
+
+    function updateNodeDescription() {
+      if (editingNode) {
+        let contentDiv = editingNode.querySelector('.node-content');
+        if (!contentDiv) {
+          contentDiv = document.createElement('div');
+          contentDiv.className = 'node-content';
+          editingNode.appendChild(contentDiv);
+        }
+        contentDiv.textContent = nodeDescriptionInput.value;
+      }
+    }
+
+    function getHighestNodeId() {
+      const nodes = document.querySelectorAll('.node');
+      let highestId = -1;
+      nodes.forEach(node => {
+        const id = parseInt(node.id.replace('node', ''));
+        if (id > highestId) {
+          highestId = id;
+        }
+      });
+      return highestId;
+    }
+
+    function isEditorEmpty() {
+      return document.querySelectorAll('.node').length === 0;
+    }
+
+    function deselectNode() {
+      if (selectedNode) {
+        selectedNode.classList.remove('selected');
+        removeDeleteButton(selectedNode);
+        selectedNode = null;
+      }
+    }
+
+    function removeDeleteButton(node) {
+      const deleteBtn = node.querySelector('.delete-node');
+      if (deleteBtn) {
+        node.removeChild(deleteBtn);
+      }
+    }
+
+    function deselectConnection() {
+      if (selectedConnection) {
+        selectedConnection.setPaintStyle({ stroke: "#4CAF50", strokeWidth: 2 });
+        const deleteBtn = selectedConnection.getOverlay("deleteButton");
+        if (deleteBtn) {
+          selectedConnection.removeOverlay("deleteButton");
+        }
+        selectedConnection = null;
+      }
+    }
+
+    function selectConnection(conn, originalEvent) {
+      if (selectedConnection) {
+        deselectConnection();
+      }
+      selectedConnection = conn;
+      conn.setPaintStyle({ stroke: "#FFA500", strokeWidth: 3 });
+      const pos = originalEvent.clientX - editor.getBoundingClientRect().left;
+      const top = originalEvent.clientY - editor.getBoundingClientRect().top;
+      addDeleteButtonOverlay(conn, pos, top);
+    }
+
+    function addDeleteButtonOverlay(connection, x, y) {
+      connection.addOverlay([
+        "Custom", {
+          id: "deleteButton",
+          create: function(component) {
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-connection';
+            deleteBtn.innerHTML = '×';
+            deleteBtn.style.left = `${x}px`;
+            deleteBtn.style.top = `${y}px`;
+            deleteBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              instance.deleteConnection(connection);
+              deselectConnection();
+            });
+            return deleteBtn;
+          },
+          location: 0.5
+        }
+      ]);
+    }
+
+    function updateNodePositions(deltaX, deltaY) {
+      const nodes = document.querySelectorAll('.node');
+      nodes.forEach(node => {
+        const left = parseInt(node.style.left) + deltaX;
+        const top = parseInt(node.style.top) + deltaY;
+        node.style.left = `${left}px`;
+        node.style.top = `${top}px`;
+      });
+      instance.repaintEverything();
+    }
+
+    jsPlumb.ready(function() {
+      instance = jsPlumb.getInstance({
+        Connector: ["Bezier", { curviness: 25 }],
+        DragOptions: { cursor: "pointer", zIndex: 2000 },
+        PaintStyle: { stroke: "#4CAF50", strokeWidth: 2 },
+        EndpointStyle: { radius: 3, fill: "#4CAF50" },
+        HoverPaintStyle: { stroke: "#45a049" },
+        EndpointHoverStyle: { fill: "#45a049" },
+        Container: "editor"
+      });
+
+      function addNode(x, y, id = null) {
+        const node = document.createElement('div');
+        node.className = 'node';
+        if (id === null) {
+          nodeId = getHighestNodeId() + 1;
+        } else {
+          nodeId = Math.max(getHighestNodeId() + 1, parseInt(id.replace('node', '')));
+        }
+        node.id = `node${nodeId}`;
+        node.innerHTML = `
+          <div class="node-title">Node ${node.id}</div>
+          <div class="node-content">Connect from any side</div>
+          <div class="api-response" style="display: none;"></div>
+          <div class="connection-point top"></div>
+          <div class="connection-point right"></div>
+          <div class="connection-point bottom"></div>
+          <div class="connection-point left"></div>
+        `;
+        node.style.left = `${x}px`;
+        node.style.top = `${y}px`;
+        editor.appendChild(node);
+
+        instance.draggable(node, {
+          stop: function() {
+            adjustNodeSize(node);
+          }
+        });
+
+        node.addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggleNodeSelection(node);
+        });
+
+        const connectionPoints = ['Top', 'Right', 'Bottom', 'Left'];
+        connectionPoints.forEach(point => {
+          instance.addEndpoint(node, {
+            anchor: point,
+            isSource: true,
+            isTarget: true,
+            maxConnections: -1,
+            connectorStyle: { stroke: "#4CAF50", strokeWidth: 2 },
+            connectorHoverStyle: { stroke: "#45a049" },
+            endpoint: "Dot",
+            endpointStyle: { fill: "#4CAF50", radius: 3 },
+            endpointHoverStyle: { fill: "#45a049", radius: 4 }
+          });
+        });
+
+        adjustNodeSize(node);
+      }
+
+      function toggleNodeSelection(node) {
+        if (selectedNode === node) {
+          deselectNode();
+        } else {
+          if (selectedNode) {
+            deselectNode();
+          }
+          selectNode(node);
+        }
+      }
+
+      function selectNode(node) {
+        selectedNode = node;
+        node.classList.add('selected');
+        addDeleteButton(node);
+        openEditPanel(node);
+      }
+
+      function addDeleteButton(node) {
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-node';
+        deleteBtn.innerHTML = '×';
+        deleteBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          deleteNode(node);
+        });
+        node.appendChild(deleteBtn);
+      }
+
+      function deleteNode(node) {
+        instance.removeAllEndpoints(node);
+        if (node.parentNode === editor) {
+          editor.removeChild(node);
+        }
+        deselectNode();
+        if (editingNode === node) {
+          nodeEditPanel.classList.remove('open');
+          editingNode = null;
+        }
+      }
+
+      instance.bind("click", (conn, originalEvent) => {
+        if (selectedConnection === conn) {
+          deselectConnection();
+        } else {
+          selectConnection(conn, originalEvent);
+        }
+      });
+
+      instance.bind("connectionDetached", (info) => {
+        deselectConnection(info.connection);
+      });
+
+      function importData(importedData) {
+        document.getElementById('logo').innerText = importedData.title || 'NodeFlow';
+        const idMap = importNodes(importedData.nodes);
+        importConnections(importedData.connections, idMap);
+      }
+
+      function importNodes(nodes) {
+        const idMap = new Map();
+        nodes.forEach(node => {
+          const oldId = node.id;
+          addNode(node.position.x, node.position.y, oldId);
+          const newId = `node${nodeId}`;
+          const newNode = document.getElementById(newId);
+          
+          if (newNode) {
+            if (node.title) {
+              let titleDiv = newNode.querySelector('.node-title');
+              if (!titleDiv) {
+                titleDiv = document.createElement('div');
+                titleDiv.className = 'node-title';
+                newNode.insertBefore(titleDiv, newNode.firstChild);
+              }
+              titleDiv.textContent = node.title;
+              titleDiv.style.display = node.titleVisible ? '' : 'none';
+            }
+            
+            if (node.description) {
+              let contentDiv = newNode.querySelector('.node-content');
+              if (!contentDiv) {
+                contentDiv = document.createElement('div');
+                contentDiv.className = 'node-content';
+                newNode.appendChild(contentDiv);
+              }
+              contentDiv.textContent = node.description;
+              contentDiv.style.display = node.descriptionVisible ? '' : 'none';
+            }
+            
+            if (node.image) {
+              let imageElement = document.createElement('img');
+              imageElement.src = node.image;
+              imageElement.style.maxWidth = '50%'; // Ensure all images are set to small
+              newNode.appendChild(imageElement);
+              
+              imageElement.onload = () => {
+                adjustNodeSize(newNode);
+              };
+            } else {
+              adjustNodeSize(newNode);
+            }
+
+            newNode.dataset.curlCommand = node.curlCommand || '';
+            newNode.dataset.apiInterval = node.apiInterval || '';
+
+            idMap.set(oldId, newId);
+          }
+        });
+        return idMap;
+      }
+
+      function importConnections(connections, idMap) {
+        connections.forEach(conn => {
+          const sourceId = idMap.get(conn.source);
+          const targetId = idMap.get(conn.target);
+          
+          if (sourceId && targetId) {
+            const sourceEndpoints = instance.getEndpoints(sourceId);
+            const targetEndpoints = instance.getEndpoints(targetId);
+            
+            const sourceEp = sourceEndpoints.find(ep => ep.anchor.type === conn.sourceAnchor);
+            const targetEp = targetEndpoints.find(ep => ep.anchor.type === conn.targetAnchor);
+            
+            if (sourceEp && targetEp) {
+              instance.connect({ source: sourceEp, target: targetEp });
+            }
+          }
+        });
+      }
+
+      editor.addEventListener('mousedown', (e) => {
+        if (e.button === 1) {
+          e.preventDefault();
+          isPanning = true;
+          panStartX = e.clientX;
+          panStartY = e.clientY;
+          editor.style.cursor = 'move';
+        }
+      });
+
+      editor.addEventListener('mousemove', (e) => {
+        if (isPanning) {
+          const deltaX = e.clientX - panStartX;
+          const deltaY = e.clientY - panStartY;
+          updateNodePositions(deltaX, deltaY);
+          panStartX = e.clientX;
+          panStartY = e.clientY;
+        }
+      });
+
+      editor.addEventListener('mouseup', (e) => {
+        if (e.button === 1) {
+          isPanning = false;
+          editor.style.cursor = 'default';
+        }
+      });
+
+      editor.addEventListener('auxclick', (e) => {
+        if (e.button === 1) {
+          e.preventDefault();
+        }
+      });
+
+      addNodeBtn.addEventListener('click', () => {
+        const x = Math.random() * (editor.clientWidth - 200);
+        const y = Math.random() * (editor.clientHeight - 150);
+        addNode(x, y);
+      });
+
+      clearCanvasBtn.addEventListener('click', () => {
+        confirmModal.style.display = 'block';
+      });
+
+      confirmClearBtn.addEventListener('click', () => {
+        instance.deleteEveryEndpoint();
+        editor.innerHTML = '';
+        nodeId = 0;
+        confirmModal.style.display = 'none';
+      });
+
+      cancelClearBtn.addEventListener('click', () => {
+        confirmModal.style.display = 'none';
+      });
+
+      exportJsonBtn.addEventListener('click', () => {
+        exportModal.style.display = 'block';
+        exportFilenameInput.value = 'node_editor_export';
+        exportFilenameInput.focus();
+      });
+
+      confirmExportBtn.addEventListener('click', () => {
+        const filename = exportFilenameInput.value.trim() || 'node_editor_export';
+        const boardTitle = document.getElementById('logo').innerText;
+        
+        const nodes = Array.from(document.querySelectorAll('.node')).map(node => ({
+          id: node.id,
+          position: {
+            x: parseInt(node.style.left),
+            y: parseInt(node.style.top)
+          },
+          title: node.querySelector('.node-title')?.textContent || '',
+          description: node.querySelector('.node-content')?.textContent || '',
+          image: node.querySelector('img')?.src || '',
+          titleVisible: node.querySelector('.node-title')?.style.display !== 'none',
+          descriptionVisible: node.querySelector('.node-content')?.style.display !== 'none',
+          imageSize: '50%', // Set image size to small for exports
+          curlCommand: node.dataset.curlCommand || '',
+          apiInterval: node.dataset.apiInterval || ''
+        }));
+        const connections = instance.getConnections().map(conn => ({
+          source: conn.sourceId,
+          target: conn.targetId,
+          sourceAnchor: conn.endpoints[0].anchor.type,
+          targetAnchor: conn.endpoints[1].anchor.type
+        }));
+        const data = { nodes, connections, title: boardTitle };
+        const jsonString = JSON.stringify(data, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${filename}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        exportModal.style.display = 'none';
+      });
+
+      cancelExportBtn.addEventListener('click', () => {
+        exportModal.style.display = 'none';
+      });
+
+      importJsonBtn.addEventListener('click', () => {
+        importModal.style.display = 'block';
+      });
+
+      addToFrameBtn.addEventListener('click', () => {
+        importModal.style.display = 'none';
+        fileInput.click();
+      });
+
+      clearAndImportBtn.addEventListener('click', () => {
+        importModal.style.display = 'none';
+        instance.deleteEveryEndpoint();
+        editor.innerHTML = '';
+        nodeId = 0;
+        fileInput.click();
+      });
+
+      fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const content = e.target.result;
+            try {
+              const importedData = JSON.parse(content);
+              importData(importedData);
+            } catch (error) {
+              console.error('Error parsing JSON:', error);
+              alert('Invalid JSON file. Please try again.');
+            }
+          };
+          reader.readAsText(file);
+        }
+        event.target.value = '';
+      });
+
+      openImageCatalogBtn.addEventListener('click', () => {
+        imageCatalogModal.style.display = 'block';
+        loadImageCatalog();
+      });
+
+      function loadImageCatalog() {
+        imageCatalogGrid.innerHTML = '';
+        for (let i = 1; i <= 15; i++) {
+          const img = document.createElement('img');
+          img.src = `https://faganelo.me/funnelpages/${i}.png`;
+          img.alt = `Catalog Image ${i}`;
+          img.addEventListener('click', () => selectImage(img.src));
+          imageCatalogGrid.appendChild(img);
+        }
+      }
+
+      function selectImage(src) {
+        if (editingNode) {
+          let imageElement = editingNode.querySelector('img');
+          if (!imageElement) {
+            imageElement = document.createElement('img');
+            editingNode.appendChild(imageElement);
+          }
+          imageElement.src = src;
+          imageElement.style.maxWidth = '50%'; // Set to small size
+          nodeImagePreview.src = src;
+          nodeImagePreview.style.display = 'block';
+          removeImageBtn.style.display = 'block';
+          
+          imageElement.onload = () => {
+            adjustNodeSize(editingNode);
+          };
+        }
+        imageCatalogModal.style.display = 'none';
+      }
+
+      customImageUpload.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            selectImage(event.target.result);
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        }
+      });
+
+      addNode(100, 100);
+      addNode(300, 200);
+    });
+
+    editor.addEventListener('click', () => {
+      deselectNode();
+      deselectConnection();
+      nodeEditPanel.classList.remove('open');
+      imageCatalogModal.style.display = 'none';
+      editingNode = null;
+    });
+
+    const themeButton = document.getElementById('theme-button');
+    const themeOptions = document.getElementById('theme-options');
+    const themeOptionButtons = document.querySelectorAll('.theme-option');
+
+    themeButton.addEventListener('click', () => {
+      themeOptions.style.display = themeOptions.style.display === 'none' ? 'block' : 'none';
+    });
+
+    themeOptionButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const theme = button.dataset.theme;
+        document.body.setAttribute('data-theme', theme);
+        themeOptions.style.display = 'none';
+        instance.repaintEverything();
+      });
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('#theme-switcher')) {
+        themeOptions.style.display = 'none';
+      }
+    });
+
+    window.onclick = function(event) {
+      if (event.target == importModal) {
+        importModal.style.display = "none";
+      }
+      if (event.target == confirmModal) {
+        confirmModal.style.display = "none";
+      }
+      if (event.target == exportModal) {
+        exportModal.style.display = "none";
+      }
+      if (event.target == imageCatalogModal) {
+        imageCatalogModal.style.display = "none";
+      }
+    }
+
+    function openEditPanel(node) {
+      if (!node) return; 
+
+      editingNode = node;
+      nodeEditPanel.classList.add('open');
+      
+      const titleDiv = node.querySelector('.node-title');
+      const contentDiv = node.querySelector('.node-content');
+      const imageElement = node.querySelector('img');
+      
+      nodeTitleInput.value = titleDiv ? titleDiv.textContent : '';
+      nodeDescriptionInput.value = contentDiv ? contentDiv.textContent : '';
+      
+      toggleTitleBtn.innerHTML = titleDiv && titleDiv.style.display !== 'none' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+      toggleDescriptionBtn.innerHTML = contentDiv && contentDiv.style.display !== 'none' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+      
+      if (imageElement) {
+        nodeImagePreview.src = imageElement.src;
+        nodeImagePreview.style.display = 'block';
+        removeImageBtn.style.display = 'block';
+      } else {
+        nodeImagePreview.style.display = 'none';
+        removeImageBtn.style.display = 'none';
+      }
+
+      const curlCommandInput = document.getElementById('curl-command');
+      const apiIntervalInput = document.getElementById('api-interval');
+
+      if (curlCommandInput) curlCommandInput.value = node.dataset.curlCommand || '';
+      if (apiIntervalInput) apiIntervalInput.value = node.dataset.apiInterval || '';
+      
+      const toggleApiResponseBtn = document.getElementById('toggle-api-response');
+      const testApiBtn = document.getElementById('test-api');
+      const saveApiConfigBtn = document.getElementById('save-api-config');
+
+      if (toggleApiResponseBtn) toggleApiResponseBtn.onclick = () => toggleApiResponse(node);
+      if (testApiBtn) testApiBtn.onclick = () => performApiCall(node, curlCommandInput ? curlCommandInput.value : '');
+      if (saveApiConfigBtn) saveApiConfigBtn.onclick = () => {
+        node.dataset.curlCommand = curlCommandInput ? curlCommandInput.value : '';
+        node.dataset.apiInterval = apiIntervalInput ? apiIntervalInput.value : '';
+        setupApiInterval(node, node.dataset.curlCommand, parseInt(node.dataset.apiInterval));
+      };
+    }
+
+    toggleTitleBtn.addEventListener('click', () => {
+      if (editingNode) {
+        const titleDiv = editingNode.querySelector('.node-title');
+        if (titleDiv) {
+          titleDiv.style.display = titleDiv.style.display === 'none' ? '' : 'none';
+          toggleTitleBtn.innerHTML = titleDiv.style.display === 'none' ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+          adjustNodeSize(editingNode);
+        }
+      }
+    });
+
+    toggleDescriptionBtn.addEventListener('click', () => {
+      if (editingNode) {
+        const contentDiv = editingNode.querySelector('.node-content');
+        if (contentDiv) {
+          contentDiv.style.display = contentDiv.style.display === 'none' ? '' : 'none';
+          toggleDescriptionBtn.innerHTML = contentDiv.style.display === 'none' ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+          adjustNodeSize(editingNode);
+        }
+      }
+    });
+
+    removeImageBtn.addEventListener('click', () => {
+      if (editingNode) {
+        const imageElement = editingNode.querySelector('img');
+        if (imageElement) {
+          editingNode.removeChild(imageElement);
+          nodeImagePreview.src = '';
+          nodeImagePreview.style.display = 'none';
+          removeImageBtn.style.display = 'none';
+          
+          adjustNodeSize(editingNode);
+        }
+      }
+    });
+  </script>
+
+</body></html>
