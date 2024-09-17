@@ -1,9 +1,13 @@
 /* This CSS rule sets the default font size of the entire document */
-html {
+html, body {
   font-size: 16px;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
-/* These CSS rules sets the text direction of the paragraph (RTL or LTR) */
+/* These CSS rules set the text direction of the paragraph (RTL or LTR) */
 p,
 .bpw-from-bot > div,
 #input-message {
@@ -23,17 +27,13 @@ p,
 
 /* Styling for the chat header container */
 .bpw-header-container {
-  margin: 10px;
-  background: #6675fa;
-  border-radius: 10px;
-  position: relative;
-  overflow: hidden;
-  border: 1px;
-  border-radius: 10px;
+  background: #333;
   color: #ffffff;
+  padding: 10px;
 }
 
-.bpw-header-name{
+/* Styling for the header name */
+.bpw-header-name {
   color: #ffffff;
 }
 
@@ -56,24 +56,17 @@ p,
   color: #ffffff;
 }
 
-/* Styling for the layout of the chat bubble. Width, height, border, position and radius of the chat bubble */
+/* Styling for the layout of the chat bubble. Making it full screen */
 .bpw-layout {
-  width: 360px !important;
-  height: 60vh;
-  border-radius: 10px;
-  right: 10px;
-  bottom: 5px;
-  border: 1px;
-}
-/* Responsive design rules for devices with width less than or equal to 767px */
-@media screen and (max-device-width: 767px) {
-  .bpw-layout {
-    width: 100% !important;
-    height: 100%;
-    right: 0;
-    bottom: 0;
-    border-radius: 0;
-  }
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  border: none;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Changes the fill color of the header icons to white */
@@ -85,16 +78,18 @@ p,
 
 /* Changes the color of the placeholder text in the input message */
 #input-message::placeholder {
-  color: rgba(0,0,0,.30);
+  color: rgba(0, 0, 0, .30);
 }
 
-.bpw-composer textarea{
+/* Styling for the text area in the composer */
+.bpw-composer textarea {
   outline: none !important;
-  border: 1px solid rgba(0,0,0,.15);
+  border: 1px solid rgba(0, 0, 0, .15);
 }
-.bpw-composer textarea:focus{
+
+.bpw-composer textarea:focus {
   outline: none !important;
-  border: 1px solid rgba(0,0,0,.30);
+  border: 1px solid rgba(0, 0, 0, .30);
 }
 
 /* Styling for the keyboard single choice option */
@@ -112,13 +107,11 @@ p,
   border: none;
 }
 
-
 /* Styling for hover effect on the buttons in the chat interface */
 .bpw-button:hover,
 .bpw-button-alt:hover {
   background-color: #f5f5f5;
 }
-
 
 /* Styling for hyperlinks in the chat interface */
 a {
@@ -132,6 +125,8 @@ a {
   scrollbar-width: thin;
   scrollbar-color: #f5f5f5 #ffffff;
   border: none;
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 /* Styling for the chat bubble content when it's from the bot */
@@ -142,16 +137,16 @@ a {
 
 /* Styling for the chat bubble content when it's from the user */
 .bpw-from-user .bpw-chat-bubble .bpw-chat-bubble-content {
-  background-color: #6675fa;
+  background-color: #333;
   color: #ffffff;
 }
 
 /* Styling for the composer section of the chat interface */
 .bpw-composer {
   background-color: #ffffff;
-  border-top: none;
+  border-top: 1px solid #f5f5f5;
+  padding: 10px;
 }
-
 
 /* Styling for the scrollbar in the chat container */
 .bpw-chat-container::-webkit-scrollbar,
@@ -194,8 +189,6 @@ a {
   fill: #6675fa;
 }
 
-
-
 /* Styling for the 'powered by' section of the chat interface */
 .bpw-powered {
   text-align: center;
@@ -203,8 +196,6 @@ a {
   color: #000000;
   background: #ffffff;
   font-size: 14px;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
 }
 
 /* Styling for the hyperlinks in the 'powered by' section of the chat interface */
@@ -218,35 +209,18 @@ a {
   text-decoration: underline;
 }
 
-.bpw-send-button{
-  background: #6675fa;
+.bpw-send-button {
+  background: #333;
+  border-radius: 5px;
+  width: 50px;
+  height: auto;
 }
-
 
 /* Change Bot Widget Icon */
-
-.bpw-widget-btn{
-  border-radius: 50%;
-  background:#6675fa;
-}
-
-.bpw-floating-button::before {
-background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='white' class='w-6 h-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z' /%3E%3C/svg%3E");
-background-repeat: no-repeat;
-  background-position: center;
-background-size: contain;
-height:undefinedpx !important;
-width:undefinedpx !important;
+.bpw-widget-btn {
+  display: none; /* Hide the widget button for full-screen mode */
 }
 
 .bpw-floating-button {
-  box-shadow: none !important;
+  display: none; /* Hide the floating button for full-screen mode */
 }
-
-.bpw-floating-button:hover {
-  box-shadow: none !important;
-}
-
-// .bpw-floating-button > i {
-// display: none;
-// }
