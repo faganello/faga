@@ -1,0 +1,418 @@
+<html><head><base href="https://websimcreationengine.com/tailwind-task-dashboard/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel de Gerenciamento de Tarefas</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  .chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+  }
+  .tab-container {
+    position: relative;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 2px;
+    background-color: #dadadb;
+    border-radius: 9px;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .indicator {
+    content: "";
+    height: 28px;
+    background: #ffffff;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    z-index: 9;
+    border: 0.5px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 7px;
+    transition: all 0.2s ease-out;
+  }
+  .tab {
+    height: 28px;
+    position: absolute;
+    z-index: 99;
+    outline: none;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .tab_label {
+    height: 28px;
+    position: relative;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    font-size: 0.75rem;
+    opacity: 0.6;
+    cursor: pointer;
+    padding: 0 10px;
+  }
+  .tab:checked + .tab_label {
+    opacity: 1;
+  }
+</style>
+</head>
+<body class="bg-gray-50">
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-4xl font-bold mb-8 text-gray-800">Painel de Gerenciamento de Tarefas</h1>
+  
+  <!-- Novo menu de categorias -->
+  <div class="flex justify-center mb-8">
+    <div class="tab-container">
+      <input type="radio" name="tab" id="tab-all" class="tab tab--1" checked />
+      <label class="tab_label" for="tab-all">Todos</label>
+      <div class="indicator"></div>
+    </div>
+  </div>
+
+  <div id="all-view">
+    <!-- Seção de Estatísticas Principais -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <!-- Cartão de Taxa de Conclusão -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700">Taxa de Conclusão</h2>
+        <div class="flex items-center">
+          <div id="completion-rate" class="text-4xl font-bold text-blue-600"></div>
+          <div class="ml-4 text-gray-600">de tarefas concluídas</div>
+        </div>
+        <div class="mt-4 bg-gray-200 rounded-full h-3">
+          <div id="completion-bar" class="bg-blue-600 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+      </div>
+      <!-- Cartão de Total de Tarefas -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700">Total de Tarefas</h2>
+        <div id="total-tasks" class="text-4xl font-bold text-gray-800"></div>
+      </div>
+      <!-- Cartão de Tarefas Resolvidas -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700">Tarefas Resolvidas</h2>
+        <div id="solved-tasks" class="text-4xl font-bold text-green-500"></div>
+      </div>
+      <!-- Cartão de Tarefas Não Resolvidas -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700">Tarefas Não Resolvidas</h2>
+        <div id="unsolved-tasks" class="text-4xl font-bold text-red-500"></div>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Visão Geral das Tarefas</h2>
+        <div class="chart-container">
+          <canvas id="taskOverviewChart"></canvas>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Distribuição por Categorias</h2>
+        <div class="chart-container">
+          <canvas id="categoriesChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="category-view" class="hidden">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700">Taxa de Conclusão</h2>
+        <div class="flex items-center">
+          <div id="category-completion-rate" class="text-4xl font-bold text-blue-600"></div>
+          <div class="ml-4 text-gray-600">de tarefas concluídas</div>
+        </div>
+        <div class="mt-4 bg-gray-200 rounded-full h-3">
+          <div id="category-completion-bar" class="bg-blue-600 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700">Total de Tarefas</h2>
+        <div id="category-total-tasks" class="text-4xl font-bold text-gray-800"></div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700">Tarefas Resolvidas</h2>
+        <div id="category-solved-tasks" class="text-4xl font-bold text-green-500"></div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700">Tarefas Não Resolvidas</h2>
+        <div id="category-unsolved-tasks" class="text-4xl font-bold text-red-500"></div>
+      </div>
+    </div>
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+      <table class="w-full">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Coluna C</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Coluna D</th>
+          </tr>
+        </thead>
+        <tbody id="table-body" class="bg-white divide-y divide-gray-200"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const SHEET_ID = '1wqp-roIvMNIhOjipvfuuJBCwxcMKhc75pAfic5IpCmQ';
+const SHEET_TITLE = 'Sheet1';
+const SHEET_RANGE = 'B:D';
+
+const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${SHEET_TITLE}&range=${SHEET_RANGE}`;
+
+let allData = [];
+let taskOverviewChart, categoriesChart;
+
+fetch(url)
+  .then(response => response.text())
+  .then(data => {
+    const parsedData = Papa.parse(data, { header: false });
+    allData = parsedData.data.slice(1); // Remove a linha de cabeçalho
+
+    const categories = new Set(allData.map(row => row[0]));
+    const tabContainer = document.querySelector('.tab-container');
+    const indicator = document.querySelector('.indicator');
+    let tabIndex = 2; // Start from 2 since 'Todos' is already added
+
+    categories.forEach(category => {
+      if (category) {
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'tab';
+        input.id = `tab-${category}`;
+        input.className = `tab`;
+        input.dataset.category = category;
+
+        const label = document.createElement('label');
+        label.className = 'tab_label';
+        label.htmlFor = `tab-${category}`;
+        label.textContent = category;
+
+        tabContainer.insertBefore(label, indicator);
+        tabContainer.insertBefore(input, label);
+
+        tabIndex++;
+      }
+    });
+
+    updateDashboard();
+    addEventListeners();
+  })
+  .catch(error => {
+    console.error('Erro ao buscar ou analisar os dados:', error);
+    const container = document.querySelector('.container');
+    const errorMessage = document.createElement('p');
+    errorMessage.textContent = 'Ocorreu um erro ao buscar os dados. Por favor, tente novamente mais tarde.';
+    errorMessage.className = 'text-red-500 mt-4';
+    container.appendChild(errorMessage);
+  });
+
+function getCategoryStatistics(category) {
+  const categoryData = allData.filter(row => row[0] === category);
+  const totalTasks = categoryData.length;
+  const solvedTasks = categoryData.filter(row => row[2].includes('✅')).length;
+  const unsolvedTasks = categoryData.filter(row => row[2].includes('🚫')).length;
+  const completionRate = totalTasks > 0 ? ((solvedTasks / totalTasks) * 100).toFixed(2) : 0;
+
+  return {
+    totalTasks,
+    solvedTasks,
+    unsolvedTasks,
+    completionRate
+  };
+}
+
+function updateDashboard() {
+  const solvedTasks = allData.filter(row => row[2].includes('✅')).length;
+  const unsolvedTasks = allData.filter(row => row[2].includes('🚫')).length;
+
+  updateTaskOverviewChart(solvedTasks, unsolvedTasks);
+  updateCategoriesChart();
+  updateTaskStatistics(solvedTasks, unsolvedTasks);
+  updateCompletionRate(solvedTasks, unsolvedTasks);
+}
+
+function updateTaskOverviewChart(solved, unsolved) {
+  const ctx = document.getElementById('taskOverviewChart').getContext('2d');
+  if (taskOverviewChart) {
+    taskOverviewChart.destroy();
+  }
+  taskOverviewChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Resolvidas', 'Não Resolvidas'],
+      datasets: [{
+        data: [solved, unsolved],
+        backgroundColor: ['#10B981', '#EF4444'],
+        borderColor: 'white',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '70%',
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            font: {
+              size: 14
+            },
+            padding: 20
+          }
+        }
+      },
+      animation: {
+        animateScale: true,
+        animateRotate: true
+      }
+    }
+  });
+}
+
+function updateCategoriesChart() {
+  const categories = {};
+  allData.forEach(row => {
+    const category = row[0];
+    categories[category] = (categories[category] || 0) + 1;
+  });
+
+  const ctx = document.getElementById('categoriesChart').getContext('2d');
+  if (categoriesChart) {
+    categoriesChart.destroy();
+  }
+  categoriesChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: Object.keys(categories),
+      datasets: [{
+        label: 'Tarefas por Categoria',
+        data: Object.values(categories),
+        backgroundColor: 'rgba(59, 130, 246, 0.6)',
+        borderColor: 'rgba(59, 130, 246, 1)',
+        borderWidth: 1,
+        borderRadius: 10,
+        maxBarThickness: 50
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1,
+            font: {
+              size: 12
+            }
+          },
+          grid: {
+            display: false
+          }
+        },
+        x: {
+          grid: {
+            display: false
+          },
+          ticks: {
+            font: {
+              size: 12
+            }
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      animation: {
+        duration: 1500,
+        easing: 'easeInOutQuart'
+      }
+    }
+  });
+}
+
+function updateTaskStatistics(solved, unsolved) {
+  const total = solved + unsolved;
+  document.getElementById('total-tasks').textContent = total;
+  document.getElementById('solved-tasks').textContent = solved;
+  document.getElementById('unsolved-tasks').textContent = unsolved;
+}
+
+function updateCompletionRate(solved, unsolved) {
+  const total = solved + unsolved;
+  const completionRate = ((solved / total) * 100).toFixed(2);
+  
+  const completionRateElement = document.getElementById('completion-rate');
+  const completionBar = document.getElementById('completion-bar');
+  
+  completionRateElement.textContent = `${completionRate}%`;
+  completionBar.style.width = `${completionRate}%`;
+}
+
+function populateTable(data) {
+  const tableBody = document.getElementById('table-body');
+  tableBody.innerHTML = '';
+
+  data.forEach(row => {
+    if (row[0] !== "" || row[1] !== "" || row[2] !== "") {
+      const tr = document.createElement('tr');
+      for (let i = 0; i < 3; i++) {
+        const td = document.createElement('td');
+        td.textContent = row[i] || '';
+        td.className = 'px-6 py-4 whitespace-nowrap text-sm text-gray-500';
+        tr.appendChild(td);
+      }
+      tableBody.appendChild(tr);
+    }
+  });
+}
+
+function addEventListeners() {
+  const tabContainer = document.querySelector('.tab-container');
+  const indicator = document.querySelector('.indicator');
+  
+  const radioInputs = document.querySelectorAll('.tab-container input[type="radio"]');
+  radioInputs.forEach((input) => {
+    input.addEventListener('change', (e) => {
+      const category = e.target.dataset.category || 'all';
+      
+      // Update indicator position
+      const label = input.nextElementSibling;
+      indicator.style.width = `${label.offsetWidth}px`;
+      indicator.style.left = `${label.offsetLeft}px`;
+      
+      if (category === 'all') {
+        document.getElementById('all-view').classList.remove('hidden');
+        document.getElementById('category-view').classList.add('hidden');
+        updateDashboard();
+      } else {
+        document.getElementById('all-view').classList.add('hidden');
+        document.getElementById('category-view').classList.remove('hidden');
+        const filteredData = allData.filter(row => row[0] === category);
+        populateTable(filteredData);
+        
+        const stats = getCategoryStatistics(category);
+        document.getElementById('category-completion-rate').textContent = `${stats.completionRate}%`;
+        document.getElementById('category-completion-bar').style.width = `${stats.completionRate}%`;
+        document.getElementById('category-total-tasks').textContent = stats.totalTasks;
+        document.getElementById('category-solved-tasks').textContent = stats.solvedTasks;
+        document.getElementById('category-unsolved-tasks').textContent = stats.unsolvedTasks;
+      }
+    });
+  });
+}
+</script>
+</body>
+</html>
