@@ -1,0 +1,585 @@
+<html><head><base href="https://websimcreationengine.com/tailwind-task-dashboard/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel de Gerenciamento de Tarefas</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root {
+    --bg-color: #f9fafb;
+    --text-color: #1f2937;
+    --card-bg: #ffffff;
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  .dark {
+    --bg-color: linear-gradient(to bottom right, #000000, #1a202c);
+    --text-color: #e2e8f0;
+    --card-bg: rgba(255, 255, 255, 0.1);
+    --card-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.06);
+  }
+  body {
+    background: var(--bg-color);
+    color: var(--text-color);
+  }
+  .bg-white {
+    background-color: var(--card-bg);
+    backdrop-filter: blur(10px);
+  }
+  .shadow-lg {
+    box-shadow: var(--card-shadow);
+  }
+  .tab-container {
+    background-color: rgba(218, 218, 219, 0.2);
+  }
+  .dark .tab-container {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  .indicator {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+  }
+  .dark .indicator {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  table thead {
+    background-color: rgba(243, 244, 246, 0.1);
+  }
+  .dark table {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .dark table thead {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  .dark table tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .dark table th,
+  .dark table td {
+    color: var(--text-color);
+  }
+  .dark table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  table tbody {
+    background-color: transparent;
+  }
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .dark .glass {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+  }
+  .tab-container {
+    position: relative;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 2px;
+    background-color: #dadadb;
+    border-radius: 9px;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .indicator {
+    content: "";
+    height: 32px;
+    background: #ffffff;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    z-index: 9;
+    border: 0.5px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 7px;
+    transition: all 0.2s ease-out;
+  }
+  .tab {
+    height: 32px;
+    position: relative;
+    z-index: 99;
+    outline: none;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .tab_label {
+    height: 32px;
+    position: relative;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    font-size: 0.875rem;
+    opacity: 0.6;
+    cursor: pointer;
+    padding: 0 20px;
+  }
+  .tab:checked + .tab_label {
+    opacity: 1;
+  }
+  .bg-gray-200 {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  #theme-toggle {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #theme-toggle i {
+    font-size: 1.25rem;
+  }
+</style>
+</head>
+<body class="bg-gray-50 transition-colors duration-300">
+  <button id="theme-toggle" class="fixed top-4 right-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <i class="bi bi-moon-stars dark:bi-sun"></i>
+  </button>
+  <div class="flex justify-center mt-8 mb-4">
+    <svg xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" version="1.1" id="svg1" width="120" height="120" viewBox="0 0 4000 4000" sodipodi:docname="vision.svg" inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)">
+      <defs id="defs1"/>
+      <sodipodi:namedview xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" id="namedview1" pagecolor="#505050" bordercolor="#eeeeee" borderopacity="1" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" inkscape:showpageshadow="0" inkscape:pageopacity="0" inkscape:pagecheckerboard="0" inkscape:deskcolor="#505050" inkscape:zoom="0.125" inkscape:cx="-80" inkscape:cy="2540" inkscape:window-width="1920" inkscape:window-height="1017" inkscape:window-x="-8" inkscape:window-y="-8" inkscape:window-maximized="1" inkscape:current-layer="layer1"/>
+      <g xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" inkscape:groupmode="layer" id="layer1" inkscape:label="Image 1" style="opacity:1">
+        <path style="display:inline;opacity:1;fill:#2290f0;fill-opacity:1;stroke:#2290f0;stroke-width:17.6229;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill" d="m 2981.8307,2588.0793 c 170.8896,-150.6318 116.8627,-548.1984 -267.7264,-486.1271 -81.1741,21.5295 -113.8146,54.9529 -141.3473,70.6247 C 1899.3653,2592.8597 1425.7502,2221.3295 847.1306,1757.4885 602.45086,1569.7673 297.91974,1600.4542 69.424229,1804.3265 1186.3696,2967.29 1951.8566,3049.8894 2548.76,2824.4358 c 231.7491,-87.5328 392.5583,-202.1076 433.0707,-236.3565 z" id="path1-5" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" sodipodi:nodetypes="ccsccsc"/>
+        <path style="display:inline;opacity:1;fill:#1a6eb7;fill-opacity:1;stroke:#1a6eb7;stroke-width:17.6229;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill" d="m 2982.3236,2588.3661 c 170.8896,-150.6318 116.8627,-548.1984 -267.7264,-486.1272 -81.1741,21.5294 -113.8146,54.953 -141.3473,70.6248 -673.3917,420.2827 -1147.0068,48.7525 -1725.62639,-415.0885 642.85089,615.3013 1291.27749,1108.7561 1839.09089,989.6779 152.2268,-40.8033 255.0968,-124.8381 295.6092,-159.087 z" id="path1-2-3" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" sodipodi:nodetypes="ccsccc" inkscape:label="path1-2"/>
+        <path style="display:inline;fill:#18c8b6;fill-opacity:1;stroke:#18c8b6;stroke-width:17.6229;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill" d="m 1011.9453,1022.0375 c -170.88958,150.6318 -116.8627,548.1984 267.7263,486.1271 81.1741,-21.5295 113.8147,-54.9529 141.3474,-70.6247 673.3916,-420.2828 1147.0068,-48.7526 1725.6264,415.0884 244.6797,187.7212 549.2108,157.0343 777.7064,-46.838 C 2807.4063,642.82684 2041.9195,560.22737 1445.016,785.68096 1213.2669,873.21383 1052.4577,987.7886 1011.9453,1022.0375 Z" id="path1" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" sodipodi:nodetypes="ccsccsc"/>
+        <path style="display:inline;opacity:1;fill:#0d9589;fill-opacity:1;stroke:#0d9589;stroke-width:17.6229;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill" d="m 1011.4523,1021.7507 c -170.88949,150.6318 -116.86261,548.1984 267.7264,486.1272 81.1741,-21.5294 113.8147,-54.953 141.3473,-70.6248 673.3917,-420.2827 1147.0069,-48.7525 1725.6265,415.0885 C 2503.3017,1237.0403 1854.8751,743.58546 1307.0616,862.66368 1154.8348,903.46697 1051.9648,987.5018 1011.4523,1021.7507 Z" id="path1-2" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" sodipodi:nodetypes="ccsccc" inkscape:label="path1-2"/>
+        <circle style="fill:#19bdfc;fill-opacity:1;stroke:#19bdfc;stroke-width:18.2587;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill" id="path6" cx="1997.8971" cy="1792.6195" r="345.08972"/>
+      </g>
+    </svg>
+  </div>
+<div class="mx-auto px-4 py-8 w-11/12 max-w-6xl transition-colors duration-300">
+  <h1 class="text-4xl font-bold mb-8 text-gray-800 text-center">Diagnóstico Digital</h1>
+  
+  <div class="flex justify-center mb-8">
+    <div class="tab-container">
+      <input type="radio" name="tab" id="tab-all" class="tab tab--1" checked />
+      <label class="tab_label" for="tab-all">Todos</label>
+      <div class="indicator"></div>
+    </div>
+  </div>
+
+  <div id="all-view">
+    <div class="grid grid-cols-12 gap-6 mb-8">
+      <div class="col-span-4 bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl glass">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700"><i class="bi bi-check-circle me-2"></i>Taxa de Conclusão</h2>
+        <div class="flex items-center">
+          <div id="completion-rate" class="text-4xl font-bold text-blue-600"></div>
+          <div class="ml-4 text-gray-600">de tarefas concluídas</div>
+        </div>
+        <div class="mt-4 bg-gray-200 rounded-full h-3">
+          <div id="completion-bar" class="bg-blue-600 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="col-span-2 bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl glass">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700"><i class="bi bi-list-task me-2"></i>Total de Tarefas</h2>
+        <div id="total-tasks" class="text-4xl font-bold text-gray-800"></div>
+      </div>
+      <div class="col-span-3 bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl glass">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700"><i class="bi bi-check2-square me-2"></i>Tarefas Resolvidas</h2>
+        <div id="solved-tasks" class="text-4xl font-bold text-green-500"></div>
+      </div>
+      <div class="col-span-3 bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl glass">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700"><i class="bi bi-x-square me-2"></i>Tarefas Não Resolvidas</h2>
+        <div id="unsolved-tasks" class="text-4xl font-bold text-red-500"></div>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl glass">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700"><i class="bi bi-pie-chart me-2"></i>Visão Geral das Tarefas</h2>
+        <div class="chart-container">
+          <canvas id="taskOverviewChart"></canvas>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl glass">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700"><i class="bi bi-bar-chart me-2"></i>Distribuição por Categorias</h2>
+        <div class="chart-container">
+          <canvas id="categoriesChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="category-view" class="hidden">
+    <div class="grid grid-cols-12 gap-6 mb-8">
+      <div class="col-span-4 bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl glass">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700"><i class="bi bi-check-circle me-2"></i>Taxa de Conclusão</h2>
+        <div class="flex items-center">
+          <div id="category-completion-rate" class="text-4xl font-bold text-blue-600"></div>
+          <div class="ml-4 text-gray-600">de tarefas concluídas</div>
+        </div>
+        <div class="mt-4 bg-gray-200 rounded-full h-3">
+          <div id="category-completion-bar" class="bg-blue-600 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="col-span-2 bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl glass">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700"><i class="bi bi-list-task me-2"></i>Total de Tarefas</h2>
+        <div id="category-total-tasks" class="text-4xl font-bold text-gray-800"></div>
+      </div>
+      <div class="col-span-3 bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl glass">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700"><i class="bi bi-check2-square me-2"></i>Tarefas Resolvidas</h2>
+        <div id="category-solved-tasks" class="text-4xl font-bold text-green-500"></div>
+      </div>
+      <div class="col-span-3 bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl glass">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700"><i class="bi bi-x-square me-2"></i>Tarefas Não Resolvidas</h2>
+        <div id="category-unsolved-tasks" class="text-4xl font-bold text-red-500"></div>
+      </div>
+    </div>
+    <div class="bg-white dark:bg-transparent rounded-2xl shadow-lg overflow-hidden glass">
+      <table class="w-full table-fixed">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider w-1/6">Categoria</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider w-2/5">Coluna C</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider w-5/12">Coluna D</th>
+          </tr>
+        </thead>
+        <tbody id="table-body" class="bg-white dark:bg-transparent divide-y divide-gray-200 dark:divide-gray-700"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const SHEET_ID = '1wqp-roIvMNIhOjipvfuuJBCwxcMKhc75pAfic5IpCmQ';
+const SHEET_TITLE = 'Sheet1';
+const SHEET_RANGE = 'B:D';
+
+const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${SHEET_TITLE}&range=${SHEET_RANGE}`;
+
+let allData = [];
+let taskOverviewChart, categoriesChart;
+
+fetch(url)
+  .then(response => response.text())
+  .then(data => {
+    const parsedData = Papa.parse(data, { header: false });
+    allData = parsedData.data.slice(1);
+
+    const categories = new Set(allData.map(row => row[0]));
+    const tabContainer = document.querySelector('.tab-container');
+    const indicator = document.querySelector('.indicator');
+    let tabIndex = 2;
+
+    categories.forEach(category => {
+      if (category) {
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'tab';
+        input.id = `tab-${category}`;
+        input.className = `tab tab--${tabIndex}`;
+        input.dataset.category = category;
+
+        const label = document.createElement('label');
+        label.className = 'tab_label';
+        label.htmlFor = `tab-${category}`;
+        label.textContent = category;
+
+        tabContainer.insertBefore(label, indicator);
+        tabContainer.insertBefore(input, label);
+
+        const style = document.createElement('style');
+        style.textContent = `.tab--${tabIndex}:checked ~ .indicator { left: calc(130px * ${tabIndex - 1} + 2px); }`;
+        document.head.appendChild(style);
+
+        tabIndex++;
+      }
+    });
+
+    setInitialIndicator();
+    updateDashboard();
+    addEventListeners();
+  })
+  .catch(error => {
+    console.error('Erro ao buscar ou analisar os dados:', error);
+    const container = document.querySelector('.container');
+    const errorMessage = document.createElement('p');
+    errorMessage.textContent = 'Ocorreu um erro ao buscar os dados. Por favor, tente novamente mais tarde.';
+    errorMessage.className = 'text-red-500 mt-4';
+    container.appendChild(errorMessage);
+  });
+
+function setInitialIndicator() {
+  const indicator = document.querySelector('.indicator');
+  const firstLabel = document.querySelector('.tab_label');
+  indicator.style.width = `${firstLabel.offsetWidth}px`;
+  indicator.style.left = `${firstLabel.offsetLeft}px`;
+}
+
+function getCategoryStatistics(category) {
+  const categoryData = allData.filter(row => row[0] === category);
+  const totalTasks = categoryData.length;
+  const solvedTasks = categoryData.filter(row => row[2].includes('✅')).length;
+  const unsolvedTasks = categoryData.filter(row => row[2].includes('🚫')).length;
+  const completionRate = totalTasks > 0 ? ((solvedTasks / totalTasks) * 100).toFixed(2) : 0;
+
+  return {
+    totalTasks,
+    solvedTasks,
+    unsolvedTasks,
+    completionRate
+  };
+}
+
+function updateDashboard() {
+  const solvedTasks = allData.filter(row => row[2].includes('✅')).length;
+  const unsolvedTasks = allData.filter(row => row[2].includes('🚫')).length;
+
+  updateTaskOverviewChart(solvedTasks, unsolvedTasks);
+  updateCategoriesChart();
+  updateTaskStatistics(solvedTasks, unsolvedTasks);
+  updateCompletionRate(solvedTasks, unsolvedTasks);
+}
+
+function updateTaskOverviewChart(solved, unsolved) {
+  const ctx = document.getElementById('taskOverviewChart').getContext('2d');
+  if (taskOverviewChart) {
+    taskOverviewChart.destroy();
+  }
+  taskOverviewChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Resolvidas', 'Não Resolvidas'],
+      datasets: [{
+        data: [solved, unsolved],
+        backgroundColor: ['#10B981', '#EF4444'],
+        borderColor: 'white',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '70%',
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            font: {
+              size: 14
+            },
+            padding: 20
+          }
+        }
+      },
+      animation: {
+        animateScale: true,
+        animateRotate: true
+      }
+    }
+  });
+}
+
+function updateCategoriesChart() {
+  const categories = {};
+  allData.forEach(row => {
+    const category = row[0];
+    categories[category] = (categories[category] || 0) + 1;
+  });
+
+  const ctx = document.getElementById('categoriesChart').getContext('2d');
+  if (categoriesChart) {
+    categoriesChart.destroy();
+  }
+  categoriesChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: Object.keys(categories),
+      datasets: [{
+        label: 'Tarefas por Categoria',
+        data: Object.values(categories),
+        backgroundColor: 'rgba(59, 130, 246, 0.6)',
+        borderColor: 'rgba(59, 130, 246, 1)',
+        borderWidth: 1,
+        borderRadius: 10,
+        maxBarThickness: 50
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1,
+            font: {
+              size: 12
+            }
+          },
+          grid: {
+            display: false
+          }
+        },
+        x: {
+          grid: {
+            display: false
+          },
+          ticks: {
+            font: {
+              size: 12
+            }
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      animation: {
+        duration: 1500,
+        easing: 'easeInOutQuart'
+      }
+    }
+  });
+}
+
+function updateTaskStatistics(solved, unsolved) {
+  const total = solved + unsolved;
+  document.getElementById('total-tasks').textContent = total;
+  document.getElementById('solved-tasks').textContent = solved;
+  document.getElementById('unsolved-tasks').textContent = unsolved;
+}
+
+function updateCompletionRate(solved, unsolved) {
+  const total = solved + unsolved;
+  const completionRate = ((solved / total) * 100).toFixed(2);
+  
+  const completionRateElement = document.getElementById('completion-rate');
+  const completionBar = document.getElementById('completion-bar');
+  
+  completionRateElement.textContent = `${completionRate}%`;
+  completionBar.style.width = `${completionRate}%`;
+}
+
+function populateTable(data) {
+  const tableBody = document.getElementById('table-body');
+  tableBody.innerHTML = '';
+
+  data.forEach(row => {
+    if (row[0] !== "" || row[1] !== "" || row[2] !== "") {
+      const tr = document.createElement('tr');
+      for (let i = 0; i < 3; i++) {
+        const td = document.createElement('td');
+        td.textContent = row[i] || '';
+        td.className = i === 2 
+          ? 'px-6 py-4 whitespace-normal text-sm text-gray-500 w-5/12'
+          : i === 1
+            ? 'px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-2/5'
+            : 'px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-1/6';
+        tr.appendChild(td);
+      }
+      tableBody.appendChild(tr);
+    }
+  });
+}
+
+function addEventListeners() {
+  const tabContainer = document.querySelector('.tab-container');
+  const indicator = document.querySelector('.indicator');
+  
+  const radioInputs = document.querySelectorAll('.tab-container input[type="radio"]');
+  radioInputs.forEach((input, index) => {
+    input.addEventListener('change', (e) => {
+      const category = e.target.dataset.category || 'all';
+      
+      const label = input.nextElementSibling;
+      indicator.style.width = `${label.offsetWidth}px`;
+      indicator.style.left = `${label.offsetLeft}px`;
+
+      if (category === 'all') {
+        document.getElementById('all-view').classList.remove('hidden');
+        document.getElementById('category-view').classList.add('hidden');
+        updateDashboard();
+      } else {
+        document.getElementById('all-view').classList.add('hidden');
+        document.getElementById('category-view').classList.remove('hidden');
+        const filteredData = allData.filter(row => row[0] === category);
+        populateTable(filteredData);
+        
+        const stats = getCategoryStatistics(category);
+        document.getElementById('category-completion-rate').textContent = `${stats.completionRate}%`;
+        document.getElementById('category-completion-bar').style.width = `${stats.completionRate}%`;
+        document.getElementById('category-total-tasks').textContent = stats.totalTasks;
+        document.getElementById('category-solved-tasks').textContent = stats.solvedTasks;
+        document.getElementById('category-unsolved-tasks').textContent = stats.unsolvedTasks;
+      }
+    });
+  });
+
+  setInitialIndicator();
+}
+const themeToggle = document.getElementById('theme-toggle');
+const htmlElement = document.documentElement;
+
+function setTheme(isDark) {
+  if (isDark) {
+    htmlElement.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
+  } else {
+    htmlElement.classList.remove('dark');
+    localStorage.setItem('theme', 'light');
+  }
+}
+
+const savedTheme = localStorage.getItem('theme');
+const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+setTheme(savedTheme === 'dark' || (!savedTheme && systemPrefersDark));
+
+themeToggle.addEventListener('click', () => {
+  htmlElement.classList.toggle('dark');
+  const isDark = htmlElement.classList.contains('dark');
+  setTheme(isDark);
+  themeToggle.querySelector('i').classList.toggle('bi-moon-stars', !isDark);
+  themeToggle.querySelector('i').classList.toggle('bi-sun', isDark);
+});
+
+// Update charts colors based on theme
+function updateChartsTheme(isDark) {
+  const textColor = isDark ? '#e2e8f0' : '#1f2937';
+  const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+
+  if (taskOverviewChart) {
+    taskOverviewChart.options.plugins.legend.labels.color = textColor;
+    taskOverviewChart.update();
+  }
+
+  if (categoriesChart) {
+    categoriesChart.options.scales.x.ticks.color = textColor;
+    categoriesChart.options.scales.y.ticks.color = textColor;
+    categoriesChart.options.scales.x.grid.color = gridColor;
+    categoriesChart.options.scales.y.grid.color = gridColor;
+    categoriesChart.update();
+  }
+}
+
+// Call this function when changing themes and after charts are created
+updateChartsTheme(htmlElement.classList.contains('dark'));
+
+// Observe theme changes
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+      updateChartsTheme(htmlElement.classList.contains('dark'));
+    }
+  });
+});
+
+observer.observe(htmlElement, { attributes: true });
+</script>
+</body>
+</html>
