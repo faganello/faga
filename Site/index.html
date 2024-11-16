@@ -249,15 +249,6 @@
     					background-color: #ffffff36;
     					border: 1px solid #ffffff70;
 						max-width: 850px;
-
-						transform: perspective(1500px) rotateY(15deg);
-						border-radius: 1rem;
-						box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
-						transition: transform 1s ease 0s;
-
-						&:hover {
-							transform: perspective(3000px) rotateY(5deg);
-						}
 					}
 					.card-vet-img {
 						display: flex; justify-content: flex-end;
@@ -304,6 +295,19 @@
 						.btn-vet-service {
 							width: 100%;
 							margin-bottom: 10px;
+						}
+						.card-container { margin-top: 10px; }
+					}
+					@media screen and (min-width: 520px) {
+						.card-vet {
+							transform: perspective(1500px) rotateY(15deg);
+							border-radius: 1rem;
+							box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+							transition: transform 1s ease 0s;
+
+							&:hover {
+								transform: perspective(3000px) rotateY(5deg);
+							}
 						}
 					}
 
@@ -359,9 +363,6 @@
 				</script>
 			</div>
 		</section>
-		
-
-
 		<!-- Avaliações -->
 		<section class="py-5">
 			<div>
@@ -377,8 +378,8 @@
 								<div class="col-lg-8">
 									<div class="card text-center">
 										<div class="card-body position-relative">
-											<div style="position: absolute; top: -40px; left: -10px; font-family: 'Petangue'; font-size: 190px; color: var(--cor-primaria); line-height: 0.5;">"</div>
-											<div style="position: absolute; bottom: -40px; right: -10px; font-family: 'Petangue'; font-size: 190px; color: var(--cor-primaria); line-height: 0.5; transform: rotate(180deg);">"</div>
+											<div class="p-aspas">"</div>
+											<div class="s-aspas">"</div>
 											<img src="https://lh3.googleusercontent.com/a-/ALV-UjXc1AZc6j128hAA2Y40lKRXcEboJFGYVnSJMK9W5aXuBae1douUyA=w36-h36-p-rp-mo-br100" class="rounded-circle mb-3" width="32" alt="Cliente 1">
 											<h5 class="mb-2">Maria Silva</h5>
 											<div class="mb-3" style="color: var(--cor-secundaria);">
