@@ -182,11 +182,20 @@ header {
 	font-style: italic;
 	color: #666;
 }
+.p-aspas { position: absolute; top: -40px; left: -10px; font-family: 'Petangue'; font-size: 190px; color: var(--cor-primaria); line-height: 0.5; }
+.s-aspas { position: absolute; bottom: -40px; right: -10px; font-family: 'Petangue'; font-size: 190px; color: var(--cor-primaria); line-height: 0.5; transform: rotate(180deg); }
+
+@media screen and (max-width: 400px ) {
+	.lead { font-size: x-small; }
+	.carousel-item .card-body { margin: 0; padding: 0; }
+	.p-aspas { top:-25px; }
+	.s-aspas { bottom: -25px;}
+	.carousel-control-prev-icon, .carousel-control-next-icon { padding: .5rem; }
+}
 
 @media screen and (max-width:520px ) {
-	.lead {
-		font-size: medium;
-	}
+	.lead { font-size: medium; }
+	.carousel-item .card { padding: 1rem; }
 }
 
 .text-muted {
