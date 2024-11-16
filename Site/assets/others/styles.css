@@ -15,6 +15,7 @@
 body {
     background-color: var(--cor-secundaria);
     min-height: 100vh;
+	overflow-x: hidden;
 }
 
 
@@ -49,6 +50,24 @@ p {
 	width: 300px;
 }
 
+body::-webkit-scrollbar { width: 5px; }
+body::-webkit-scrollbar:hover { width: 9px; }
+
+body::-webkit-scrollbar-thumb {
+    background-color: var(--cor-primaria);
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background-color: #57037d; /* Usa a cor escura quando o mouse está em cima */
+}
+
+body::-webkit-scrollbar-track {
+    background-color: var(--cor-secundaria-escura);
+}
+
+
+
 /* header */
 header {
 	background: linear-gradient(135deg, var(--cor-primaria), #57037d);
@@ -56,6 +75,9 @@ header {
 	min-height: 70vh;
 	box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
+
+@media screen and (max-width:520px ) { header { border-radius: 0 0 100px 100px; } }
+@media screen and (max-width:470px ) { header { border-radius: 0 0 50px 50px; } }
 
 .btn-whatsapp-header {
 	padding: 15px 35px;
@@ -124,18 +146,7 @@ header {
 
 
 /* Pet Shop */
-.btn-petshop {
-	background-color:#25d366;
-	border:none;	
-}
-.btn-petshop:hover { background-color:#1ba04c;	}
-@media screen and (max-width: 990px) {
-	.card-title { font-size: small;	}
-}
 
-@media screen and (max-width: 770px) {
-	.card-title { font-size: x-small; }
-}
 
 /* Avaliações */
 
@@ -170,6 +181,12 @@ header {
 .lead {
 	font-style: italic;
 	color: #666;
+}
+
+@media screen and (max-width:520px ) {
+	.lead {
+		font-size: medium;
+	}
 }
 
 .text-muted {
