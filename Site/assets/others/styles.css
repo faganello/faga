@@ -152,6 +152,22 @@ header {
 
 /* Pet Shop */
 
+/* IG */
+.card-ig {
+	border-radius: 2rem;
+
+}
+.btn-ig{
+	border-radius: 10px;
+	margin-top: 20px;
+	border: 3px solid var(--cor-terciaria);
+	color: var(--cor-terciaria);
+	font-weight: 600;
+}
+.btn-ig:hover{
+	border: 3px solid #bd4d02;
+	color: #bd4d02;
+}
 
 /* Avaliações */
 
