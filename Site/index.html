@@ -91,7 +91,6 @@
 				</div>
 			</div>
 		</section>
-
 		<!-- Pet Shop -->
 		<section class="py-5">
 			<div class="container">
@@ -194,6 +193,7 @@
 			</div>
 			<style>
 				.btn-petshop { background-color: #25d366; }
+				.btn-petshop:hover { background-color: #20b657; }
 				@media screen and (max-width:990px ) { .btn-petshop { font-size: medium; } }
 				@media screen and (max-width:767px ) { .btn-petshop { font-size: medium; } }
 				@media screen and (max-width:520px ) { .line-petshop { display: none; } .card-title { font-size: small; } }
@@ -220,9 +220,9 @@
 							<div class="row align-items-center">
 								<!-- Conteúdo do lado esquerdo -->
 								<div class="col card-vet-infos" style="padding: 2rem;">
-									<h3 id="card-title">Consultas</h3>
-									<p id="card-text">Agende uma consulta com nossos especialistas e garanta o melhor cuidado para o seu pet.</p>
-									<button id="card-button" class="btn btn-success">Agendar Agora</button>
+									<h3 id="card-title">Consultas com veterinários especializados</h3>
+									<p id="card-text">Nosso time oferece consultas para diagnóstico e acompanhamento em diversas áreas, como dermatologia, cardiologia, oncologia, neurologia, endocrinologia, e mais. Seu pet será atendido com cuidado e atenção personalizados.</p>
+									<button id="card-button" class="btn btn-petshop">Agendar Consulta</button>
 								</div>
 								<!-- Imagem colada ao lado direito do cartão -->
 								<div class="col card-vet-img" style="">
@@ -318,28 +318,28 @@
 					// Conteúdo dinâmico
 					const content = {
 						Consultas: {
-							title: "Consultas",
-							text: "Agende uma consulta com nossos especialistas e garanta o melhor cuidado para o seu pet.",
+							title: "Consultas com veterinários especializados",
+							text: "Nosso time oferece consultas para diagnóstico e acompanhamento em diversas áreas, como dermatologia, cardiologia, oncologia, neurologia, endocrinologia, e mais. Seu pet será atendido com cuidado e atenção personalizados.",
 							image: "assets/images/products/product.jpg",
-							buttonText: "Agendar Agora",
+							buttonText: "Agendar Consulta",
 						},
 						Vacinas: {
-							title: "Vacinas",
-							text: "Proteja seu pet com nosso serviço de vacinação segura e eficaz.",
+							title: "Imunização completa para cães e gatos",
+							text: "Garantimos a saúde e proteção do seu pet com vacinas seguras, como V8, V10, antirrábica e outras essenciais. Consulte nosso calendário de vacinação e mantenha seu amigo imunizado.",
 							image: "assets/images/products/product.jpg",
 							buttonText: "Agendar Vacinação",
 						},
 						Exames: {
-							title: "Exames",
-							text: "Realize exames completos para garantir a saúde do seu pet.",
+							title: "Exames de última geração para diagnósticos rápidos",
+							text: "Oferecemos exames completos e tecnologia de ponta para diagnósticos rápidos e confiáveis. De análises laboratoriais a exames de imagem, cuidamos de cada detalhe para a saúde do seu pet.",
 							image: "assets/images/products/product.jpg",
 							buttonText: "Agendar Exame",
 						},
 						Internamento: {
-							title: "Internamento",
-							text: "Oferecemos internamento com acompanhamento especializado para o seu pet.",
+							title: "Internamento completo e monitoramento 24h",
+							text: "Oferecemos internamento com ambientes separados para cães e gatos, garantindo conforto e tranquilidade. Contamos com suporte veterinário especializado em cardiologia, nefrologia, oncologia, ortopedia, e mais.",
 							image: "assets/images/products/product.jpg",
-							buttonText: "Agendar Internamento",
+							buttonText: "Saiba mais",
 						},
 					};
 		
@@ -457,9 +457,55 @@
 					<span class="visually-hidden">Próximo</span>
 				</button>
 			</div>
+			<div class="container mt-5">
+				<div class="row align-items-center">
+					<div class="col text-center">
+						<a class="btn btn-petshop btn-lg" style="width: auto;">Quero fazer parte dessa experiência</a>
+					</div>
+				</div>
+			</div>	
+		</section>
+		<!-- IG -->
+		<style>
+		
+		.img-ig-container {
+			display: flex;
+    		align-content: flex-end;
+    		flex-wrap: wrap;
+			justify-content: center;
+		}
+		@media screen and (max-width: 390px) { 
+			.img-ig { width: 250px;  } 
+			.seta-ig { position: absolute; left: 60%; top: 37%; width: 100px; transform: scaleX(-1) rotate(50deg); }	
+		}
+		@media screen and (min-width: 390px) and (max-width: 767px) {
+			.img-ig { margin: 0; }
+			.seta-ig { position: absolute; left: 70%; top: 27%; width: 100px; transform: scaleX(-1) rotate(50deg); }		
+		}
+		@media screen and (min-width: 767px) and (max-width:990px ){
+			.img-ig { margin: 30px 30px 0 20px; }
+			.seta-ig { position: absolute; left: 30%; top: 60%; }
+		} 
+		/*.seta-ig { left: 70%; top: 30%; transform: scaleX(-1) rotate(50deg); }*/
+		</style>
+		<section class="py-5" style="display: flex; justify-content: center;">
+			<div class="card card-ig" style="max-width: 900px;">
+				<div class="card-body" style="padding: 0;">
+					<img src="./assets/images/seta.svg" alt="Instagram da VetStop" class="seta-ig">
+				  	<div class="row">
+						<div class="col" style="padding: 2rem; min-width: 300px;">
+							<h3 id="card-title">Acompanhe nossas novidades e dicas <b>para cuidar do seu pet!</b> Siga nosso Instagram e fique por dentro!</h3>
+							<a href="https://www.instagram.com/vetstopboutiqueclinic/" id="card-button" class="btn btn-ig">Seguir Agora</a>
+						</div>
+						<div class="col img-ig-container">
+							<img src="./assets/images/celular.svg" alt="Instagram da VetStop" class="img-ig">
+						</div>
+				  	</div>
+				</div>
+			  </div>
 		</section>
 	</div>
-
+	<!-- Localização -->
 	<section class="py-5 localizacao">
 		<div class="container">
 			<div class="row align-items-center">
@@ -483,10 +529,10 @@
 		</div>
 	</section>
 
+	<!-- Botão para subir -->
 	<button onclick="scrollToTop()" id="btnScrollToTop" class="btn rounded-circle" style="position: fixed; bottom: 20px; right: 20px; display: none; width: 50px; height: 50px; z-index: 99; background-color: var(--cor-primaria); border: none; color: white; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='var(--cor-primaria-escura)'" onmouseout="this.style.backgroundColor='var(--cor-primaria)'">
 		<i class="bi bi-arrow-up"></i>
 	</button>
-
 	<script>
 		// Mostrar/ocultar botão conforme scroll
 		window.onscroll = function() {
@@ -505,7 +551,8 @@
 			});
 		}
 	</script>
-
+	
+	<!-- Rodapé -->
 	<footer style="width: 100%; height: 70px; background-color: #000000; display: flex; justify-content: center; align-items: center;">
 		<p style="color: white; text-align: center; margin: 0; padding: 10px 0;">Feito com <i class="bi bi-heart-fill" style="color: red;"></i> por Vision Ads</p>
 
