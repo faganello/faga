@@ -148,7 +148,81 @@ header {
 }
 
 /* Veterinária */
+.card-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 50px;
+}
+.card-vet {
+	border-radius: 1rem;
+	background-color: #ffffff36;
+	border: 1px solid #ffffff70;
+	max-width: 850px;
+}
+.card-vet-img {
+	display: flex; justify-content: flex-end;
+}
+.card-vet-img img {
+	width: auto; height: auto; border-radius: 0 1rem 1rem 0;
+}
+.btn-vet-service {
+	background-color: var(--cor-secundaria-escura);
+	color: black;
+	z-index: 4;
+}
+.btn-vet-service.active {
+	background-color: var(--cor-primaria);
+	color: white;
+	border: none;
+	position: relative;
+	pointer-events: none;
+}
+.btn-vet-service.active::after {
+	content: '';
+	position: absolute;
+	top: 65%;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 20px;
+	height: 20px;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	background-color: var(--cor-primaria);
+	border-radius: 50%;
+	z-index: -1;
+}
+@media screen and (max-width:767px ) {
+	.card-vet-img img { 
+		width: 100%;
+		margin-right: 20px;
+		border-radius: 1rem;  
+	}
+	.card-vet-infos p { font-size: small; }
+	
+}
+@media screen and (max-width:520px ) {
+	.card-vet-img { display: none;	}
+	.d-flex {
+		flex-direction: column;
+	}
+	.btn-vet-service {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+	.card-container { margin-top: 10px; }
+}
+@media screen and (min-width: 520px) {
+	.card-vet {
+		transform: perspective(1500px) rotateY(15deg);
+		border-radius: 1rem;
+		box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+		transition: transform 1s ease 0s;
 
+		&:hover {
+			transform: perspective(3000px) rotateY(5deg);
+		}
+	}
+}
 
 /* Pet Shop */
 .card-swiper {
