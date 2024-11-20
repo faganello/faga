@@ -251,7 +251,11 @@
 								</div>
 								<!-- Imagem colada ao lado direito do cartão -->
 								<div class="col card-vet-img" style="">
-									<img id="card-image" src="assets/images/services/consulta.jpg" alt="Veja nossos serviços" style="">
+									<picture>
+										<source srcset="assets/images/services/consulta.avif" type="image/avif">
+										<source srcset="assets/images/services/consulta.webp" type="image/webp">
+										<img id="card-image" src="assets/images/services/consulta.jpg" alt="Consulta veterinária especializada" style="">
+									</picture>
 								</div>
 							</div>
 						</div>						
@@ -349,28 +353,44 @@
 						Consultas: {
 							title: "Consultas com veterinários especializados",
 							text: "Nosso time oferece consultas para diagnóstico e acompanhamento em diversas áreas, como dermatologia, cardiologia, oncologia, neurologia, endocrinologia, e mais. Seu pet será atendido com cuidado e atenção personalizados.",
-							image: "assets/images/services/consulta.jpg",
+							image: {
+								avif: "assets/images/services/consulta.avif",
+								webp: "assets/images/services/consulta.webp",
+								jpg: "assets/images/services/consulta.jpg"
+							},
 							buttonText: "Agendar Consulta",
 							link: "https://api.whatsapp.com/send?phone=554732378661&text=Quero%20agendar%20uma%20consulta%20com%20um%20veterinário.",
 						},
 						Vacinas: {
 							title: "Imunização completa para cães e gatos",
 							text: "Garantimos a saúde e proteção do seu pet com vacinas seguras, como V8, V10, antirrábica e outras essenciais. Consulte nosso calendário de vacinação e mantenha seu amigo imunizado.",
-							image: "assets/images/services/vacina.jpg",
+							image: {
+								avif: "assets/images/services/vacina.avif",
+								webp: "assets/images/services/vacina.webp",
+								jpg: "assets/images/services/vacina.jpg"
+							},
 							buttonText: "Agendar Vacinação",
 							link: "https://api.whatsapp.com/send?phone=554732378661&text=Quero%20agendar%20uma%20vacinação%20para%20meu%20pet.",
 						},
 						Exames: {
 							title: "Exames de última geração para diagnósticos rápidos",
 							text: "Oferecemos exames completos e tecnologia de ponta para diagnósticos rápidos e confiáveis. De análises laboratoriais a exames de imagem, cuidamos de cada detalhe para a saúde do seu pet.",
-							image: "assets/images/services/exame.jpg",
+							image: {
+								avif: "assets/images/services/exame.avif",
+								webp: "assets/images/services/exame.webp",
+								jpg: "assets/images/services/exame.jpg"
+							},
 							buttonText: "Agendar Exame",
 							link: "https://api.whatsapp.com/send?phone=554732378661&text=Quero%20agendar%20um%20exame%20para%20meu%20pet.",
 						},
 						Internamento: {
 							title: "Internamento completo e monitoramento 24h",
 							text: "Oferecemos internamento com ambientes separados para cães e gatos, garantindo conforto e tranquilidade. Contamos com suporte veterinário especializado em cardiologia, nefrologia, oncologia, ortopedia, e mais.",
-							image: "assets/images/services/internacao.jpg",
+							image: {
+								avif: "assets/images/services/internacao.avif",
+								webp: "assets/images/services/internacao.webp",
+								jpg: "assets/images/services/internacao.jpg"
+							},
 							buttonText: "Saiba mais",
 							link: "https://api.whatsapp.com/send?phone=554732378661&text=Quero%20saber%20mais%20sobre%20o%20internamento.",
 						},
@@ -380,7 +400,7 @@
 					function changeContent(section) {
 						document.getElementById("card-title").innerText = content[section].title;
 						document.getElementById("card-text").innerText = content[section].text;
-						document.getElementById("card-image").src = content[section].image;
+						document.getElementById("card-image").src = content[section].image.jpg; // Usando a versão JPG como padrão
 						document.getElementById("card-button").innerText = content[section].buttonText;
 						document.getElementById("card-button").href = content[section].link;
 		
