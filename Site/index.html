@@ -226,108 +226,94 @@
 
 		</section>
 		<!-- Veterinária -->
-		<section class="py-5">
+				<section class="py-5">
 			<div>
-			  <h2 class="text-center mb-2">Veterinária</h2>
-			  <h3 class="text-center mb-4 fs-4" style="font-family: 'Raleway', serif;">Cuidado Integral para Seus Pets</h3>
-		  
-			  <div class="container my-5">
-				<!-- Linha de botões -->
-				<div class="d-flex justify-content-center mb-4 flex-wrap">
-				  <button class="btn btn-vet-service mx-2 mb-2 active" onclick="changeContent('Consultas')">Consultas</button>
-				  <button class="btn btn-vet-service mx-2 mb-2" onclick="changeContent('Vacinas')">Vacinas</button>
-				  <button class="btn btn-vet-service mx-2 mb-2" onclick="changeContent('Exames')">Exames</button>
-				  <button class="btn btn-vet-service mx-2 mb-2" onclick="changeContent('Internamento')">Internamento</button>
-				</div>
-		  
-				<div class="card-container">
-				  <div class="card card-vet shadow">
-					<div class="row align-items-center">
-					  <!-- Conteúdo do lado esquerdo -->
-					  <div class="col card-vet-infos" style="padding: 2rem;">
-						<h3 id="card-title">Consultas com veterinários especializados</h3>
-						<p id="card-text">Nosso time oferece consultas para diagnóstico e acompanhamento em diversas áreas, como dermatologia, cardiologia, oncologia, neurologia, endocrinologia, e mais. Seu pet será atendido com cuidado e atenção personalizados.</p>
-						<a target="_blank" href="https://api.whatsapp.com/send?phone=554732378661&text=Quero%20agendar%20uma%20consulta%20com%20um%20veterinário." id="card-button" class="btn btn-petshop">Agendar Consulta</a>
-					  </div>
-					  <!-- Imagem colada ao lado direito do cartão -->
-					  <div class="col card-vet-img">
-						<picture id="card-picture">
-						  <source id="card-source-avif" srcset="assets/images/services/consulta.avif" type="image/avif">
-						  <source id="card-source-webp" srcset="assets/images/services/consulta.webp" type="image/webp">
-						  <img id="card-image" src="assets/images/services/consulta.jpg" alt="Veja nossos serviços" style="width: 100%; height: auto; object-fit: cover;">
-						</picture>
-					  </div>
+				<h2 class="text-center mb-2">Veterinária</h2>
+				<h3 class="text-center mb-4 fs-4" style="font-family: 'Raleway', serif;">Cuidado Integral para Seus Pets</h3>
+		
+				<div class="container my-5">
+					<!-- Linha de botões -->
+					<div class="d-flex justify-content-center mb-4 flex-wrap">
+						<button class="btn btn-vet-service mx-2 mb-2 active" onclick="changeContent('Consultas')">Consultas</button>
+						<button class="btn btn-vet-service mx-2 mb-2" onclick="changeContent('Vacinas')">Vacinas</button>
+						<button class="btn btn-vet-service mx-2 mb-2" onclick="changeContent('Exames')">Exames</button>
+						<button class="btn btn-vet-service mx-2 mb-2" onclick="changeContent('Internamento')">Internamento</button>
 					</div>
-				  </div>						
+					
+					<div class="card-container">
+						<div class="card card-vet shadow">
+							<div class="row align-items-center">
+								<!-- Conteúdo do lado esquerdo -->
+								<div class="col card-vet-infos" style="padding: 2rem;">
+									<h3 id="card-title">Consultas com veterinários especializados</h3>
+									<p id="card-text">Nosso time oferece consultas para diagnóstico e acompanhamento em diversas áreas, como dermatologia, cardiologia, oncologia, neurologia, endocrinologia, e mais. Seu pet será atendido com cuidado e atenção personalizados.</p>
+									<a target="_blank" href="https://api.whatsapp.com/send?phone=554732378661&text=Quero%20agendar%20uma%20consulta%20com%20um%20veterinário." id="card-button" class="btn btn-petshop">Agendar Consulta</a>
+								</div>
+								<!-- Imagem colada ao lado direito do cartão -->
+								<div class="col card-vet-img" style="">
+									<img id="card-image" src="assets/images/services/consulta.jpg" alt="Veja nossos serviços" style="">
+								</div>
+							</div>
+						</div>						
+					</div>
+					<!-- Card largo -->
+
 				</div>
-			  </div>
-		  
-			  <script>
-				// Conteúdo dinâmico
-				const content = {
-				  Consultas: {
-					title: "Consultas com veterinários especializados",
-					text: "Nosso time oferece consultas para diagnóstico e acompanhamento em diversas áreas, como dermatologia, cardiologia, oncologia, neurologia, endocrinologia, e mais. Seu pet será atendido com cuidado e atenção personalizados.",
-					image: "assets/images/services/consulta.jpg", // A imagem padrão será carregada se as versões WebP e AVIF não forem suportadas
-					imageWebP: "assets/images/services/consulta.webp",
-					imageAVIF: "assets/images/services/consulta.avif",
-					buttonText: "Agendar Consulta",
-					link: "https://api.whatsapp.com/send?phone=554732378661&text=Quero%20agendar%20uma%20consulta%20com%20um%20veterinário.",
-				  },
-				  Vacinas: {
-					title: "Imunização completa para cães e gatos",
-					text: "Garantimos a saúde e proteção do seu pet com vacinas seguras, como V8, V10, antirrábica e outras essenciais. Consulte nosso calendário de vacinação e mantenha seu amigo imunizado.",
-					image: "assets/images/services/vacina.jpg",
-					imageWebP: "assets/images/services/vacina.webp",
-					imageAVIF: "assets/images/services/vacina.avif",
-					buttonText: "Agendar Vacinação",
-					link: "https://api.whatsapp.com/send?phone=554732378661&text=Quero%20agendar%20uma%20vacinação%20para%20meu%20pet.",
-				  },
-				  Exames: {
-					title: "Exames de última geração para diagnósticos rápidos",
-					text: "Oferecemos exames completos e tecnologia de ponta para diagnósticos rápidos e confiáveis. De análises laboratoriais a exames de imagem, cuidamos de cada detalhe para a saúde do seu pet.",
-					image: "assets/images/services/exame.jpg",
-					imageWebP: "assets/images/services/exame.webp",
-					imageAVIF: "assets/images/services/exame.avif",
-					buttonText: "Agendar Exame",
-					link: "https://api.whatsapp.com/send?phone=554732378661&text=Quero%20agendar%20um%20exame%20para%20meu%20pet.",
-				  },
-				  Internamento: {
-					title: "Internamento completo e monitoramento 24h",
-					text: "Oferecemos internamento com ambientes separados para cães e gatos, garantindo conforto e tranquilidade. Contamos com suporte veterinário especializado em cardiologia, nefrologia, oncologia, ortopedia, e mais.",
-					image: "assets/images/services/internacao.jpg",
-					imageWebP: "assets/images/services/internacao.webp",
-					imageAVIF: "assets/images/services/internacao.avif",
-					buttonText: "Saiba mais",
-					link: "https://api.whatsapp.com/send?phone=554732378661&text=Quero%20saber%20mais%20sobre%20o%20internamento.",
-				  },
-				};
-		  
-				// Função para trocar o conteúdo do card e alterar a cor dos botões
-				function changeContent(section) {
-				  document.getElementById("card-title").innerText = content[section].title;
-				  document.getElementById("card-text").innerText = content[section].text;
-				  document.getElementById("card-button").innerText = content[section].buttonText;
-				  document.getElementById("card-button").href = content[section].link;
-		  
-				  // Atualizar as fontes de imagem no <picture>
-				  document.getElementById("card-source-avif").srcset = content[section].imageAVIF;
-				  document.getElementById("card-source-webp").srcset = content[section].imageWebP;
-				  document.getElementById("card-image").src = content[section].image;
-		  
-				  // Alterar a cor dos botões
-				  const buttons = document.querySelectorAll('.btn-vet-service');
-				  buttons.forEach(button => {
-					if (button.textContent === section) {
-					  button.classList.add('active');
-					} else {
-					  button.classList.remove('active');
+		
+				<script>
+					// Conteúdo dinâmico
+					const content = {
+						Consultas: {
+							title: "Consultas com veterinários especializados",
+							text: "Nosso time oferece consultas para diagnóstico e acompanhamento em diversas áreas, como dermatologia, cardiologia, oncologia, neurologia, endocrinologia, e mais. Seu pet será atendido com cuidado e atenção personalizados.",
+							image: "assets/images/services/consulta.jpg",
+							buttonText: "Agendar Consulta",
+							link: "https://api.whatsapp.com/send?phone=554732378661&text=Quero%20agendar%20uma%20consulta%20com%20um%20veterinário.",
+						},
+						Vacinas: {
+							title: "Imunização completa para cães e gatos",
+							text: "Garantimos a saúde e proteção do seu pet com vacinas seguras, como V8, V10, antirrábica e outras essenciais. Consulte nosso calendário de vacinação e mantenha seu amigo imunizado.",
+							image: "assets/images/services/vacina.jpg",
+							buttonText: "Agendar Vacinação",
+							link: "https://api.whatsapp.com/send?phone=554732378661&text=Quero%20agendar%20uma%20vacinação%20para%20meu%20pet.",
+						},
+						Exames: {
+							title: "Exames de última geração para diagnósticos rápidos",
+							text: "Oferecemos exames completos e tecnologia de ponta para diagnósticos rápidos e confiáveis. De análises laboratoriais a exames de imagem, cuidamos de cada detalhe para a saúde do seu pet.",
+							image: "assets/images/services/exame.jpg",
+							buttonText: "Agendar Exame",
+							link: "https://api.whatsapp.com/send?phone=554732378661&text=Quero%20agendar%20um%20exame%20para%20meu%20pet.",
+						},
+						Internamento: {
+							title: "Internamento completo e monitoramento 24h",
+							text: "Oferecemos internamento com ambientes separados para cães e gatos, garantindo conforto e tranquilidade. Contamos com suporte veterinário especializado em cardiologia, nefrologia, oncologia, ortopedia, e mais.",
+							image: "assets/images/services/internacao.jpg",
+							buttonText: "Saiba mais",
+							link: "https://api.whatsapp.com/send?phone=554732378661&text=Quero%20saber%20mais%20sobre%20o%20internamento.",
+						},
+					};
+		
+					// Função para trocar o conteúdo do card e alterar a cor dos botões
+					function changeContent(section) {
+						document.getElementById("card-title").innerText = content[section].title;
+						document.getElementById("card-text").innerText = content[section].text;
+						document.getElementById("card-image").src = content[section].image;
+						document.getElementById("card-button").innerText = content[section].buttonText;
+						document.getElementById("card-button").href = content[section].link;
+		
+						// Alterar a cor dos botões
+						const buttons = document.querySelectorAll('.btn-vet-service');
+						buttons.forEach(button => {
+							if (button.textContent === section) {
+								button.classList.add('active');
+							} else {
+								button.classList.remove('active');
+							}
+						});
 					}
-				  });
-				}
-			  </script>
+				</script>
 			</div>
-		  </section>
+		</section>
 		  
 		<!-- Avaliações -->
 		<section class="py-5">
