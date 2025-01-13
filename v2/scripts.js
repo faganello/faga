@@ -1,8 +1,18 @@
 
 // Troca de imagem no mockup
+document.getElementById('notionButton').addEventListener('click', function() {
+    changeImage('https://faganelo.me/v2/assets/Notion%20mail.png');
+});
+document.getElementById('animateButton').addEventListener('click', function() {
+    changeImage('https://faganelo.me/v2/assets/animate.png');
+});
+document.getElementById('maxButton').addEventListener('click', function() {
+    changeImage('https://faganelo.me/v2/assets/max.png');
+});
+
 function changeImage(image) {
-  const imageDisplay = document.getElementById('imageDisplay');
-  imageDisplay.src = image;
+    const imageDisplay = document.getElementById('imageDisplay');
+    imageDisplay.src = image;
 }
 
 // Efeito de pixels
