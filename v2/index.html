@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <meta charset="utf-8">
+        <title>faganelo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="description" content="Descubra como um site bem-feito pode atrair clientes, destacar sua marca e impulsionar suas vendas. Criamos websites incríveis sob medida para você."/>
+        <meta name="keywords" content=""criação de sites", "web design", "sites profissionais", "sites personalizados", "design responsivo", "SEO otimizado", "presença online", "websites modernos", "melhores sites para negócios"."/>
+        <meta property="og:title" content="Faganelo"/>
+        <meta property="og:description" content="Transforme visitas em vendas com um site bonito, funcional e feito sob medida para você."/>
+        <meta property="og:image" content="assets/frame_1.png"/>
+        <link rel="icon" href="assets/f.ico"/>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+        <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet"/>
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+        
+        <script src="assets/static/scripts.js"></script>
+        <link rel="stylesheet" href="assets/static/styles.css">
+        
+    </head>
+    <body>
+        <!-- Typebot -->
+        <script type="module">
+            import Typebot from 'https://cdn.jsdelivr.net/npm/@typebot.io/js@0.3.34/dist/web.js'
+          
+            Typebot.initBubble({
+              typebot: "my-typebot-tip9hwt",
+              apiHost: "https://chat.faganelo.me",
+              theme: {
+                button: { backgroundColor: "#0042DA" },
+                chatWindow: { backgroundColor: "#fff" },
+              },
+            });
+        </script>
+
+        <!-- nav -->
+        <nav>
+            <div class="nav-container">
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <div class="nav-left animate__animated animate__bounceInLeft">
+                    <a href="#inicio" class="" style="color:#303030; font-weight: bold; ">Início</a>
+                    <a href="#blog" style="">Blog</a>
+                </div>
+                <div class="nav-center animate__animated animate__bounceInDown">
+                    <span>faganelo</span>
+                </div>
+                <div class="nav-right animate__animated animate__bounceInRight" style="">
+                    <button onclick="location.href='#login'">Login</button>
+                </div>
+            </div>
+            <div class="side-menu" id="sideMenu">
+                <div>
+                    <div class="header-side-menu">
+                        <button class="close-menu" onclick="toggleMenu()">✖</button>
+                    </div>
+                    <a href="#inicio">Início</a>
+                    <a href="#blog">Blog</a>
+                </div>
+                <button class="login-button" onclick="location.href='#login'">Login</button>
+            </div>
+        </nav>
+        <script>
+            function toggleMenu() {
+                const sideMenu = document.getElementById('sideMenu');
+                sideMenu.classList.toggle('open');
+            }
+        </script>
+
+        <!-- hero -->
+        <section class="section-hero animate__animated animate__fadeIn" style="--animate-duration: 2s;">
+            <div class="hero">
+                <h1 id="heroText"></h1>
+                <script>
+                    const phrases = [
+                        "<b>Pense rápido:</b><br>Quantos clientes você já perdeu por não estar online?",
+                        "<b>Seu concorrente já está online.</b><br>E você?",
+                        "<b>Está difícil crescer?</b><br>Talvez o problema esteja no seu site<br>(ou na falta dele).",
+                        "Seu público está procurando por você na internet.<br><b>Vamos garantir que eles te encontrem.</b>",
+                        "<b>Seu público está navegando.</b><br>E você? Ainda à deriva?",
+                        "Pense no site dos seus sonhos.<br><b>Agora deixe comigo.</b>",
+                        "Seu próximo cliente já está na internet.<br><b>A questão é: ele vai te encontrar?</b>",
+                        "Seu site atual parece de 2005?<br><b>Seus clientes também acham.</b>",
+                        "<b>Acha que ter um site é opcional?</b><br>Seu concorrente acha estratégico.<br>E ele está certo.",
+                        "Negócios sérios tratam o site como investimento.<br><b>E você?</b>",
+                        "Enquanto você hesita, <b>outros estão transformando cliques em vendas.</b>"
+                    ];
+                
+                    // Função para sortear uma frase
+                    function getRandomPhrase() {
+                        const randomIndex = Math.floor(Math.random() * phrases.length);
+                        return phrases[randomIndex];
+                    }
+                
+                    // Atualiza o texto do hero com uma frase aleatória
+                    document.getElementById('heroText').innerHTML = getRandomPhrase();
+                </script>
+            </div>
+        </section>
+
+        <!-- Services -->
+        <section class="services-section">
+            <div class="section-title">
+                <h2>Escolha o site certo para sua necessidade</h2>
+                <h3>Cada tipo de site resolve um problema específico. Descubra o que vai alavancar seu negócio e encantar seu público</h3>
+            </div>
+            <main>
+                <div class="card animate__animated animate__fadeInUp" style="--active-color: #DA073B; --animate-duration: 2s;">
+                    <pixel-canvas class="pixel" data-gap="3" data-speed="20" data-colors="#DA073B, #ca1e49, #db4c70"></pixel-canvas>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
+                        <circle opacity="0.5" cx="12" cy="12" r="10" stroke="#7B7B7B" stroke-width="1.5"/>
+                        <path d="M12 17V17.5V18" stroke="#181E33" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M12 6V6.5V7" stroke="#181E33" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M15 9.5C15 8.11929 13.6569 7 12 7C10.3431 7 9 8.11929 9 9.5C9 10.8807 10.3431 12 12 12C13.6569 12 15 13.1193 15 14.5C15 15.8807 13.6569 17 12 17C10.3431 17 9 15.8807 9 14.5" stroke="#181E33" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <h4>Página de Vendas</h4>
+                    <p>Ideal para quem deseja destacar produtos ou serviços e converter visitantes em compradores.</p>
+                    <button>Layout</button>
+                </div>
+            
+                <div class="card animate__animated animate__fadeInUp" style="--active-color: #181E33; --animate-duration: 3s;">
+                    <pixel-canvas class="pixel" data-gap="3" data-speed="20" data-colors="#181E33, #212e5c, #3d4a79"></pixel-canvas>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
+                        <path opacity="0.5" d="M3 12C3 15.7712 3 19.6569 4.31802 20.8284C5.63604 22 7.75736 22 12 22C16.2426 22 18.364 22 19.682 20.8284C21 19.6569 21 15.7712 21 12" stroke="#7B7B7B" stroke-width="1.5"/>
+                        <path d="M14.6603 14.2019L20.6676 12.3997C21.2631 12.2211 21.5609 12.1317 21.7498 11.9176C21.7866 11.8759 21.8199 11.8312 21.8492 11.784C22 11.5415 22 11.2307 22 10.6089C22 8.15877 22 6.9337 21.327 6.10659C21.1977 5.94763 21.0524 5.80233 20.8934 5.67298C20.0663 5 18.8412 5 16.3911 5H7.60893C5.15877 5 3.9337 5 3.10659 5.67298C2.94763 5.80233 2.80233 5.94763 2.67298 6.10659C2 6.9337 2 8.15877 2 10.6089C2 11.2307 2 11.5415 2.15078 11.784C2.18015 11.8312 2.21341 11.8759 2.25021 11.9176C2.43915 12.1317 2.7369 12.2211 3.3324 12.3997L9.33968 14.2019" stroke="#181E33" stroke-width="1.5"/>
+                        <path opacity="0.5" d="M6.5 5C7.32344 4.97913 8.15925 4.45491 8.43944 3.68032C8.44806 3.65649 8.4569 3.62999 8.47457 3.57697L8.50023 3.5C8.54241 3.37344 8.56351 3.31014 8.58608 3.254C8.87427 2.53712 9.54961 2.05037 10.3208 2.00366C10.3812 2 10.4479 2 10.5814 2H13.4191C13.5525 2 13.6192 2 13.6796 2.00366C14.4508 2.05037 15.1262 2.53712 15.4144 3.254C15.4369 3.31014 15.458 3.37343 15.5002 3.5L15.5259 3.57697C15.5435 3.62968 15.5524 3.65656 15.561 3.68032C15.8412 4.45491 16.6766 4.97913 17.5 5" stroke="#7B7B7B" stroke-width="1.5"/>
+                        <path d="M14 12.5H10C9.72386 12.5 9.5 12.7239 9.5 13V15.1615C9.5 15.3659 9.62448 15.5498 9.8143 15.6257L10.5144 15.9058C11.4681 16.2872 12.5319 16.2872 13.4856 15.9058L14.1857 15.6257C14.3755 15.5498 14.5 15.3659 14.5 15.1615V13C14.5 12.7239 14.2761 12.5 14 12.5Z" stroke="#181E33" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <h4>Institucional</h4>
+                    <p>Mostre ao mundo quem você é, o que faz e por que sua empresa é única.</p>
+                    <button>Code</buton>
+                </div>
+            
+                <div class="card animate__animated animate__fadeInUp" style="--active-color: #F89720; --animate-duration: 4s;">
+                    <pixel-canvas class="pixel" data-gap="3" data-speed="20" data-colors="#fef08a, #fde047, #eab308"></pixel-canvas>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
+                        <path d="M18.18 8.03933L18.6435 7.57589C19.4113 6.80804 20.6563 6.80804 21.4241 7.57589C22.192 8.34374 22.192 9.58868 21.4241 10.3565L20.9607 10.82M18.18 8.03933C18.18 8.03933 18.238 9.02414 19.1069 9.89309C19.9759 10.762 20.9607 10.82 20.9607 10.82M18.18 8.03933L13.9194 12.2999C13.6308 12.5885 13.4865 12.7328 13.3624 12.8919C13.2161 13.0796 13.0906 13.2827 12.9882 13.4975C12.9014 13.6797 12.8368 13.8732 12.7078 14.2604L12.2946 15.5L12.1609 15.901M20.9607 10.82L16.7001 15.0806C16.4115 15.3692 16.2672 15.5135 16.1081 15.6376C15.9204 15.7839 15.7173 15.9094 15.5025 16.0118C15.3203 16.0986 15.1268 16.1632 14.7396 16.2922L13.5 16.7054L13.099 16.8391M13.099 16.8391L12.6979 16.9728C12.5074 17.0363 12.2973 16.9867 12.1553 16.8447C12.0133 16.7027 11.9637 16.4926 12.0272 16.3021L12.1609 15.901M13.099 16.8391L12.1609 15.901" stroke="#181E33" stroke-width="1.5"/>
+                        <path d="M8 13H10.5" stroke="#181E33" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M8 9H14.5" stroke="#181E33" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M8 17H9.5" stroke="#181E33" stroke-width="1.5" stroke-linecap="round"/>
+                        <path opacity="0.5" d="M3 10C3 6.22876 3 4.34315 4.17157 3.17157C5.34315 2 7.22876 2 11 2H13C16.7712 2 18.6569 2 19.8284 3.17157C21 4.34315 21 6.22876 21 10V14C21 17.7712 21 19.6569 19.8284 20.8284C18.6569 22 16.7712 22 13 22H11C7.22876 22 5.34315 22 4.17157 20.8284C3 19.6569 3 17.7712 3 14V10Z" stroke="#7B7B7B" stroke-width="1.5"/>
+                    </svg>
+                    <h4>Blog</h4>
+                    <p>Compartilhe conteúdo, atraia leitores e mostre sua autoridade no que você faz de melhor.</p>
+                    <button>Command</buton>
+                </div>
+            
+                <div class="card animate__animated animate__fadeInUp" style="--active-color: #202617; --animate-duration: 5s;">
+                    <pixel-canvas class="pixel" data-gap="3" data-speed="20" data-colors="#202617, #2f3a1f, #415229" data-no-focus></pixel-canvas>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
+                        <path d="M3.84453 7.92226C2.71849 6.79623 2.71849 4.97056 3.84453 3.84453C4.97056 2.71849 6.79623 2.71849 7.92226 3.84453L20.1555 16.0777C21.2815 17.2038 21.2815 19.0294 20.1555 20.1555C19.0294 21.2815 17.2038 21.2815 16.0777 20.1555L3.84453 7.92226Z" stroke="#181E33" stroke-width="1.5"/>
+                        <path opacity="0.5" d="M6 10L10 6" stroke="#7B7B7B" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M16.1 2.30719C16.261 1.8976 16.8385 1.8976 16.9994 2.30719L17.4298 3.40247C17.479 3.52752 17.5776 3.62651 17.7022 3.67583L18.7934 4.1078C19.2015 4.26934 19.2015 4.849 18.7934 5.01054L17.7022 5.44252C17.5776 5.49184 17.479 5.59082 17.4298 5.71587L16.9995 6.81115C16.8385 7.22074 16.261 7.22074 16.1 6.81116L15.6697 5.71587C15.6205 5.59082 15.5219 5.49184 15.3973 5.44252L14.3061 5.01054C13.898 4.849 13.898 4.26934 14.3061 4.1078L15.3973 3.67583C15.5219 3.62651 15.6205 3.52752 15.6697 3.40247L16.1 2.30719Z" stroke="#181E33"/>
+                        <path opacity="0.5" d="M19.9672 9.12945C20.1281 8.71987 20.7057 8.71987 20.8666 9.12945L21.0235 9.5288C21.0727 9.65385 21.1713 9.75284 21.2959 9.80215L21.6937 9.95965C22.1018 10.1212 22.1018 10.7009 21.6937 10.8624L21.2959 11.0199C21.1713 11.0692 21.0727 11.1682 21.0235 11.2932L20.8666 11.6926C20.7057 12.1022 20.1281 12.1022 19.9672 11.6926L19.8103 11.2932C19.7611 11.1682 19.6625 11.0692 19.5379 11.0199L19.14 10.8624C18.732 10.7009 18.732 10.1212 19.14 9.95965L19.5379 9.80215C19.6625 9.75284 19.7611 9.65385 19.8103 9.5288L19.9672 9.12945Z" stroke="#7B7B7B"/>
+                        <path opacity="0.5" d="M5.1332 15.3072C5.29414 14.8976 5.87167 14.8976 6.03261 15.3072L6.18953 15.7065C6.23867 15.8316 6.33729 15.9306 6.46188 15.9799L6.85975 16.1374C7.26783 16.2989 7.26783 16.8786 6.85975 17.0401L6.46188 17.1976C6.33729 17.2469 6.23867 17.3459 6.18953 17.471L6.03261 17.8703C5.87167 18.2799 5.29414 18.2799 5.1332 17.8703L4.97628 17.471C4.92714 17.3459 4.82852 17.2469 4.70393 17.1976L4.30606 17.0401C3.89798 16.8786 3.89798 16.2989 4.30606 16.1374L4.70393 15.9799C4.82852 15.9306 4.92714 15.8316 4.97628 15.7065L5.1332 15.3072Z" stroke="#7B7B7B"/>
+                    </svg>
+                    <h4>Aplicação Web</h4>
+                    <p>Ferramentas personalizadas para automatizar processos, engajar usuários e expandir sua operação.</p>
+                    <button>Dropper</buton>
+                </div>
+            </main>
+            <!-- partial -->
+            <script>
+
+              </script>
+        </section>
+
+        <!-- models -->
+        <section class="models-section">
+            <div class="section-title">
+                <h2>Inspirado em você</h2>
+                <h3>Veja exemplos de como diferentes negócios podem se destacar na web e imagine o potencial do seu site.</h3>
+            </div>
+            <div class="mockup-pc">
+                <img id="imageDisplay" src='assets/images/pc3.png' alt="Imagem" class="image">
+            </div>
+                
+            <div class="models-buttons">
+                <button id="prevButton">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none">
+                        <path d="M15 5L9 12L15 19" stroke="#7B7B7B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <button id="randomButton">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none">
+                        <path d="M2 16.25C1.58579 16.25 1.25 16.5858 1.25 17C1.25 17.4142 1.58579 17.75 2 17.75V16.25ZM10.7478 14.087L10.1047 13.7011L10.7478 14.087ZM13.2522 9.91303L13.8953 10.2989L13.2522 9.91303ZM22 7L22.5303 7.53033C22.8232 7.23744 22.8232 6.76256 22.5303 6.46967L22 7ZM19.4697 8.46967C19.1768 8.76256 19.1768 9.23744 19.4697 9.53033C19.7626 9.82322 20.2374 9.82322 20.5303 9.53033L19.4697 8.46967ZM20.5303 4.46967C20.2374 4.17678 19.7626 4.17678 19.4697 4.46967C19.1768 4.76256 19.1768 5.23744 19.4697 5.53033L20.5303 4.46967ZM15.2205 7.3894L14.851 6.73675V6.73675L15.2205 7.3894ZM2 17.75H5.60286V16.25H2V17.75ZM11.3909 14.4728L13.8953 10.2989L12.6091 9.52716L10.1047 13.7011L11.3909 14.4728ZM18.3971 7.75H22V6.25H18.3971V7.75ZM21.4697 6.46967L19.4697 8.46967L20.5303 9.53033L22.5303 7.53033L21.4697 6.46967ZM22.5303 6.46967L20.5303 4.46967L19.4697 5.53033L21.4697 7.53033L22.5303 6.46967ZM13.8953 10.2989C14.3295 9.57518 14.6286 9.07834 14.9013 8.70996C15.1644 8.35464 15.3692 8.16707 15.59 8.04205L14.851 6.73675C14.384 7.00113 14.0315 7.36397 13.6958 7.8174C13.3697 8.25778 13.0285 8.82806 12.6091 9.52716L13.8953 10.2989ZM18.3971 6.25C17.5819 6.25 16.9173 6.24918 16.3719 6.30219C15.8104 6.35677 15.3179 6.47237 14.851 6.73675L15.59 8.04205C15.8108 7.91703 16.077 7.83793 16.517 7.79516C16.9733 7.75082 17.5531 7.75 18.3971 7.75V6.25ZM5.60286 17.75C6.41814 17.75 7.0827 17.7508 7.62807 17.6978C8.18961 17.6432 8.6821 17.5276 9.14905 17.2632L8.41 15.9579C8.18919 16.083 7.92299 16.1621 7.48296 16.2048C7.02675 16.2492 6.44685 16.25 5.60286 16.25V17.75ZM10.1047 13.7011C9.67046 14.4248 9.37141 14.9217 9.09867 15.29C8.8356 15.6454 8.63081 15.8329 8.41 15.9579L9.14905 17.2632C9.616 16.9989 9.96851 16.636 10.3042 16.1826C10.6303 15.7422 10.9715 15.1719 11.3909 14.4728L10.1047 13.7011Z" fill="#7B7B7B"/>
+                        <path opacity="0.5" d="M2 7.75C1.58579 7.75 1.25 7.41421 1.25 7C1.25 6.58579 1.58579 6.25 2 6.25V7.75ZM10.7478 9.91303L10.1047 10.2989L10.7478 9.91303ZM13.2522 14.087L13.8953 13.7011L13.2522 14.087ZM22 17L22.5303 16.4697C22.8232 16.7626 22.8232 17.2374 22.5303 17.5303L22 17ZM19.4697 15.5303C19.1768 15.2374 19.1768 14.7626 19.4697 14.4697C19.7626 14.1768 20.2374 14.1768 20.5303 14.4697L19.4697 15.5303ZM20.5303 19.5303C20.2374 19.8232 19.7626 19.8232 19.4697 19.5303C19.1768 19.2374 19.1768 18.7626 19.4697 18.4697L20.5303 19.5303ZM15.2205 16.6106L14.851 17.2632V17.2632L15.2205 16.6106ZM2 6.25H5.60286V7.75H2V6.25ZM11.3909 9.52715L13.8953 13.7011L12.6091 14.4728L10.1047 10.2989L11.3909 9.52715ZM18.3971 16.25H22V17.75H18.3971V16.25ZM21.4697 17.5303L19.4697 15.5303L20.5303 14.4697L22.5303 16.4697L21.4697 17.5303ZM22.5303 17.5303L20.5303 19.5303L19.4697 18.4697L21.4697 16.4697L22.5303 17.5303ZM13.8953 13.7011C14.3295 14.4248 14.6286 14.9217 14.9013 15.29C15.1644 15.6454 15.3692 15.8329 15.59 15.9579L14.851 17.2632C14.384 16.9989 14.0315 16.636 13.6958 16.1826C13.3697 15.7422 13.0285 15.1719 12.6091 14.4728L13.8953 13.7011ZM18.3971 17.75C17.5819 17.75 16.9173 17.7508 16.3719 17.6978C15.8104 17.6432 15.3179 17.5276 14.851 17.2632L15.59 15.9579C15.8108 16.083 16.077 16.1621 16.517 16.2048C16.9733 16.2492 17.5531 16.25 18.3971 16.25V17.75ZM5.60286 6.25C6.41814 6.25 7.0827 6.24918 7.62807 6.30219C8.18961 6.35677 8.6821 6.47237 9.14905 6.73675L8.41 8.04205C8.18919 7.91703 7.92299 7.83793 7.48296 7.79516C7.02675 7.75082 6.44685 7.75 5.60286 7.75V6.25ZM10.1047 10.2989C9.67046 9.57518 9.37141 9.07834 9.09867 8.70996C8.8356 8.35464 8.63081 8.16707 8.41 8.04205L9.14905 6.73675C9.616 7.00113 9.96851 7.36397 10.3042 7.8174C10.6303 8.25778 10.9715 8.82806 11.3909 9.52715L10.1047 10.2989Z" fill="#7B7B7B"/>
+                    </svg>
+                </button>
+                <button id="nextButton">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 5L15 12L9 19" stroke="#7B7B7B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        
+            <script>
+                const images = [
+                    'assets/images/pc1.png',
+                    'assets/images/pc2.png',
+                    'assets/images/pc3.png',
+                    // Adicione mais imagens conforme necessário
+                ];
+                let currentIndex = 0;
+
+                document.getElementById('prevButton').addEventListener('click', function() {
+                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                    changeImage(images[currentIndex]);
+                });
+
+                document.getElementById('nextButton').addEventListener('click', function() {
+                    currentIndex = (currentIndex + 1) % images.length;
+                    changeImage(images[currentIndex]);
+                });
+
+                document.getElementById('randomButton').addEventListener('click', function() {
+                    currentIndex = Math.floor(Math.random() * images.length);
+                    changeImage(images[currentIndex]);
+                });
+
+                function changeImage(image) {
+                    const imageDisplay = document.getElementById('imageDisplay');
+                    imageDisplay.src = image;
+                }
+            </script>
+        </section>
+
+        <!-- Process -->
+        <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+        <section class="process-section">
+            <div class="section-title">
+                <h2>Do esboço à publicação, juntos em cada etapa</h2>
+                <h3>Descubra como construímos seu site em um processo simples e transparente.</h3>
+            </div> 
+            <div class="timeline">
+                <hr>
+                <div id="step-1" class="step-point"></div>
+                <hr>
+                <div id="step-2" class="step-point"></div>
+                <hr>
+                <div id="step-3" class="step-point"></div>
+                <hr>
+                <div id="step-4" class="step-point"></div>
+                <hr>
+                <div id="step-5" class="step-point"></div>
+                <hr>
+            </div>  
+            <div class="timeline-card">
+                <div class="timeline-card-content">
+                    <p>Selecione um passo para ver mais detalhes.</p>
+                </div>
+            </div>       
+
+            <img src="assets/images/quadriculado.png" class="bg-process-section">
+
+            <script>
+                // Som do Confeti
+                //function playBackgroundAudio(url, volume) {
+                //    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                //    var audioElement = new Audio(url);
+                //    var audioSource = audioCtx.createMediaElementSource(audioElement);
+                //    var gainNode = audioCtx.createGain(); // Nó de ganho para controlar o volume
+                //    audioSource.connect(gainNode);
+                //    gainNode.connect(audioCtx.destination);
+                //    audioElement.loop = false;
+                //    audioElement.play();
+                //    gainNode.gain.value = volume; // Define o volume
+                //}
+
+                // Conteúdo para cada passo com imagens e texto
+                const stepContents = {
+                    step1: {
+                        title: "Wireframe",
+                        subtitle: "Esboçando a Obra",
+                        description: "Tudo começa <b>traçando os contornos</b> do que será o seu site. É aqui que decidimos onde vai cada porta, janela e espaço especial do seu site.",
+                        image: "assets/images/step-wireframe.webp",
+                        buttonText: "Ver Próxima Etapa",
+                        id: "nextButton"
+                    },
+                    step2: {
+                        title: "Design",
+                        subtitle: "Escolhendo os Revestimentos",
+                        description: "Agora que a estrutura está pronta, <b>é hora de aplicar as cores, texturas e acabamentos</b> que darão vida ao seu site.",
+                        image: "assets/images/step-design.webp",
+                        buttonText: "Ver Próxima Etapa",
+                        id: "nextButton"
+                    },
+                    step3: {
+                        title: "Desenvolvimento",
+                        subtitle: "Subindo as Paredes",
+                        description: "O design pode ser bonito, mas <b>o desenvolvimento é o coração que faz tudo pulsar.</b> É aqui que construimos linha por linha seu espaço digital. ",
+                        image: "assets/images/step-desenvolvimento.webp",
+                        buttonText: "Ver Próxima Etapa",
+                        id: "nextButton"
+                    },
+                    step4: {
+                        title: "Testes",
+                        subtitle: "Chutando as Paredes",
+                        description: "Depois de colocar todos os tijolos, vamos chuta-lo de todos os lados para se certificar de estar bem firme. É aqui que fazemos <b>testes para verificar o comportamento</b> em dispositivos moveis, carregamento, integrações e muito mais. ",
+                        image: "assets/images/tests.png",
+                        buttonText: "Ver Próxima Etapa",
+                        id: "nextButton"
+                    },
+                    step5: {
+                        title: "Entrega",
+                        subtitle: "Entrega das Chaves",
+                        description: "É hora de brilhar! <b>Colocamos seu site no ar</b> e garantimos que ele esteja pronto para encantar seus clientes desde o primeiro clique.",
+                        image: "assets/images/step-entrega2.webp",
+                        buttonText: "Continuar Lendo",
+                        id: "step-5",
+                        buttonStyle: {
+                            backgroundColor: "rgb(115 115 115)"
+                        }
+                    }
+                };
+    
+                // Seleciona todos os passos
+                const steps = document.querySelectorAll('.step-point');
+                const timelineCardContent = document.querySelector('.timeline-card-content');
+                let currentStep = 0; // Passo atual
+
+                // Função para atualizar o conteúdo do card
+                function updateCardContent(stepIndex) {
+                    const content = stepContents[`step${stepIndex + 1}`];
+                    timelineCardContent.innerHTML = `
+                        <div class="step-content">
+                            <div class="step-text">
+                                <h4>${content.title}</h4>
+                                <h5>${content.subtitle}</h5>
+                                <p>${content.description}</p>
+                            </div>
+                            <button class="next-step" id="${content.id}" style="${content.buttonStyle ? `background-color: ${content.buttonStyle.backgroundColor};` : ''}">${content.buttonText}</button>
+                        </div>
+                        <div class="steps-navegador">
+                            <div class="steps-navegador-btns">
+                                <div class="snb-1"></div>
+                                <div class="snb-2"></div>
+                                <div class="snb-3"></div>
+                            </div>
+                            <img src="${content.image}" alt="Imagem ${stepIndex + 1}" class="step-image" />    
+                        </div>`;
+
+                    // Verifica se o passo atual é o "Entrega"
+                    if (stepIndex === 4) { // Passo 5 (index 4)
+                        // Inicie a reprodução do áudio em segundo plano
+                        // playBackgroundAudio('assets/audio/confetti.mp3', 0.5);
+
+                        setTimeout(() => {
+                            // Execute a função de confete
+                            confetti({
+                                particleCount: 1000,
+                                spread: 150,
+                                origin: { y: 0.6 },
+                            });
+                        }, 2000);
+                    }
+
+                }
+
+                // Inicializa o primeiro passo como ativo
+                updateCardContent(currentStep);
+                steps[currentStep].classList.add('active');
+
+                // Adiciona evento de clique a cada passo
+                steps.forEach((step, index) => {
+                    step.addEventListener('click', () => {
+                        currentStep = index; // Atualiza o passo atual
+                        updateCardContent(currentStep);
+                        // Remove a classe 'active' de todos os passos
+                        steps.forEach(step => step.classList.remove('active'));
+                        // Adiciona a classe 'active' ao passo clicado
+                        step.classList.add('active');
+                    });
+                });
+
+                // Adiciona evento de clique ao botão "Próximo Passo"
+                timelineCardContent.addEventListener('click', (event) => {
+                    if (event.target.id === 'nextButton') {
+                        currentStep = (currentStep + 1) % steps.length; // Avança para o próximo passo
+                        updateCardContent(currentStep);
+                        // Remove a classe 'active' de todos os passos
+                        steps.forEach(step => step.classList.remove('active'));
+                        // Adiciona a classe 'active' ao passo atual
+                        steps[currentStep].classList.add('active');
+                    }
+                    if (event.target.id === 'step-5') {
+                        window.scrollTo({
+                            top: document.querySelector('.section-princing').offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+                
+            </script>
+
+        </section>
+
+        <!-- Pricing -->
+        <section class="section-princing">
+            <div class="section-title">
+                <h2>Por que facilitar a vida do concorrente?</h2>
+                <h3>Um site que funciona <b>é o primeiro passo</b> para reconquistar o espaço que é seu.</h3>
+            </div>
+
+            <div class="radio-plan">
+                <div class="tab-container">
+                    <input type="radio" name="tab" id="tab1" class="tab tab--1" />
+                    <label class="tab_label" for="tab1">Mensal</label>
+                
+                    <input type="radio" name="tab" id="tab2" class="tab tab--2" />
+                    <label class="tab_label" for="tab2">Anual</label>
+                
+                    <div class="indicator"></div>
+                </div>           
+            </div>   
+            
+            <div class="plans">
+                <div class="plans-column plan-1">
+                    <h4>Coluna 1</h4>
+                    <p>Essa deve ser a descrição do plano para o usuario julgar se é adequado.</p>
+                    <div class="price-plan-card">
+                        <p>$</p>
+                        <span class="price">9.99</span>
+                    </div>
+                    <div class="features-plan-card">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none">
+                                <path opacity="0.5" d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="#1C274C" stroke-width="1.5"/>
+                                <path d="M8.5 12.5L10.5 14.5L15.5 9.5" stroke="#181e33" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p>Manutenção</p>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none">
+                                <path opacity="0.5" d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="#1C274C" stroke-width="1.5"/>
+                                <path d="M8.5 12.5L10.5 14.5L15.5 9.5" stroke="#181e33" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p>Manutenção</p>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none">
+                                <path opacity="0.5" d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="#1C274C" stroke-width="1.5"/>
+                                <path d="M8.5 12.5L10.5 14.5L15.5 9.5" stroke="#181e33" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p>Manutenção</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="plans-column plan-2">
+                    <h4>Coluna 2</h4>
+                    <p>Essa deve ser a descrição do plano para o usuario julgar se é adequado.</p>
+                    <div class="price-plan-card">
+                        <p>$</p>
+                        <span class="price">9.99</span>
+                    </div>
+                    <div class="features-plan-card">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none">
+                                <path opacity="0.5" d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="#1C274C" stroke-width="1.5"/>
+                                <path d="M8.5 12.5L10.5 14.5L15.5 9.5" stroke="#181e33" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p>Manutenção</p>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none">
+                                <path opacity="0.5" d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="#1C274C" stroke-width="1.5"/>
+                                <path d="M8.5 12.5L10.5 14.5L15.5 9.5" stroke="#181e33" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p>Manutenção</p>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none">
+                                <path opacity="0.5" d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="#1C274C" stroke-width="1.5"/>
+                                <path d="M8.5 12.5L10.5 14.5L15.5 9.5" stroke="#181e33" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p>Manutenção</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="plans-column plan-3">
+                    <h4>Coluna 3</h4>
+                    <p>Essa deve ser a descrição do plano para o usuario julgar se é adequado.</p>
+                    <div class="price-plan-card">
+                        <p>$</p>
+                        <span class="price">9.99</span>
+                    </div>
+                    <div class="features-plan-card">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none">
+                                <path opacity="0.5" d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="#1C274C" stroke-width="1.5"/>
+                                <path d="M8.5 12.5L10.5 14.5L15.5 9.5" stroke="#181e33" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p>Manutenção</p>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none">
+                                <path opacity="0.5" d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="#1C274C" stroke-width="1.5"/>
+                                <path d="M8.5 12.5L10.5 14.5L15.5 9.5" stroke="#181e33" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p>Manutenção</p>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none">
+                                <path opacity="0.5" d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="#1C274C" stroke-width="1.5"/>
+                                <path d="M8.5 12.5L10.5 14.5L15.5 9.5" stroke="#181e33" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p>Manutenção</p>
+                        </div>
+                    </div>                  
+                </div>
+            </div>
+            <script>
+                // JavaScript para alternar entre informações de planos mensal e anual
+                document.addEventListener('DOMContentLoaded', function() {
+                    const monthlyPlans = {
+                        description: "Essa deve ser a descrição do plano mensal para o usuario julgar se é adequado.",
+                        price: "9.99",
+                        features: [
+                            "Manutenção",
+                            "Suporte 24/7",
+                            "Atualizações mensais"
+                        ]
+                    };
+
+                    const annualPlans = {
+                        description: "Essa deve ser a descrição do plano anual para o usuario julgar se é adequado.",
+                        price: "99.99",
+                        features: [
+                            "Manutenção",
+                            "Suporte 24/7",
+                            "Atualizações trimestrais",
+                            "Desconto de 15%"
+                        ]
+                    };
+
+                    const planDescriptionElements = document.querySelectorAll('.plan-description');
+                    const priceElements = document.querySelectorAll('.price');
+                    const featureElements = document.querySelectorAll('.features-plan-card div');
+
+                    function updatePlanInfo(plan) {
+                        planDescriptionElements.forEach(el => el.textContent = plan.description);
+                        priceElements.forEach(el => el.textContent = plan.price);
+                        featureElements.forEach((el, index) => {
+                            if (plan.features[index]) {
+                                el.querySelector('p').textContent = plan.features[index];
+                            }
+                        });
+                    }
+
+                    document.getElementById('tab1').addEventListener('change', function() {
+                        if (this.checked) {
+                            updatePlanInfo(monthlyPlans);
+                        }
+                    });
+
+                    document.getElementById('tab2').addEventListener('change', function() {
+                        if (this.checked) {
+                            updatePlanInfo(annualPlans);
+                        }
+                    });
+
+                    // Inicializa com as informações do plano mensal
+                    updatePlanInfo(monthlyPlans);
+                });
+            </script>           
+        </section>
+
+        <!-- Contact -->
+        <section class="contact-section">
+            <div class="contact-section-content">
+                <h2>Sua solução está a um clique de distância</h2>
+                <a href="" class="contact-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:7px;" fill="#fff" width="20px" height="20px" viewBox="0 0 16 16"><path d="M11.42 9.49c-.19-.09-1.1-.54-1.27-.61s-.29-.09-.42.1-.48.6-.59.73-.21.14-.4 0a5.13 5.13 0 0 1-1.49-.92 5.25 5.25 0 0 1-1-1.29c-.11-.18 0-.28.08-.38s.18-.21.28-.32a1.39 1.39 0 0 0 .18-.31.38.38 0 0 0 0-.33c0-.09-.42-1-.58-1.37s-.3-.32-.41-.32h-.4a.72.72 0 0 0-.5.23 2.1 2.1 0 0 0-.65 1.55A3.59 3.59 0 0 0 5 8.2 8.32 8.32 0 0 0 8.19 11c.44.19.78.3 1.05.39a2.53 2.53 0 0 0 1.17.07 1.93 1.93 0 0 0 1.26-.88 1.67 1.67 0 0 0 .11-.88c-.05-.07-.17-.12-.36-.21z"/><path d="M13.29 2.68A7.36 7.36 0 0 0 8 .5a7.44 7.44 0 0 0-6.41 11.15l-1 3.85 3.94-1a7.4 7.4 0 0 0 3.55.9H8a7.44 7.44 0 0 0 5.29-12.72zM8 14.12a6.12 6.12 0 0 1-3.15-.87l-.22-.13-2.34.61.62-2.28-.14-.23a6.18 6.18 0 0 1 9.6-7.65 6.12 6.12 0 0 1 1.81 4.37A6.19 6.19 0 0 1 8 14.12z"/></svg>
+                    Entrar em contato
+                </a>
+            </div>
+        </section>
+
+        <!-- Map -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-column">
+                    <div class="footer-logo">faganelo</div>
+                    <div class="footer-social-icons">
+                        <a href="#"><img src="assets/icons/social/github.svg" alt="GitHub" /></a>
+                        <a href="#"><img src="assets/icons/social/youtube.svg" alt="YouTube" /></a>
+                        <a href="#"><img src="assets/icons/social/tabnews.svg" alt="Tabnews" /></a>
+                        <a href="#"><img src="assets/icons/social/instagram.svg" alt="Instagram" /></a>
+                    </div>
+                </div>
+                
+                <div class="footer-menu">
+                    <div class="footer-column">
+                        <h4>Links Úteis</h4>
+                        <ul>
+                            <li><a href="#inicio">Início</a></li>
+                            <li><a href="#blog">Blog</a></li>
+                            <li><a href="#servicos">Serviços</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Contato</h4>
+                        <ul>
+                            <li><a href="#sobre">Sobre Nós</a></li>
+                            <li><a href="#faq">FAQ</a></li>
+                            <li><a href="#suporte">Suporte</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+
+    </body>
+</html>
