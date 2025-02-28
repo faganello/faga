@@ -1,0 +1,296 @@
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Convites</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&family=Dancing+Script&family=Abril+Fatface&family=Oswald&family=Roboto&family=Lato&family=Open+Sans&family=Quicksand&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="download-button-container">
+        <button id="download">Baixar Convite</button>
+    </div>
+
+    <div class="container">
+        <div class="editor">
+            <h2>Personalize seu Convite</h2>
+            
+            <div class="editor-tabs">
+                <button class="tab-btn active" data-tab="visual">Editor Visual</button>
+                <button class="tab-btn" data-tab="html">Editor HTML</button>
+                <button class="tab-btn" data-tab="mensagem">Mensagem</button>
+            </div>
+
+            <div id="visual-editor" class="editor-content active">
+                <h3>Conteúdo do Convite</h3>
+                <div class="input-group">
+                    <label>Título:</label>
+                    <input type="text" id="titulo" value="Convite">
+                </div>
+                <div class="input-group">
+                    <label>Nome do Evento:</label>
+                    <input type="text" id="evento" value="Consultoria Diagnóstica">
+                </div>
+                <div class="input-group">
+                    <label>Descrição:</label>
+                    <input type="text" id="description" value="Uma consultoria completa para o seu negócio">
+                </div>
+                <div class="input-group">
+                    <label>Opções de Descrição:</label>
+                    <select id="descriptionOptions">
+                        <option value="generic">Genérica</option>
+                        <option value="businessAnalysis">Análise Comercial</option>
+                        <option value="contractProcess">Processo de Contratação</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Data:</label>
+                    <input type="text" id="data" value="Terça, 15 de Dezembro, 2023">
+                </div>
+                <div class="input-group">
+                    <label>Horário:</label>
+                    <input type="text" id="horario" value="09:00 - 11:00">
+                </div>
+                <div class="input-group">
+                    <label>Código de Protocolo:</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="protocolCode" style="flex: 1;">
+                        <button id="generateProtocol" style="width: auto; margin: 0; padding: 8px 15px;">Gerar Novo</button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Nome do decisor:</label>
+                    <input type="text" id="companyName" value="Fluence Automecânica">
+                </div>
+                <div class="input-group">
+                    <label>Imagem da Empresa:</label>
+                    <input type="file" id="companyImage" accept="image/*">
+                </div>
+                <div class="input-group">
+                    <label>Nome da empresa:</label>
+                    <input type="text" id="companyPhrase" value="Lorem ipsum dolor sit amet consectetur.">
+                </div>
+                <div class="input-group">
+                    <label>Combinação de Cores:</label>
+                    <select id="colorScheme">
+                        <option value="light">Claro</option>
+                        <option value="dark">Escuro</option>
+                        <option value="pastel">Pastel</option>
+                        <option value="black">Black</option>
+                    </select>
+                </div>
+                <div class="style-options">
+                    <h3>Cores do Convite</h3>
+                    <div class="input-group">
+                        <label>Cor do Fundo:</label>
+                        <input type="color" id="bgColor" value="#ffffff">
+                    </div>
+                    <div class="input-group">
+                        <label>Cor do Texto:</label>
+                        <input type="color" id="textColor" value="#333333">
+                    </div>
+                    <div class="input-group">
+                        <label>Cor do Destaque:</label>
+                        <input type="color" id="accentColor" value="#1a365d">
+                    </div>
+                    <div class="input-group">
+                        <label>Cor do Título:</label>
+                        <input type="color" id="titleColor" value="#333333">
+                    </div>
+                    <div class="input-group">
+                        <label>Cor do Título do Evento:</label>
+                        <input type="color" id="eventTitleColor" value="#1a365d">
+                    </div>
+                    <div class="input-group">
+                        <label>Cor do Texto do Detalhe:</label>
+                        <input type="color" id="detailTextColor" value="#333333">
+                    </div>
+                    <div class="input-group">
+                        <label>Cor do Placeholder do Logo:</label>
+                        <input type="color" id="logoPlaceholderColor" value="#666666">
+                    </div>
+                </div>
+                <div class="style-options">
+                    <h3>Estilo do Convite</h3>
+                    <div class="input-group">
+                        <label>Fonte do Título:</label>
+                        <select id="titleFont" class="font-select">
+                            <option value="'Times New Roman', serif">Times New Roman</option>
+                            <option value="'Playfair Display', serif">Playfair Display</option>
+                            <option value="'Montserrat', sans-serif" selected>Montserrat</option>
+                            <option value="'Dancing Script', cursive">Dancing Script</option>
+                            <option value="'Abril Fatface', display">Abril Fatface</option>
+                            <option value="'Oswald', sans-serif">Oswald</option>
+                        </select>
+                        <div class="font-preview" style="font-family: 'Times New Roman'">Exemplo de Título</div>
+                    </div>
+                    <div class="input-group">
+                        <label>Fonte do Texto:</label>
+                        <select id="bodyFont" class="font-select">
+                            <option value="'Arial', sans-serif">Arial</option>
+                            <option value="'Roboto', sans-serif">Roboto</option>
+                            <option value="'Lato', sans-serif">Lato</option>
+                            <option value="'Open Sans', sans-serif" selected>Open Sans</option>
+                            <option value="'Quicksand', sans-serif">Quicksand</option>
+                            <option value="'Montserrat', sans-serif">Montserrat</option>
+                        </select>
+                        <div class="font-preview" style="font-family: Arial">Exemplo de Texto</div>
+                    </div>
+                </div>
+
+                <details class="download-settings">
+                    <summary>Configurações de Download</summary>
+                    <div class="input-group">
+                        <label>Altura do Convite:</label>
+                        <input type="range" id="conviteHeight" min="400" max="800" step="50" value="650">
+                        <span id="heightValue">650px</span>
+                    </div>
+                    <div class="input-group">
+                        <label>Escala da Imagem:</label>
+                        <select id="imageScale">
+                            <option value="1">1x (Padrão)</option>
+                            <option value="2" selected>2x (HD)</option>
+                            <option value="4">4x (Ultra HD)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Formato:</label>
+                        <select id="imageFormat">
+                            <option value="png">PNG</option>
+                            <option value="jpeg">JPEG</option>
+                        </select>
+                    </div>
+                    <div class="input-group jpeg-quality" style="display: none;">
+                        <label>Qualidade JPEG:</label>
+                        <input type="range" id="imageQuality" min="0" max="1" step="0.1" value="0.9">
+                        <span id="qualityValue">90%</span>
+                    </div>
+                    <div class="input-group">
+                        <label>Nome do arquivo:</label>
+                        <input type="text" id="fileName" value="meu-convite">
+                    </div>
+                </details>
+
+                
+            </div>
+
+            <div id="html-editor" class="editor-content">
+                <div class="input-group">
+                    <label>HTML do Convite:</label>
+                    <textarea id="htmlEditor" rows="15"></textarea>
+                </div>
+                <button id="updateHtml">Atualizar Preview</button>
+            </div>
+
+            <div id="mensagem" class="editor-content">
+                <div class="input-group">
+                    <label>Chave API Gemini:</label>
+                    <input type="text" id="geminiApiKey" placeholder="Insira sua chave API" value="AIzaSyBI35tWCrySRW4Y3hCXwGeLIDz1O7JLQCs">
+                </div>
+                <div class="input-group">
+                    <label>Prompt:</label>
+                    <textarea id="geminiPrompt" rows="4">
+Escreva uma mensagem formatada para WhatsApp, com tom criativo e profissional, reforçando o compromisso da empresa com a consultoria diagnóstica de sua presença digital. O convite já foi aceito, e a mensagem deve fornecer informações relevantes sobre o processo.
+O diagnóstico abrangerá o Google Meu Negócio e o Instagram do convidado, com foco na análise da jornada do cliente e na identificação de pontos de melhoria. 
+A mensagem deve destacar de forma persuasiva os benefícios da consultoria, incentivando a participação.
+
+Ao final da mensagem adicione esse trecho com os links da minha empresa:
+" 💡 Veja mais sobre nós:
+https://www.instagram.com/visionadsoficial/
+https://visionads.com.br/ "
+
+-----------------
+
+Regras de Formatação de Mensagem Para Whatsapp
+
+Negrito
+Use asteriscos (*) antes e depois da palavra ou frase que deseja formatar em negrito. Exemplo: *negrito*.
+
+Itálico
+Adicione sublinhados (_) antes e depois da palavra ou frase que deseja formatar em itálico. Exemplo: _itálico_.
+
+Tachado
+Use til (~) antes e depois da palavra ou frase que deseja formatar com tachado. Exemplo: ~tachado~.
+
+Citação
+Inclua sinal de maior (>) antes da linha que deseja formatar como uma citação. Exemplo: > citação.
+
+Linha de código
+Para esse recurso, use três acentos graves (`) antes e depois do texto que deseja formatar como código. Exemplo: `código`.
+
+Marcadores
+Adicione um asterisco ou hífen antes de cada frase para criar marcadores: Exemplo:
+
+* texto
+
+* texto
+
+ou
+
+- texto
+
+- texto
+
+Lista numerada
+Caso deseje criar uma lista numerada, tudo que você deve fazer é adicionar um número, um ponto e um espaço antes de cada linha de texto. Exemplo:
+
+1. texto
+
+2. texto
+                    </textarea>
+                </div>
+                <button id="generateMessage" style="width: auto; margin: 0; padding: 8px 15px;">Gerar Mensagem</button>
+                <div class="input-group">
+                    <label>Mensagem Gerada:</label>
+                    <textarea id="generatedMessage" rows="6" readonly></textarea>
+                    <button id="copyMessage" style="width: auto; margin: 5px 0; padding: 8px 15px;">Copiar Mensagem</button>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="preview" id="convite">
+            <div class="convite-content" style="width: 100%; height: 100%; padding: 20px 40px; text-align: center; position: relative; margin: 0; display: flex; flex-direction: column; justify-content: space-between;">
+                <div class="header">
+                    <img src="https://faganelo.me/vision/vision-logo.png" style="width:100px; height:100px; border-radius:50%; margin-bottom:20px; display: block; margin: 0 auto;">
+                    <div class="logo-placeholder" style="font-size: 24px; color: #666; margin-bottom: 20px; font-family: var(--title-font); letter-spacing: 2px;">VISION ADS</div>
+                    <div class="decorative-border" style="height: 1px; background: linear-gradient(90deg, transparent, #1a365d, transparent); margin: 15px 0; opacity: 0.5;"></div>
+                </div>
+                
+                <div class="main-content">
+                    <h1 id="titulo-preview" style="font-size: 28px; margin-bottom: 15px; font-family: var(--title-font); letter-spacing: 1px; text-transform: uppercase;">Convite</h1>
+                    <h2 id="evento-preview" style="font-size: 24px; margin-bottom: 10px; font-family: var(--title-font); color: #1a365d;">Consultoria Diagnóstica</h2>
+                    <p id="description-preview" style="font-size: 16px; margin-bottom: 15px; font-family: var(--body-font); color: #555;">Uma consultoria completa para o seu negócio</p>
+                    <div class="details" style="font-size: 16px; line-height: 1.8; font-family: var(--body-font); margin: 20px 0;">
+                        <p id="data-preview" style="margin: 8px 0;">Terça, 15 de Dezembro, 2023</p>
+                        <p id="horario-preview" style="margin: 8px 0;">09:00 - 11:00</p>
+                        
+                        <div style="width:auto; height:auto; background-color:#d6d6d630; padding:10px 20px; display:flex; align-items: center; border-radius:10px; border:1px solid #cfcfcfb3; margin-top: 20px; justify-content: center;">
+                            <img id="company-logo" src="https://faganelo.me/vision/vision.png" style="width:60px; height:60px; border-radius:50%; border:1px solid #cfcfcf61;">
+                            <div style="margin-left:20px; text-align: left;">
+                                <h3 id="company-name-preview" style="margin:0;">Fluence Automecânica</h3>
+                                <p id="company-phrase-preview" style="margin:5px 0;">Lorem ipsum dolor sit amet consectetur.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer">
+                    <div class="decorative-border" style="height: 1px; background: linear-gradient(90deg, transparent, #1a365d, transparent); margin: 15px 0; opacity: 0.5;"></div>
+                    <p class="footer-text" style="font-size: 14px; color: #666; margin-top: 20px; font-family: monospace;">PROTOCOL: VIS20230000</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('titulo').value = "Convite";
+        document.getElementById('evento').value = "Consultoria Diagnóstica";
+        document.getElementById('description').value = "Uma consultoria completa para o seu negócio";
+        document.getElementById('data').value = "Terça, 15 de Dezembro, 2023";
+        document.getElementById('horario').value = "09:00 - 11:00";
+        document.getElementById('bgColor').value = "#ffffff";
+    </script>
+</body>
+</html>
