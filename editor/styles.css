@@ -1,0 +1,1898 @@
+/* Add these new styles at the top of the file */
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    justify-content: space-between;
+    z-index: 1000;
+}
+
+.top-bar h1 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #111827;
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.menu-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6B7280;
+    transition: all 0.2s ease;
+}
+
+.menu-button:hover {
+    background-color: rgba(243, 244, 246, 0.8);
+    color: #111827;
+}
+
+.menu-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 16px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 6px;
+    display: none;
+    min-width: 220px;
+    border: 1px solid rgba(229, 231, 235, 0.5);
+    animation: menuFadeIn 0.2s ease;
+}
+
+@keyframes menuFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.menu-dropdown.visible {
+    display: block;
+}
+
+.menu-item {
+    padding: 4px;
+}
+
+.menu-item + .menu-item {
+    border-top: 1px solid rgba(229, 231, 235, 0.5);
+    margin-top: 4px;
+    padding-top: 4px;
+}
+
+.menu-action-button {
+    width: 100%;
+    padding: 8px 12px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 0.875rem;
+    color: #374151;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.menu-action-button:hover {
+    background-color: #F9FAFB;
+    color: #111827;
+}
+
+/* Base Styles */
+:root {
+    --primary-color: #2563eb;
+    --background-color: #ffffff;
+    --text-color: #1f2937;
+    --light-gray: #f3f4f6;
+    --border-color: #e5e7eb;
+    --hover-color: #f9fafb;
+    --shadow-color: rgba(0, 0, 0, 0.05);
+    --placeholder-color: #9ca3af;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    line-height: 1.5;
+}
+
+/* Layout */
+.app-container {
+    max-width: 900px;
+    margin: 80px auto 0;
+    padding: 2rem;
+}
+
+header {
+    display: none;
+}
+
+main {
+    background-color: var(--background-color);
+    border-radius: 0.5rem;
+    padding: 2rem;
+}
+
+/* Document Title */
+.document-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    outline: none;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.document-title[contenteditable="false"] {
+    cursor: default;
+    border-bottom: none;
+}
+
+.document-title:empty:before {
+    content: attr(data-placeholder);
+    color: var(--placeholder-color);
+}
+
+.reading-mode .document-title {
+    border-bottom: none;
+    pointer-events: none;
+}
+
+/* Editor */
+.editor {
+    min-height: 400px;
+}
+
+/* Empty area click target */
+.editor-click-area {
+    min-height: 100px;
+    margin-top: 1rem;
+    cursor: text;
+}
+
+.editor-click-area:empty:before {
+    content: "Click here to add content...";
+    color: var(--placeholder-color);
+    padding: 0.5rem;
+    display: block;
+}
+
+.editor-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.action-button {
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: background-color 0.2s;
+}
+
+.action-button:hover {
+    background-color: #1d4ed8;
+}
+
+/* Block Styles */
+.block {
+    position: relative;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s;
+}
+
+.block:hover {
+    background-color: var(--hover-color);
+}
+
+.block:hover .block-handle {
+    opacity: 1;
+}
+
+.block-handle {
+    position: absolute;
+    left: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.2s;
+    cursor: grab;
+    color: var(--placeholder-color);
+}
+
+.block-content {
+    outline: none;
+    padding: 0.25rem;
+    min-height: 1.5rem;
+    word-break: break-word;
+}
+
+.block:not(.block-bullet-list):not(.block-numbered-list) .block-content:empty:before {
+    content: "\00a0"; 
+    color: var(--placeholder-color);
+}
+
+.block:not(.block-bullet-list):not(.block-numbered-list) .block-content:focus:empty:before {
+    content: "Type '/' for commands...";
+}
+
+.block-bullet-list .block-content:empty:before,
+.block-numbered-list .block-content:empty:before,
+.block-bullet-list .block-content:focus:empty:before,
+.block-numbered-list .block-content:focus:empty:before {
+    content: none;
+}
+
+/* Block Types */
+.block-heading {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.block-list-item {
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.block-list-item:before {
+    content: '•';
+    position: absolute;
+    left: 0.25rem;
+}
+
+.block-todo-item {
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.block-todo-checkbox {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.block-todo-checkbox.checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.block-todo-checkbox.checked:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.25rem;
+    height: 0.5rem;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -60%) rotate(45deg);
+}
+
+.block-todo-content.checked {
+    text-decoration: line-through;
+    color: var(--placeholder-color);
+}
+
+.block-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 1.5rem 0;
+    cursor: grab;
+    transition: all 0.2s ease;
+}
+
+.block.block-divider-container {
+    position: relative;
+    padding: 0.5rem;
+    background-color: transparent;
+}
+
+.block-divider-container .block-handle {
+    top: 1rem;
+}
+
+.block-divider-container {
+    position: relative;
+}
+
+.divider-focus {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    min-height: 30px; 
+    opacity: 0;
+    cursor: pointer;
+}
+
+.block-divider-container:hover .divider-focus {
+    background-color: var(--hover-color);
+}
+
+.block-divider-container.is-focused .divider-focus {
+    background-color: var(--hover-color);
+}
+
+.block-divider-container.is-focused .block-divider {
+    background-color: var(--primary-color);
+    height: 2px;
+    transition: all 0.2s ease;
+}
+
+.block.block-divider-container:hover {
+    background-color: var(--hover-color);
+}
+
+.block-h1 .block-content { 
+    font-size: 2.5rem; 
+    font-weight: 700; 
+}
+
+.block-h2 .block-content { 
+    font-size: 2rem; 
+    font-weight: 700; 
+}
+
+.block-h3 .block-content { 
+    font-size: 1.75rem; 
+    font-weight: 600; 
+}
+
+.block-h4 .block-content { 
+    font-size: 1.5rem; 
+    font-weight: 600; 
+}
+
+.block-h5 .block-content { 
+    font-size: 1.25rem; 
+    font-weight: 600; 
+}
+
+.block-h6 .block-content { 
+    font-size: 1.1rem; 
+    font-weight: 600; 
+}
+
+.block-quote {
+    padding-left: 1rem;
+    border-left: 4px solid var(--primary-color);
+    font-style: italic;
+    color: #4b5563;
+}
+
+.block-bullet-list .block-content {
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.block-bullet-list .block-content:before {
+    content: '•';
+    position: absolute;
+    left: 0.25rem;
+}
+
+.block-numbered-list {
+    counter-increment: list-counter;
+}
+
+.block-numbered-list .block-content {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.block-numbered-list .block-content:before {
+    content: counter(list-counter) ".";
+    position: absolute;
+    left: 0.25rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* Block Menu */
+.block-menu {
+    position: fixed;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    width: 200px;
+    z-index: 10;
+    display: none;
+    padding: 0.5rem;
+    max-height: 400px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--light-gray);
+    transform-origin: center left;
+    animation: menuSlideIn 0.15s ease-out;
+}
+
+@keyframes menuSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.block-menu::-webkit-scrollbar {
+    width: 8px;
+}
+
+.block-menu::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: 4px;
+}
+
+.block-menu::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 4px;
+}
+
+.block-menu-heading {
+    font-size: 0.8rem;
+    color: var(--placeholder-color);
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.block-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 0.25rem;
+}
+
+.block-menu-item:hover {
+    background-color: var(--hover-color);
+}
+
+.heading-level {
+    font-family: monospace;
+    color: var(--primary-color);
+    font-weight: bold;
+    width: 18px;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Drag and Drop Styles */
+.block.dragging {
+    opacity: 0.4;
+    cursor: grabbing;
+}
+
+.block.drag-over {
+    background-color: var(--hover-color);
+}
+
+.drop-indicator-top,
+.drop-indicator-bottom {
+    position: relative;
+    height: 2px;
+    margin: 4px 0;
+    background-color: var(--primary-color);
+    z-index: 10;
+}
+
+.drop-indicator-top::before,
+.drop-indicator-bottom::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: -4px;
+    width: 10px;
+    height: 10px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+}
+
+/* Add Block Button */
+.add-block-button-container {
+    display: none;
+}
+
+.add-block-button {
+    display: none;
+}
+
+/* Focus State */
+.block.is-focused {
+    background-color: var(--hover-color);
+}
+
+/* Remove hover effect when block is focused */
+.block.is-focused:hover {
+    background-color: var(--hover-color);
+}
+
+/* Ensure hover only applies when not focused */
+.block:not(.is-focused):hover {
+    background-color: var(--hover-color);
+}
+
+/* Empty State */
+.empty-editor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: var(--placeholder-color);
+    font-size: 1.1rem;
+}
+
+/* Current Selection Indicator */
+.selection-indicator {
+    position: absolute;
+    left: -2px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+
+/* Formatting Toolbar */
+.formatting-toolbar {
+    position: absolute;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: none;
+    padding: 4px;
+    z-index: 1000;
+    flex-wrap: nowrap;
+    gap: 2px;
+}
+
+.formatting-toolbar.visible {
+    display: flex;
+}
+
+.formatting-button {
+    border: none;
+    background: none;
+    padding: 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.formatting-button:hover {
+    background-color: var(--hover-color);
+}
+
+.formatting-button.active {
+    background-color: var(--light-gray);
+    color: var(--primary-color);
+}
+
+.formatting-divider {
+    width: 1px;
+    background-color: var(--border-color);
+    margin: 0 4px;
+}
+
+/* Color picker styles */
+.color-picker-button {
+    position: relative; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
+    padding: 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.color-picker-button:hover {
+    background-color: var(--hover-color);
+}
+
+.color-picker-dropdown {
+    position: absolute;
+    top: 100%; 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    z-index: 1001; 
+    display: none;
+    min-width: 160px;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.color-picker-dropdown.visible {
+    display: flex;
+}
+
+.color-swatch {
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Text formatting styles */
+.block-content b, .block-content strong {
+    font-weight: bold;
+}
+
+.block-content i, .block-content em {
+    font-style: italic;
+}
+
+.block-content u {
+    text-decoration: underline;
+}
+
+.block-content s {
+    text-decoration: line-through;
+}
+
+.block-content a {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.block-content.text-left {
+    text-align: left;
+}
+
+.block-content.text-center {
+    text-align: center;
+}
+
+.block-content.text-right {
+    text-align: right;
+}
+
+/* Reading Mode Switch */
+.switch {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.switch:hover {
+    background-color: #F9FAFB;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch-label {
+    font-size: 0.875rem;
+    color: #374151;
+    user-select: none;
+}
+
+.slider {
+    position: relative;
+    width: 36px;
+    height: 20px;
+    background-color: #E5E7EB;
+    border-radius: 20px;
+    transition: .2s ease;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    border-radius: 50%;
+    transition: .2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(16px);
+}
+
+/* Reading Mode Styles */
+.editor.reading-mode {
+    pointer-events: none;
+}
+
+.editor.reading-mode .block:hover {
+    background-color: transparent;
+}
+
+.editor.reading-mode .block-todo-checkbox {
+    pointer-events: auto !important;  
+    cursor: pointer;
+}
+
+.editor.reading-mode .block-content {
+    pointer-events: none;
+}
+
+.editor.reading-mode .block-content a {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.editor.reading-mode .block-handle,
+.editor.reading-mode .add-block-button-container,
+.editor.reading-mode .block-menu,
+.editor.reading-mode .formatting-toolbar,
+.editor.reading-mode .editor-click-area {
+    display: none;
+}
+
+.editor.reading-mode .block {
+    margin-bottom: 1rem;
+}
+
+.editor.reading-mode .block-content:empty:before,
+.editor.reading-mode .block-content:focus:empty:before {
+    content: none;
+}
+
+.editor.reading-mode .block-todo-checkbox {
+    pointer-events: none;
+}
+
+.editor.reading-mode .document-title {
+    border-bottom: none;
+}
+
+.editor.reading-mode .divider-focus {
+    display: none;
+}
+
+.editor.reading-mode .graph-toggle {
+    display: none;
+}
+
+.editor.reading-mode .graph-help-button {
+    display: none;
+}
+
+/* Force graph blocks to always be in view mode when in reading mode */
+.editor.reading-mode .graph-editor {
+    display: none !important;
+}
+
+.editor.reading-mode .graph-viewer {
+    display: block !important;
+}
+
+/* Hide controls in reading mode */
+.editor.reading-mode .image-controls {
+    display: none;
+}
+
+/* Add these styles for the confirmation dialog */
+.confirmation-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    max-width: 400px;
+    width: 90%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 2000;
+}
+
+.confirmation-dialog.visible {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+.dialog-content {
+    text-align: center;
+}
+
+.dialog-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.dialog-message {
+    color: #6B7280;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.dialog-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.dialog-button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dialog-button.confirm {
+    background-color: #EF4444;
+    color: white;
+    border: none;
+}
+
+.dialog-button.confirm:hover {
+    background-color: #DC2626;
+}
+
+.dialog-button.cancel {
+    background-color: #F3F4F6;
+    color: #374151;
+    border: 1px solid #E5E7EB;
+}
+
+.dialog-button.cancel:hover {
+    background-color: #E5E7EB;
+}
+
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 1999;
+}
+
+.dialog-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Image Block Styles */
+.block-image {
+    margin: 1rem 0;
+    text-align: center;
+    position: relative;
+}
+
+.block-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.block-image.selected img {
+    border-color: var(--primary-color);
+}
+
+/* Image controls */
+.image-controls {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+    align-items: center;
+    gap: 16px;
+    z-index: 10;
+    white-space: nowrap;
+}
+
+.block-image.selected .image-controls {
+    display: flex;
+}
+
+.resize-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 200px; 
+}
+
+.resize-slider {
+    position: relative;
+    width: 150px;
+    height: 4px;
+    background-color: var(--border-color);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.resize-slider-handle {
+    position: absolute;
+    top: 50%;
+    left: 100%; 
+    width: 12px;
+    height: 12px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    cursor: grab;
+    transition: background-color 0.2s ease;
+}
+
+.resize-slider-handle:hover {
+    background-color: #1d4ed8;
+}
+
+.resize-slider-handle.dragging {
+    cursor: grabbing;
+    background-color: #1d4ed8;
+}
+
+.resize-value {
+    font-size: 0.75rem;
+    color: #6B7280;
+    min-width: 40px;
+    text-align: right;
+}
+
+.align-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding-left: 16px;
+    margin-right: 0px;  
+    border-left: 1px solid var(--border-color);
+}
+
+.align-button {
+    padding: 4px;
+    border: none;
+    background: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #6B7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.align-button:hover {
+    background-color: var(--hover-color);
+    color: var(--text-color);
+}
+
+.align-button.active {
+    color: var(--primary-color);
+    background-color: var(--hover-color);
+}
+
+.delete-image-button {
+    padding: 4px 8px;
+    border: none;
+    background: var(--background-color);
+    border-radius: 4px;
+    cursor: pointer;
+    color: #dc2626;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.delete-image-button:hover {
+    background-color: #fecaca;
+}
+
+.delete-image-button .material-icons {
+    font-size: 16px;
+}
+
+/* Update classes for image alignment */
+.block-image.align-left {
+    text-align: left;
+}
+
+.block-image.align-center {
+    text-align: center;
+}
+
+.block-image.align-right {
+    text-align: right;
+}
+
+/* Image Upload Dialog */
+.image-upload-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    max-width: 400px;
+    width: 90%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 2000;
+}
+
+.image-upload-dialog.visible {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+.image-upload-content {
+    text-align: center;
+}
+
+.image-upload-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    color: var(--primary-color);
+}
+
+.image-upload-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.image-upload-message {
+    color: #6B7280;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.image-upload-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.image-button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.image-button.upload {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+.image-button.upload:hover {
+    background-color: #1d4ed8;
+}
+
+.image-button.cancel {
+    background-color: #F3F4F6;
+    color: #374151;
+    border: 1px solid #E5E7EB;
+}
+
+.image-button.cancel:hover {
+    background-color: #E5E7EB;
+}
+
+/* Graph Block Styles */
+.block-graph {
+    position: relative;
+    margin: 1rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.graph-help-button {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    color: #6B7280;
+}
+
+.graph-help-button:hover {
+    background-color: var(--hover-color);
+}
+
+.graph-help-popup {
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    max-width: 300px;
+    max-height:350px;
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 20;
+    display: none;
+    font-size: 0.875rem;
+    color: #374151;
+    overflow:auto;
+}
+
+.graph-help-popup.visible {
+    display: block;
+}
+
+.graph-help-popup code {
+    display: block;
+    background-color: #f3f4f6;
+    padding: 8px;
+    margin: 8px 0;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.8rem;
+    white-space: pre-wrap;
+    color: #111827;
+}
+
+.graph-help-popup h4 {
+    margin-top: 12px;
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.graph-help-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #6B7280;
+}
+
+.graph-help-close:hover {
+    color: #111827;
+}
+
+.graph-code-editor {
+    width: 100%;
+    height: 400px;
+    padding: 12px;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    border: none;
+    resize: vertical;
+    outline: none;
+    border-radius: 8px;
+}
+
+.graph-viewer {
+    min-height: 400px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.graph-viewer.selected {
+    border: 2px solid var(--primary-color);
+    background-color: var(--hover-color);
+}
+
+.plot-container {
+    width: 100%;
+    height: 400px;
+}
+
+.graph-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    padding: 4px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+.graph-toggle .material-icons {
+    font-size: 18px;
+    color: #666;
+}
+.graph-toggle:hover {
+    background-color: var(--hover-color);
+}
+
+.graph-error {
+    padding: 20px;
+    color: #ef4444;
+    background-color: #fee2e2;
+    border-radius: 4px;
+    margin: 10px;
+}
+
+/* Make sure Plotly controls aren't affected by reading mode */
+.editor.reading-mode .js-plotly-plot .plotly {
+    pointer-events: auto !important;
+}
+
+/* Update equation block styles */
+.block-equation {
+    position: relative;
+    margin: .5rem 0;
+}
+
+.equation-editor {
+    display: none;
+    width: 100%;
+    padding: 30px 12px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    outline: none;
+    border: 1px solid #333;
+    position: relative;
+}
+
+.equation-editor.active {
+    display: block;
+}
+
+.equation-editor::before {
+    content: 'KaTeX';
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 12px;
+    color: #666;
+    opacity: 0.7;
+    font-style: italic;
+}
+
+.equation-viewer {
+    padding: 8px;
+    min-height: 45px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.equation-viewer.selected {
+    border-color: var(--primary-color);
+    background-color: var(--hover-color);
+}
+
+.equation-toggle {
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.block-equation:hover .equation-toggle {
+    opacity: 1;
+}
+
+.equation-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.equation-toggle .material-icons {
+    font-size: 18px;
+    color: #666;
+}
+
+.block-equation.selected .equation-viewer {
+    background-color: var(--hover-color);
+    border-radius: 8px;
+}
+
+.equation-error {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 4px;
+    display: none;
+}
+
+.equation-error.active {
+    display: block;
+}
+
+/* Hide editor in reading mode */
+.editor.reading-mode .equation-editor {
+    display: none !important;
+}
+
+.editor.reading-mode .equation-toggle {
+    display: none;
+}
+
+.editor.reading-mode .equation-viewer {
+    cursor: default;
+}
+
+.editor.reading-mode .equation-viewer {
+    cursor: default;
+    border-color: transparent;
+}
+
+.editor.reading-mode .equation-viewer.selected {
+    border-color: transparent;
+    background-color: transparent;
+}
+
+.katex {
+    font-size: 1.21em;
+}
+
+/* Hide controls in reading mode */
+.editor.reading-mode .image-controls {
+    display: none;
+}
+
+/* Web Code Block Styles */
+.block-webcode {
+    position: relative;
+    margin: 1rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.webcode-editor {
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.webcode-tabs {
+    display: flex;
+    background-color: #252526;
+    border-bottom: 1px solid #333;
+    flex-wrap: wrap;
+}
+
+.webcode-tab {
+    padding: 8px 16px;
+    background: none;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.webcode-tab:hover {
+    background-color: #2d2d2d;
+}
+
+.webcode-tab.active {
+    background-color: #1e1e1e;
+    color: #fff;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.webcode-panel {
+    padding: 0;
+    height: 300px;
+}
+
+.webcode-code-editor {
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    border: none;
+    resize: vertical;
+    outline: none;
+}
+
+.webcode-viewer {
+    height: 350px;  
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    display: block;
+}
+
+.webcode-viewer.no-border {
+    border: none;
+}
+
+.webcode-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    padding: 4px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.webcode-toggle .material-icons {
+    font-size: 18px;
+    color: #666;
+}
+
+.webcode-toggle:hover {
+    background-color: var(--hover-color);
+}
+
+.webcode-help-button {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    color: #6B7280;
+}
+
+.webcode-help-button:hover {
+    background-color: var(--hover-color);
+}
+
+.webcode-help-popup {
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    width: 300px;
+    max-height: 350px;
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 20;
+    display: none;
+    font-size: 0.875rem;
+    color: #374151;
+    overflow: auto;
+}
+
+.webcode-help-popup.visible {
+    display: block;
+}
+
+.webcode-help-popup h4 {
+    margin-top: 12px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.webcode-help-popup h5 {
+    margin-top: 8px;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.webcode-help-popup ul {
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+
+.webcode-help-popup li {
+    margin-bottom: 4px;
+}
+
+.webcode-help-popup .code-tip {
+    background-color: #f3f4f6;
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 3px solid var(--primary-color);
+    margin: 10px 0;
+}
+
+.webcode-help-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #6B7280;
+}
+
+.webcode-help-close:hover {
+    color: #111827;
+}
+
+.webcode-select-checkbox {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 22px;
+    height: 22px;
+    background-color: white;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.webcode-select-checkbox:hover {
+    background-color: var(--hover-color);
+}
+
+.webcode-select-checkbox.checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.webcode-select-checkbox.checked:after {
+    content: '';
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    display: block;
+    margin-top: -2px;
+}
+
+.webcode-viewer:hover .webcode-select-checkbox {
+    opacity: 1;
+}
+
+.editor.reading-mode .webcode-select-checkbox {
+    display: none;
+}
+
+.webcode-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: white;
+}
+
+.align-button {
+    padding: 8px;
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #6B7280;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.align-button:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+.align-button.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+.align-button .material-icons {
+    font-size: 18px;
+}
+
+.block-webcode::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+/* Hide web code components in reading mode */
+.editor.reading-mode .webcode-toggle {
+    display: none;
+}
+
+.editor.reading-mode .webcode-help-button {
+    display: none;
+}
+
+.editor.reading-mode .webcode-editor {
+    display: none !important;
+}
+
+.editor.reading-mode .webcode-viewer {
+    display: block !important;
+}
+
+.editor.reading-mode .webcode-iframe {
+    pointer-events: auto !important;
+    height: 100%;
+    width: 100%;
+    border: none;
+}
+
+.editor.reading-mode .webcode-viewer {
+    pointer-events: none;
+}
+
+.editor.reading-mode .webcode-viewer iframe {
+    pointer-events: auto;
+}
+
+/* Add these styles for paragraph block selection */
+.block-paragraph.selected {
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    background-color: var(--hover-color);
+}
+
+/* Hide selection when in reading mode */
+.editor.reading-mode .block-paragraph.selected {
+    border-color: transparent;
+    background-color: transparent;
+}
+
+/* Add these styles for the webcode settings */
+.webcode-settings-panel {
+    padding: 16px;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+.settings-group {
+    margin-bottom: 16px;
+}
+
+.settings-group:last-child {
+    margin-bottom: 0;
+}
+
+.settings-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ccc;
+    font-size: 14px;
+}
+
+.settings-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.settings-toggle input[type="checkbox"] {
+    width: 40px;
+    height: 20px;
+    appearance: none;
+    background-color: #333;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.settings-toggle input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+}
+
+.settings-toggle input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: all 0.3s ease;
+}
+
+.settings-toggle input[type="checkbox"]:checked::before {
+    left: 22px;
+}
+
+.dimension-inputs {
+    display: flex;
+    gap: 16px;
+}
+
+.dimension-input {
+    flex: 1;
+}
+
+.dimension-input input {
+    width: 100%;
+    padding: 8px;
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.dimension-input input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.color-input {
+    display: none;
+}
+
+.align-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.align-button {
+    padding: 8px;
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #6B7280;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.align-button:hover {
+    background-color: #444;
+}
+
+.align-button.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+.align-button .material-icons {
+    font-size: 18px;
+}
