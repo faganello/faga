@@ -1,0 +1,574 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #121212;
+    color: #ffffff;
+    font-family: system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+#globe-container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+}
+
+#settings-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+}
+
+#settings-toggle:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+}
+
+#settings-panel {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    opacity: 0;
+    width: 900px;
+    height: 600px;
+    background: rgba(28, 28, 28, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    display: none;
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#settings-panel.visible {
+    display: flex;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.settings-sidebar {
+    width: 240px;
+    background: rgba(38, 38, 38, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 0;
+}
+
+.settings-sidebar-item {
+    padding: 10px 20px;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+}
+
+.settings-sidebar-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.settings-sidebar-item.active {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.settings-main {
+    flex: 1;
+    padding: 32px;
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.settings-header h2 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+}
+
+#close-settings {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.2s;
+}
+
+#close-settings:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.settings-content {
+    color: #888;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.country-list {
+    height: 450px;
+    overflow-y: auto;
+    margin-top: 20px;
+}
+
+.country-item {
+    padding: 12px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.country-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.country-sources {
+    padding: 20px 0;
+}
+
+.source-input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.source-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: white;
+    font-size: 14px;
+}
+
+.source-input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.add-source-btn, .save-sources-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.add-source-btn:hover, .save-sources-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.save-sources-btn {
+    margin-top: 20px;
+    background: #0066cc;
+}
+
+.save-sources-btn:hover {
+    background: #0077ed;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.back-button:hover {
+    color: white;
+}
+
+.proxy-checkbox {
+    width: 18px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.proxy-checkbox:checked {
+    background: #0066cc;
+    border-color: #0066cc;
+}
+
+.proxy-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.proxy-option {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.proxy-option + .proxy-option {
+    margin-top: 16px;
+}
+
+.proxy-option label {
+    display: block;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.proxy-option small {
+    font-size: 12px;
+    display: block;
+    margin-top: 4px;
+    line-height: 1.6;
+}
+
+.proxy-option input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: white;
+    font-size: 14px;
+}
+
+.navigation-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cache-option {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cache-option label {
+    display: block;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.cache-option input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: white;
+    font-size: 14px;
+    width: 100px;
+}
+
+.cache-option small {
+    font-size: 12px;
+    display: block;
+    margin-top: 4px;
+    color: #888;
+}
+
+.cache-stats {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 16px;
+}
+
+.cache-stats h4 {
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.clear-cache-btn {
+    background: #cc3300;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 16px;
+    transition: all 0.2s;
+}
+
+.clear-cache-btn:hover {
+    background: #ff4411;
+}
+
+.news-carousel-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.news-carousel {
+    width: 80vw;
+    height: 80vh;
+    background: rgba(28, 28, 28, 0.95);
+    border-radius: 12px;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+}
+
+.news-carousel-header {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.news-carousel-header-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.news-carousel-header-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.fullscreen-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.2s;
+}
+
+.fullscreen-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.news-carousel.fullscreen {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+}
+
+.news-carousel-content {
+    height: calc(80vh - 70px);
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.news-sources-container {
+    position: relative;
+    width: 100%;
+    height: calc(80vh - 180px);
+    overflow: hidden;
+}
+
+.news-source {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.news-source.loaded {
+    opacity: 1;
+}
+
+.news-source iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: white;
+}
+
+.news-tabs {
+    display: flex;
+    padding: 0 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.news-tab {
+    padding: 12px 24px;
+    color: #888;
+    cursor: pointer;
+    position: relative;
+    font-size: 14px;
+}
+
+.news-tab.active {
+    color: white;
+}
+
+.news-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #0066cc;
+}
+
+.news-tab-content {
+    display: none;
+    height: calc(80vh - 120px);
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.news-tab-content.active {
+    display: block;
+}
+
+.news-pages-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    align-items: center;
+}
+
+.page-indicator {
+    color: #888;
+    font-size: 14px;
+}
+
+.nav-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.nav-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.nav-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.success-toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(46, 213, 115, 0.9);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.success-toast.visible {
+    opacity: 1;
+}
+
+.success-toast svg {
+    width: 18px;
+    height: 18px;
+}
+
+.preload-progress {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0;
+    background: #0066cc;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-size: 12px;
+    color: #888;
+    white-space: nowrap;
+}
+
+.close-carousel {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
