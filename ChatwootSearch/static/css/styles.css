@@ -1,0 +1,101 @@
+/* Custom styles to complement the Bootstrap theme */
+
+/* Add some subtle transition effects */
+.btn {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Custom card hover effect */
+.card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.contact-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Add a bit more spacing to the modals */
+.modal-body {
+    padding: 1.5rem;
+}
+
+/* Allow long texts to wrap properly */
+.table td {
+    word-break: break-word;
+}
+
+/* Basic responsive tweaks */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .table thead {
+        display: none;
+    }
+    
+    .table, .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+    }
+    
+    .table tr {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--bs-border-color);
+    }
+    
+    .table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border-bottom: none;
+    }
+    
+    .table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 45%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+    }
+}
+
+/* Custom animation for the spinner */
+.spinner-border {
+    animation-duration: 0.8s;
+}
+
+/* Subtle highlight for search input when focused */
+#searchInput:focus {
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+/* Make contact details in modal more readable */
+.contact-detail-label {
+    font-weight: bold;
+    color: var(--bs-info);
+}
+
+.contact-detail-value {
+    margin-bottom: 1rem;
+}
+
+/* Custom animation for alerts when they appear */
+.alert {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
