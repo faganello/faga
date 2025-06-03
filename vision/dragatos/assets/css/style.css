@@ -318,6 +318,7 @@ a {
     flex-direction: column;
     margin-top:3rem;
     z-index: 1;
+    width: 100%;
 }
 .sobre-text {
     display: flex;
@@ -370,6 +371,7 @@ a {
     position: absolute;
     left: -45%;
     z-index: 1;
+    display: none;
 }
 
 
@@ -968,6 +970,9 @@ footer {
     .footer-logo {
         width: 50%;
         align-items: flex-start;
+    }
+    .brilho {
+        display: block;
     }
 }
 
