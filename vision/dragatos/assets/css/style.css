@@ -1102,6 +1102,7 @@ footer {
     .sobre-content {
         display: flex;
         flex-direction: row;
+        justify-content: center;
     }
     .sobre-image-container{
         align-items:start;
