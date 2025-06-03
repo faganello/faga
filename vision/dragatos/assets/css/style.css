@@ -293,11 +293,11 @@ a {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding:16rem 1rem 1rem 1rem;
+    padding: 0 2rem 2rem 2rem;
 }
 
 .servicos-footer p {
-    width: 70%;
+    width: 90%;
     color: var(--primary-color);
     text-align: center;
 }
@@ -335,7 +335,22 @@ a {
     transform-origin: bottom center;
     animation: drag 1s infinite alternate;
 }
-
+@keyframes drag {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(26deg);
+    }
+}
+.dg-p1 {
+    top:-130px;
+}
+@media (max-width: 768px) {
+    .dg-p1 {
+        top: -100px;
+    }
+}
 /* -------------- Sobre ---------------- */
 #sobre {
     display: flex;
@@ -989,9 +1004,6 @@ footer {
         width:fit-content;
         margin-top:30px;
     }
-    .servicos-footer {
-        padding:0 0 3rem 0;
-    }
     /* footer */
     .footer-content {
         display: flex;
@@ -1009,6 +1021,9 @@ footer {
     }
     #hero .hero-text h1 { font-size: 60px; }
     #hero .hero-text h2 { font-size: 30px; }
+    .servicos-footer p{
+        width: 70%; 
+    }
 
 }
 
