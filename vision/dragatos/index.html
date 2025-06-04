@@ -703,12 +703,74 @@
             <div class="newsletter">
                 <h3>Inscreva-se</h3>
                 <p>Se inscreva para receber nossas novidades.</p>
-                <form action="#" method="post">
+                <form id="newsletter-form" action="#" method="post">
                     <input type="email" name="email" placeholder="Seu e-mail" required>
                     <button type="submit"><img src="assets/images/send-icon.png"></button>
                 </form>
             </div>
         </div>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('newsletter-form');
+
+            // Cria o modal minimalista
+            function showModal(message) {
+                let modal = document.createElement('div');
+                modal.id = 'newsletter-modal';
+                modal.style.position = 'fixed';
+                modal.style.top = 0;
+                modal.style.left = 0;
+                modal.style.width = '100vw';
+                modal.style.height = '100vh';
+                modal.style.background = 'rgba(0,0,0,0.5)';
+                modal.style.display = 'flex';
+                modal.style.alignItems = 'center';
+                modal.style.justifyContent = 'center';
+                modal.style.zIndex = 9999;
+
+                let box = document.createElement('div');
+                box.style.background = '#fff';
+                box.style.padding = '2rem 2.5rem';
+                box.style.borderRadius = '18px';
+                box.style.boxShadow = '0 4px 24px rgba(0,0,0,0.12)';
+                box.style.textAlign = 'center';
+                box.style.fontSize = '1.2rem';
+                box.innerHTML = `<p style="margin-bottom:1.5rem;">${message}</p>
+                    <button style="background:#112d2f;color:#fff;border:none;padding:0.7rem 2rem;border-radius:8px;cursor:pointer;font-size:1rem;">OK</button>`;
+
+                box.querySelector('button').onclick = () => modal.remove();
+                modal.appendChild(box);
+                document.body.appendChild(modal);
+            }
+
+            if (form) {
+                form.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+                    const email = form.email.value.trim();
+
+                    if (!email) return;
+
+                    try {
+                        const res = await fetch('https://n8n.faganelo.me/webhook/dragatos/newsletter/set', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email })
+                        });
+
+                        if (res.status === 200) {
+                            showModal('Seu e-mail foi cadastrado com sucesso! 🐾');
+                            form.reset();
+                        } else {
+                            showModal('Ocorreu um erro ao cadastrar. Tente novamente.');
+                        }
+                    } catch (err) {
+                        showModal('Ocorreu um erro de conexão. Tente novamente.');
+                    }
+                });
+            }
+        });
+        </script>
 
         <p class="copyright_text">Feito com ❤️ por<a href="https://visionads.com.br"> Vision Ads</a></p>
 
